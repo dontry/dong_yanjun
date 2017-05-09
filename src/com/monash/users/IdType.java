@@ -1,0 +1,8 @@
+package com.monash.users;
+
+/**
+ * Created by caidong on 8/05/2017.
+ */
+public enum IdType {
+    DRIVER_LICENSE, SOCIAL_SECURITY_CARD, CITIZENSHIP_CERTIFICATE, PASSPORT
+}

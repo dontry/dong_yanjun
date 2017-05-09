@@ -30,7 +30,7 @@ public class AccountController {
         return false;
     }
 
-    public boolean checkTransactionLog(long accountId, Date startingDate, @Nullable Dat endingDate) {
+    public boolean checkTransactionLog(long accountId, Date startingDate, @Nullable Date endingDate) {
         //TODO: check transaction log
         return false;
     }

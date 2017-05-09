@@ -12,14 +12,16 @@ public class Transaction {
     private long mFromAccountId;
     private long mToAccountId;
     private Date mTransDate;
-    private long mAmount;
+    private double mAmount;
+    private TransactionType mTransType;
 
-    public Transaction(long mTransNum, Date mTransDate, long mAmount, long mFromAccountId, @Nullable long mToAccountId) {
+    public Transaction(long mTransNum, TransactionType mTransType, Date mTransDate, double mAmount, @Nullable long mToAccountId, long mFromAccountId) {
         this.mTransNum = mTransNum;
         this.mFromAccountId = mFromAccountId;
         this.mToAccountId = mToAccountId;
         this.mTransDate = mTransDate;
         this.mAmount = mAmount;
+        this.mTransType = mTransType;
     }
 
     public long getmTransNum() {
@@ -38,7 +40,9 @@ public class Transaction {
         return mTransDate;
     }
 
-    public long getmAmount() {
+    public double getmAmount() {
         return mAmount;
     }
+
+    public TransactionType getmTransType() { return mTransType; }
 }

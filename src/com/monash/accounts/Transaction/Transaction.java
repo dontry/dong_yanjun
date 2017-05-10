@@ -1,4 +1,4 @@
-package com.monash;
+package com.monash.accounts.Transaction;
 
 import com.monash.Utils.DataConverter;
 import com.sun.istack.internal.Nullable;

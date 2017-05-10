@@ -1,4 +1,4 @@
-package com.monash.accounts;
+package com.monash.users;
 
 import com.monash.users.Customer;
 import com.monash.users.User;

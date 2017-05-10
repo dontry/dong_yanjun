@@ -1,11 +1,11 @@
-package com.monash.accounts;
+package com.monash.accounts.HomeLoanAccount;
 
 import java.util.Date;
 
 /**
- * Created by caidong on 8/05/2017.
+ * Created by caidong on 10/05/2017.
  */
-public class Loan {
+public class HomeLoan {
     private long loanId;
     private double principle;
     private double overallRepayment;
@@ -14,7 +14,7 @@ public class Loan {
     private double interest;
     private Date nextRepaymentDate;
 
-    public Loan(long loanId, double principle,  Date startingDate, double interest, int period) {
+    public HomeLoan(long loanId, double principle,  Date startingDate, double interest, int period) {
         this.loanId = loanId;
         this.principle = principle;
         this.overallRepayment = overallRepayment;

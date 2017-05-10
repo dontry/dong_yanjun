@@ -1,4 +1,7 @@
-package com.monash.accounts;
+package com.monash.accounts.SavingAccount;
+
+import com.monash.accounts.Account;
+import com.monash.accounts.TypeOfAccount;
 
 /**
  * Created by caidong on 8/05/2017.

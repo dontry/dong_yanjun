@@ -10,7 +10,7 @@ public class Account {
     private TypeOfAccount mTypeOfAccount;
     private boolean mLocked;
 
-    public Account(long accountId, TypeOfAccount typeOfAccount, @Nullable  boolean locked) {
+    public Account(long accountId, TypeOfAccount typeOfAccount, boolean locked) {
         mAccountId = accountId;
         mTypeOfAccount = typeOfAccount;
         mLocked = locked;

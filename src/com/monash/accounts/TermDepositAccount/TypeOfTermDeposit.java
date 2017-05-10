@@ -1,4 +1,4 @@
-package com.monash.accounts;
+package com.monash.accounts.TermDepositAccount;
 
 /**
  * Created by caidong on 8/05/2017.

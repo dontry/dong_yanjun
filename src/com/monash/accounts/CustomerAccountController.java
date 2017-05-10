@@ -1,4 +1,4 @@
-package com.monash;
+package com.monash.accounts;
 
 import com.monash.accounts.Account;
 import com.monash.accounts.AccountContract;

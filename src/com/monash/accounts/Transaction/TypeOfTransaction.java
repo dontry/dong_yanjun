@@ -1,4 +1,4 @@
-package com.monash;
+package com.monash.accounts.Transaction;
 
 /**
  * Created by caidong on 9/05/2017.

@@ -1,5 +1,8 @@
-package com.monash.accounts;
+package com.monash.accounts.CreditCardAccount;
 
+
+import com.monash.accounts.Account;
+import com.monash.accounts.TypeOfAccount;
 
 /**
  * Created by caidong on 8/05/2017.
@@ -10,10 +13,20 @@ public class CrediCardAccount extends Account {
     private double mLoanLimit;
     private double dailyWithdrawal;
 
-    public CrediCardAccount(long accountId, TypeOfAccount typeOfAccount, boolean locked, double withdrawDailyLimit, double loanLimit) {
+    public CrediCardAccount(long accountId, TypeOfAccount typeOfAccount, boolean locked, double balance, double withdrawDailyLimit, double loanLimit) {
         super(accountId, typeOfAccount, locked);
+        mBalance = balance;
         mWithdrawDailyLimit = withdrawDailyLimit;
         mLoanLimit = loanLimit;
+        dailyWithdrawal = 0;
+    }
+
+    public double getmBalance() {
+        return mBalance;
+    }
+
+    public double getDailyWithdrawal() {
+        return dailyWithdrawal;
     }
 
     public double getmWithdrawDailyLimit() {

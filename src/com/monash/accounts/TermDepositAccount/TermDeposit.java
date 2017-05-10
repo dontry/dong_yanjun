@@ -1,4 +1,4 @@
-package com.monash.accounts;
+package com.monash.accounts.TermDepositAccount;
 
 import com.sun.istack.internal.Nullable;
 
@@ -13,13 +13,18 @@ public class TermDeposit {
     private TypeOfTermDeposit mTypeOfTermDeposit;
     private Date mStartingDate;
     private double mOverallBalance;
+    private double mInterestRate;
 
-    public TermDeposit(long mTermId, double mBaseDeposit, TypeOfTermDeposit mTypeOfTermDeposit, @Nullable Date mStartingDate) {
+    public TermDeposit(long mTermId, double mBaseDeposit, TypeOfTermDeposit mTypeOfTermDeposit, double mInterestRate, @Nullable Date mStartingDate) {
         this.mTermId = mTermId;
         this.mBaseDeposit = mBaseDeposit;
         this.mTypeOfTermDeposit = mTypeOfTermDeposit;
         this.mStartingDate = (mStartingDate == null ? new Date() : mStartingDate);
+        this.mInterestRate = mInterestRate;
+        this.mOverallBalance = mBaseDeposit;
     }
+
+    public double getmInterestRate() {return mInterestRate; };
 
     public Date getmStartingDate() {
         return mStartingDate;

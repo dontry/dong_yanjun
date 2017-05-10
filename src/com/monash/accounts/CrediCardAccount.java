@@ -10,8 +10,8 @@ public class CrediCardAccount extends Account {
     private double mLoanLimit;
     private double dailyWithdrawal;
 
-    public CrediCardAccount(long accountId, com.monash.accounts.AccountType accountType, boolean locked, double withdrawDailyLimit, double loanLimit) {
-        super(accountId, accountType, locked);
+    public CrediCardAccount(long accountId, TypeOfAccount typeOfAccount, boolean locked, double withdrawDailyLimit, double loanLimit) {
+        super(accountId, typeOfAccount, locked);
         mWithdrawDailyLimit = withdrawDailyLimit;
         mLoanLimit = loanLimit;
     }

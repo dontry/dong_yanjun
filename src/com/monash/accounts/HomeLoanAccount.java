@@ -9,8 +9,8 @@ import java.util.HashMap;
 public class HomeLoanAccount extends Account {
     HashMap<Long, com.monash.accounts.Loan> loans;
 
-    public HomeLoanAccount(long accountId, Ac accountType, boolean locked) {
-        super(accountId, accountType, locked);
+    public HomeLoanAccount(long accountId, TypeOfAccount typeOfAccount, boolean locked) {
+        super(accountId, typeOfAccount, locked);
         this.loans = new HashMap<Long, Loan>();
     }
 

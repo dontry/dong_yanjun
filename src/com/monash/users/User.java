@@ -3,14 +3,16 @@ package com.monash.users;
 /**
  * Created by caidong on 8/05/2017.
  */
-public class User {
+abstract public class User {
     private String mUsername;
     private String mPassword;
+    private TypeOfUser mTypeOfUser;
 
 
-    public User(String username, String password) {
+    public User(String username, String password, TypeOfUser typeOfUser) {
        mUsername = username;
        mPassword = password;
+       mTypeOfUser = typeOfUser;
     }
 
     public String getmUsername() {
@@ -21,12 +23,7 @@ public class User {
         return mPassword;
     }
 
-    public void setmUsername(String mUsername) {
-        this.mUsername = mUsername;
-    }
+    public TypeOfUser getmTypeOfUser() { return mTypeOfUser; }
 
-    public void setmPassword(String mPassword) {
-        this.mPassword = mPassword;
-    }
 }
 

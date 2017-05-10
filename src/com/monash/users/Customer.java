@@ -4,6 +4,7 @@ package com.monash.users;
  * Created by caidong on 8/05/2017.
  */
 public class Customer extends User {
+    public static final int PIN_LENGTH = 6;
     private String mFirstName;
     private String mLastName;
     private String mAddress;
@@ -11,7 +12,7 @@ public class Customer extends User {
     private String mEmail;
     private String mPhoneNumber;
     private long mPin;
-    private IdType mIdType;
+    private TypeOfId mTypeOfId;
 
     /**
      *
@@ -24,10 +25,10 @@ public class Customer extends User {
      * @param mEmail
      * @param mPhoneNumber
      * @param mPin
-     * @param mIdType
+     * @param mTypeOfId
      */
-    public Customer(String username, String password, String mFirstName, String mLastName, String mAddress, String mIdNumber, String mEmail, String mPhoneNumber, long mPin, IdType mIdType) {
-        super(username, password);
+    public Customer(String username, String password, String mFirstName, String mLastName, String mAddress, String mIdNumber, String mEmail, String mPhoneNumber, long mPin, TypeOfId mTypeOfId) {
+        super(username, password, TypeOfUser.CUSTOMER);
         this.mFirstName = mFirstName;
         this.mLastName = mLastName;
         this.mAddress = mAddress;
@@ -35,7 +36,7 @@ public class Customer extends User {
         this.mEmail = mEmail;
         this.mPhoneNumber = mPhoneNumber;
         this.mPin = mPin;
-        this.mIdType = mIdType;
+        this.mTypeOfId = mTypeOfId;
     }
 
     /**
@@ -106,8 +107,8 @@ public class Customer extends User {
      *
      * @return ID type
      */
-    public IdType getmIdType() {
-        return mIdType;
+    public TypeOfId getmTypeOfId() {
+        return mTypeOfId;
     }
 
 
@@ -139,7 +140,7 @@ public class Customer extends User {
         this.mPin = mPin;
     }
 
-    public void setmIdType(IdType mIdType) {
-        this.mIdType = mIdType;
+    public void setmTypeOfId(TypeOfId mTypeOfId) {
+        this.mTypeOfId = mTypeOfId;
     }
 }

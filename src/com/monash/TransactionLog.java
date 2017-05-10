@@ -28,7 +28,7 @@ public class TransactionLog {
         return mTransactions;
     }
 
-    public void createTransaction(long num, TransactionType type, Date date, double amount, long from, long to) {
+    public void createTransaction(long num, TypeOfTransaction type, Date date, double amount, long from, long to) {
         Transaction transaction = new Transaction(num, type, date, amount, from, to);
     }
 }

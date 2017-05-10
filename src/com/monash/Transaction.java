@@ -1,5 +1,6 @@
 package com.monash;
 
+import com.monash.Utils.DataConverter;
 import com.sun.istack.internal.Nullable;
 
 import java.util.Date;
@@ -13,12 +14,12 @@ public class Transaction {
     private long mToAccountId;
     private Date mTransDate;
     private double mAmount;
-    private TransactionType mTransType;
+    private TypeOfTransaction mTransType;
 
-    public Transaction(long mTransNum, TransactionType mTransType, Date mTransDate, double mAmount, @Nullable long mToAccountId, long mFromAccountId) {
+    public Transaction(long mTransNum, TypeOfTransaction mTransType, Date mTransDate, double mAmount, @Nullable long mToAccountId, long mFromAccountId) {
         this.mTransNum = mTransNum;
         this.mFromAccountId = mFromAccountId;
-        this.mToAccountId = mToAccountId;
+        this.mToAccountId = mToAccountId; //what if long is null?
         this.mTransDate = mTransDate;
         this.mAmount = mAmount;
         this.mTransType = mTransType;
@@ -44,5 +45,15 @@ public class Transaction {
         return mAmount;
     }
 
-    public TransactionType getmTransType() { return mTransType; }
+    public TypeOfTransaction getmTransType() { return mTransType; }
+
+    public String toString() {
+        String toAccountString = mToAccountId == 0 ? "" : ("\nTo Account:" + mToAccountId);
+        return "Transaction No. " + mTransNum +
+                "\nTransaction Date: " + DataConverter.dateToString(mTransDate) +
+                "\nTransaction Type: " + mTransType +
+                "\nFrom Account" + mFromAccountId +
+                 toAccountString +
+                "\nTransaction amount: $" + mAmount;
+    }
 }

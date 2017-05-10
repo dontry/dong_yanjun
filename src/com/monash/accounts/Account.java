@@ -7,12 +7,12 @@ import com.sun.istack.internal.Nullable;
  */
 public class Account {
     private long mAccountId;
-    private com.monash.accounts.AccountType mAccountType;
+    private TypeOfAccount mTypeOfAccount;
     private boolean mLocked;
 
-    public Account(long accountId, com.monash.accounts.AccountType accountType, @Nullable  boolean locked) {
+    public Account(long accountId, TypeOfAccount typeOfAccount, @Nullable  boolean locked) {
         mAccountId = accountId;
-        mAccountType = accountType;
+        mTypeOfAccount = typeOfAccount;
         mLocked = locked;
     }
 
@@ -28,8 +28,8 @@ public class Account {
      *
      * @return accountType
      */
-    public com.monash.accounts.AccountType getmAccountType() {
-        return mAccountType;
+    public TypeOfAccount getmTypeOfAccount() {
+        return mTypeOfAccount;
     }
 
     /**

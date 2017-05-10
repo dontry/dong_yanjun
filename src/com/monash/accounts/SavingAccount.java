@@ -5,8 +5,8 @@ package com.monash.accounts;
  */
 public class SavingAccount extends Account {
     private double mBalance;
-    public SavingAccount(long accountId, double balance, AccountType accountType, boolean locked) {
-        super(accountId, accountType, locked);
+    public SavingAccount(long accountId, double balance, TypeOfAccount typeOfAccount, boolean locked) {
+        super(accountId, typeOfAccount, locked);
         mBalance = balance;
     }
 

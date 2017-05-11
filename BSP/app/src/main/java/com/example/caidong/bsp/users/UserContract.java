@@ -1,7 +1,4 @@
-package com.monash.users;
-
-import com.monash.users.Customer;
-import com.monash.users.User;
+package com.example.caidong.bsp.users;
 
 /**
  * Created by caidong on 9/05/2017.

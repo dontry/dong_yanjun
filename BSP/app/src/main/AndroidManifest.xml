@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.caidong.bsp">
+
+    <!-- To auto-complete the Username text field in the login form with the user's Usernames -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".accounts.CustomerHomeActivity"
+            android:label="Home" />
+        <activity
+            android:name=".accounts.CreditCardAccount.CreditCardAccountActivity"
+            android:label="Credit Card Account" />
+        <activity
+            android:name=".accounts.HomeLoanAccount.HomeLoanAccountActivity"
+            android:label="Home Loan Account " />
+        <activity
+            android:name=".accounts.SavingAccount.SavingAccountActivity"
+            android:label="Saving Account" />
+        <activity
+            android:name=".accounts.TermDepositAccount.TermDepositAccountActivity"
+            android:label="Term Deposit Account" />
+        <activity android:name=".users.CustomerProfileActivity"
+            android:label="View Profile"></activity>
+    </application>
+
+</manifest>

@@ -1,5 +1,6 @@
 package banksystemprototype.accounts.SavingAccount;
 
+import banksystemprototype.Exceptions.BalanceLimitException;
 import banksystemprototype.accounts.Transaction.Transaction;
 import java.util.Date;
 import java.util.List;
@@ -8,20 +9,33 @@ import java.util.List;
  * Created by caidong on 10/05/2017.
  */
 public class SavingAccountController implements SavingAccountContract.UserActionListener {
+    private SavingAccount mSavingAccount;
 
     @Override
-    public void deposit(double amount) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public double deposit(double amount) {
+        double balance = mSavingAccount.getmBalance();
+        balance += amount;
+        mSavingAccount.setmBalance(balance);
+        return balance;
     }
 
     @Override
-    public double withdraw(double amount) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public double withdraw(double amount) throws Exception {
+        double balance = mSavingAccount.getmBalance();
+        balance -= amount;
+        if(balance - amount < 0) throw new BalanceLimitException();
+        mSavingAccount.setmBalance(balance);
+        return balance;
     }
 
     @Override
-    public void transfer(double amount, long toAccountId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public double transfer(double amount, long toAccountId) throws Exception {
+        double balance = mSavingAccount.getmBalance();
+        balance -= amount;
+        if(balance - amount < 0) throw new BalanceLimitException();
+        mSavingAccount.setmBalance(balance);
+        //TODO
+        return balance;
     }
 
     @Override

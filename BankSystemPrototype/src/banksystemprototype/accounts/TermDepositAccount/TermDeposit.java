@@ -73,16 +73,19 @@ public class TermDeposit {
     
     //Calculate interest rate
     //Early withdrawal will produce a penalty with half of interest.
+    //If the term ends, the interest stops accrues.
     public double calculateInterest(Date date) {
         int diffMonth = DataConverter.monthBetweenDates(mStartingDate, date);
         double base = 0;
+        double interest = 0;
         if(diffMonth < mTypeOfTermDeposit.month()) {
             base = 1 + mInterestRate / 2; 
+            interest = Math.pow(base, diffMonth);
         } else {
             base = 1 + mInterestRate;
+            interest = Math.pow(base, mTypeOfTermDeposit.month());
         }
-        
-        return Math.pow(base, diffMonth);
+        return interest;
     }
     
     public double getTotalAccrueAmount(Date date) {

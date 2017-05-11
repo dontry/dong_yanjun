@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package banksystemprototype;
+package banksystemprototype.accounts.CreditCardAccount;
 
 /**
  *
@@ -27,6 +27,16 @@ public class CreditCardAccountFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel5 = new javax.swing.JLabel();
+        tfAmount = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        tfAmount2 = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        tfAmount1 = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         btnViewTransaction = new javax.swing.JButton();
         jLayeredPane1 = new javax.swing.JLayeredPane();
@@ -37,6 +47,202 @@ public class CreditCardAccountFrame extends javax.swing.JFrame {
         labelBalanceValue = new javax.swing.JLabel();
         labelBalanceValue1 = new javax.swing.JLabel();
         labelBalanceValue2 = new javax.swing.JLabel();
+
+        dialogTransfer.setTitle("Withdraw");
+        dialogTransfer.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentHidden(java.awt.event.ComponentEvent evt) {
+                dialogTransferComponentHidden(evt);
+            }
+        });
+
+        jLabel5.setText("Amount:");
+
+        tfAmount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfAmountActionPerformed(evt);
+            }
+        });
+
+        btnOK.setText("OK");
+
+        btnCancel.setText("Cancel");
+
+        jLabel6.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jLabel6.setText("Transfer Money");
+
+        jLabel8.setText("To Account:");
+
+        tfToAccount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfToAccountActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout dialogTransferLayout = new javax.swing.GroupLayout(dialogTransfer.getContentPane());
+        dialogTransfer.getContentPane().setLayout(dialogTransferLayout);
+        dialogTransferLayout.setHorizontalGroup(
+            dialogTransferLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dialogTransferLayout.createSequentialGroup()
+                .addGap(83, 83, 83)
+                .addGroup(dialogTransferLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(dialogTransferLayout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(btnOK)
+                        .addGap(31, 31, 31)
+                        .addComponent(btnCancel))
+                    .addGroup(dialogTransferLayout.createSequentialGroup()
+                        .addGroup(dialogTransferLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel5))
+                        .addGap(18, 18, 18)
+                        .addGroup(dialogTransferLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tfAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfToAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(63, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dialogTransferLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel6)
+                .addGap(123, 123, 123))
+        );
+        dialogTransferLayout.setVerticalGroup(
+            dialogTransferLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dialogTransferLayout.createSequentialGroup()
+                .addGap(11, 11, 11)
+                .addComponent(jLabel6)
+                .addGap(18, 18, 18)
+                .addGroup(dialogTransferLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfAmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(dialogTransferLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfToAccount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addGap(18, 18, 18)
+                .addGroup(dialogTransferLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnOK)
+                    .addComponent(btnCancel))
+                .addContainerGap(11, Short.MAX_VALUE))
+        );
+
+        dialogWithdraw.setTitle("Transfer");
+        dialogWithdraw.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentHidden(java.awt.event.ComponentEvent evt) {
+                dialogWithdrawComponentHidden(evt);
+            }
+        });
+
+        jLabel7.setText("Amount:");
+
+        tfAmount2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfAmount2ActionPerformed(evt);
+            }
+        });
+
+        btnOK2.setText("OK");
+
+        btnCancel2.setText("Cancel");
+
+        jLabel9.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jLabel9.setText("Withdraw Money");
+
+        javax.swing.GroupLayout dialogWithdrawLayout = new javax.swing.GroupLayout(dialogWithdraw.getContentPane());
+        dialogWithdraw.getContentPane().setLayout(dialogWithdrawLayout);
+        dialogWithdrawLayout.setHorizontalGroup(
+            dialogWithdrawLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dialogWithdrawLayout.createSequentialGroup()
+                .addGap(83, 83, 83)
+                .addGroup(dialogWithdrawLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(dialogWithdrawLayout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(btnOK2)
+                        .addGap(31, 31, 31)
+                        .addComponent(btnCancel2))
+                    .addGroup(dialogWithdrawLayout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(18, 18, 18)
+                        .addComponent(tfAmount2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(85, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dialogWithdrawLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel9)
+                .addGap(119, 119, 119))
+        );
+        dialogWithdrawLayout.setVerticalGroup(
+            dialogWithdrawLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dialogWithdrawLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(jLabel9)
+                .addGap(18, 18, 18)
+                .addGroup(dialogWithdrawLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(tfAmount2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(dialogWithdrawLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnOK2)
+                    .addComponent(btnCancel2))
+                .addContainerGap(15, Short.MAX_VALUE))
+        );
+
+        dialogDeposit.setTitle("Deposit");
+        dialogDeposit.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentHidden(java.awt.event.ComponentEvent evt) {
+                dialogDepositComponentHidden(evt);
+            }
+        });
+
+        jLabel10.setText("Amount:");
+
+        tfAmount1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfAmount1ActionPerformed(evt);
+            }
+        });
+
+        btnOK1.setText("OK");
+
+        btnCancel1.setText("Cancel");
+
+        jLabel11.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jLabel11.setText("Deposit Money");
+
+        javax.swing.GroupLayout dialogDepositLayout = new javax.swing.GroupLayout(dialogDeposit.getContentPane());
+        dialogDeposit.getContentPane().setLayout(dialogDepositLayout);
+        dialogDepositLayout.setHorizontalGroup(
+            dialogDepositLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dialogDepositLayout.createSequentialGroup()
+                .addGap(83, 83, 83)
+                .addGroup(dialogDepositLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(dialogDepositLayout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(btnOK1)
+                        .addGap(31, 31, 31)
+                        .addComponent(btnCancel1))
+                    .addGroup(dialogDepositLayout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addGap(18, 18, 18)
+                        .addComponent(tfAmount1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(85, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dialogDepositLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel11)
+                .addGap(126, 126, 126))
+        );
+        dialogDepositLayout.setVerticalGroup(
+            dialogDepositLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dialogDepositLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(jLabel11)
+                .addGap(18, 18, 18)
+                .addGroup(dialogDepositLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(tfAmount1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(dialogDepositLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnOK1)
+                    .addComponent(btnCancel1))
+                .addContainerGap(15, Short.MAX_VALUE))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -219,6 +425,34 @@ public class CreditCardAccountFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnViewTransactionActionPerformed
 
+    private void tfAmountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfAmountActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfAmountActionPerformed
+
+    private void tfToAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfToAccountActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfToAccountActionPerformed
+
+    private void dialogTransferComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_dialogTransferComponentHidden
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dialogTransferComponentHidden
+
+    private void tfAmount2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfAmount2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfAmount2ActionPerformed
+
+    private void dialogWithdrawComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_dialogWithdrawComponentHidden
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dialogWithdrawComponentHidden
+
+    private void tfAmount1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfAmount1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfAmount1ActionPerformed
+
+    private void dialogDepositComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_dialogDepositComponentHidden
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dialogDepositComponentHidden
+
     /**
      * @param args the command line arguments
      */
@@ -256,18 +490,38 @@ public class CreditCardAccountFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private final javax.swing.JButton btnCancel = new javax.swing.JButton();
+    private final javax.swing.JButton btnCancel1 = new javax.swing.JButton();
+    private final javax.swing.JButton btnCancel2 = new javax.swing.JButton();
     private final javax.swing.JButton btnDeposit = new javax.swing.JButton();
+    private final javax.swing.JButton btnOK = new javax.swing.JButton();
+    private final javax.swing.JButton btnOK1 = new javax.swing.JButton();
+    private final javax.swing.JButton btnOK2 = new javax.swing.JButton();
     private final javax.swing.JButton btnTransfer = new javax.swing.JButton();
     private javax.swing.JButton btnViewTransaction;
     private final javax.swing.JButton btnWithdraw = new javax.swing.JButton();
+    private final javax.swing.JDialog dialogDeposit = new javax.swing.JDialog();
+    private final javax.swing.JDialog dialogTransfer = new javax.swing.JDialog();
+    private final javax.swing.JDialog dialogWithdraw = new javax.swing.JDialog();
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JLayeredPane jLayeredPane2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel labelBalanceValue;
     private javax.swing.JLabel labelBalanceValue1;
     private javax.swing.JLabel labelBalanceValue2;
+    private javax.swing.JTextField tfAmount;
+    private javax.swing.JTextField tfAmount1;
+    private javax.swing.JTextField tfAmount2;
+    private final javax.swing.JTextField tfToAccount = new javax.swing.JTextField();
     // End of variables declaration//GEN-END:variables
 }

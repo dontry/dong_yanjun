@@ -12,8 +12,8 @@ public interface SavingAccountContract {
     }
     interface UserActionListener {
         void deposit(double amount);
-        double withdraw(double amount);
-        void transfer(double amount, long toAccountId);
+        double withdraw(double amount) throws Exception;
+        void transfer(double amount, long toAccountId) throws Exception;
         List<Transaction> checkTransactions(Date startingDate,  Date endingDate);
         void openAccount( long accountId);
         void showAccount();

@@ -9,11 +9,11 @@ public class Customer extends User {
     private String mFirstName;
     private String mLastName;
     private String mAddress;
+    private TypeOfId mTypeOfId;
     private String mIdNumber;
     private String mEmail;
     private String mPhoneNumber;
     private long mPin;
-    private TypeOfId mTypeOfId;
 
     /**
      *

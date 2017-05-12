@@ -8,23 +8,25 @@ import java.util.Date;
 public class HomeLoan {
     private long loanId;
     private double principle;
-    private double overallRepayment;
+    private double remainingLoan;
     private Date startingDate;
     private int period;
     private double interest;
     private Date nextRepaymentDate;
+    private double repaymentAmount;
 
-    public HomeLoan(long loanId, double principle,  Date startingDate, double interest, int period) {
+    public HomeLoan(long loanId, double principle,  Date startingDate, double interest, int period, double repaymentAmount) {
         this.loanId = loanId;
         this.principle = principle;
-        this.overallRepayment = overallRepayment;
+        this.remainingLoan = remainingLoan;
         this.startingDate = startingDate;
         this.period = period;
         this.interest = interest;
+        this.repaymentAmount = repaymentAmount;
     }
 
     public void deductRepayment(double amount) {
-        overallRepayment -= amount;
+        remainingLoan -= amount;
     }
 
     public void stop() {

@@ -7,6 +7,7 @@ public interface UserContract {
     User getUser(String username, String password);
     interface View {
         void login();
+        void logout();
     }
     
     interface UserActionListener {

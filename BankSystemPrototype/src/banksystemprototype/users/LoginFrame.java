@@ -180,7 +180,7 @@ public class LoginFrame extends javax.swing.JFrame implements UserContract.View{
         boolean isVerified = mActionListener.verifyUser(username, password, userType);
         if(isVerified) {
             this.setVisible(false);
-            new CustomerHomeFrame().setVisible(true);
+            new CustomerHomeFrame(this).setVisible(true);
         } else {
             dialogNotVerified.setVisible(true);
         }
@@ -251,6 +251,11 @@ public class LoginFrame extends javax.swing.JFrame implements UserContract.View{
     public void login() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-  
+    
+    @Override
+    public void logout() {
+        this.setVisible(true);
+        tfUsername.setText("");
+        tfPwd.setText("");
+    }
 }

@@ -26,7 +26,7 @@ public class SavingAccountController implements SavingAccountContract.UserAction
     }
 
     @Override
-    public double withdraw(double amount) throws Exception {
+    public double withdraw(double amount) throws BalanceLimitException {
         double balance = mSavingAccount.getmBalance();
         balance -= amount;
         if(balance - amount < 0) throw new BalanceLimitException();
@@ -36,7 +36,7 @@ public class SavingAccountController implements SavingAccountContract.UserAction
     }
 
     @Override
-    public double transfer(double amount, long toAccountId) throws Exception {
+    public double transfer(double amount, long toAccountId) throws BalanceLimitException {
         double balance = mSavingAccount.getmBalance();
         balance -= amount;
         if(balance - amount < 0) throw new BalanceLimitException();

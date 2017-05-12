@@ -19,15 +19,15 @@ import oracle.jdbc.OracleDriver;
 public final class DBConnection {
     // TODO  DBConnection 
     public static final String DB_DRIVER = "oracle.jdbc,driver.OracleDriver";
-    public static final String DB_CONNECTION =  "jdbc:oracle:thins:@hippo.its.monash.edu.au:1521:FIT5148A";
-    public static final String DB_USER = "username";
-    public static final String DB_PASSWORD = "password";
+    public static final String DB_CONNECTION =  "jdbc:oracle:thin:@hippo.its.monash.edu.au:1521:FIT5148A";
+    public static final String DB_USER = "S27624366";
+    public static final String DB_PASSWORD = "student";
     
     public static Connection conn = null;
     public static Connection getConnection(){
         try {
             DriverManager.registerDriver(new OracleDriver());
-            conn = DriverManager.getConnection("jdbc:oracle:thin:@hippo.its.monash.edu.au:1521:FIT5148a", "Student60", "student");
+            conn = DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASSWORD);
             System.out.println("Connected to Oracle");
         } catch (SQLException ex) {
             Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
@@ -35,16 +35,6 @@ public final class DBConnection {
         return conn;
     }
     
-    public static Connection getConnectionB(){
-        try {
-            DriverManager.registerDriver(new OracleDriver());
-            conn = DriverManager.getConnection("jdbc:oracle:thin:@hippo.its.monash.edu.au:1521:FIT5148b", "Student60", "student");
-            System.out.println("Connected to Oracle");
-        } catch (SQLException ex) {
-            Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return conn;
-    }
     
     public static void closeConnection(){
         try {

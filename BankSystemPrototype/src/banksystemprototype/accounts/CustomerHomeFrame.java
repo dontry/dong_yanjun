@@ -5,6 +5,10 @@
  */
 package banksystemprototype.accounts;
 
+import banksystemprototype.accounts.HomeLoanAccount.HomeLoanAccountFrame;
+import banksystemprototype.accounts.CreditCardAccount.CreditCardAccountFrame;
+import banksystemprototype.accounts.SavingAccount.SavingAccountFrame;
+import banksystemprototype.accounts.TermDepositAccount.TermDepositAccountFrame;
 import banksystemprototype.users.Customer;
 
 /**
@@ -162,18 +166,26 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
 
     private void btnTermDepositAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTermDepositAccountActionPerformed
         // TODO add your handling code here:
+        this.setVisible(false);
+        new TermDepositAccountFrame(this).setVisible(true);
     }//GEN-LAST:event_btnTermDepositAccountActionPerformed
 
     private void btnCreditCardAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreditCardAccountActionPerformed
         // TODO add your handling code here:
+        this.setVisible(false);
+        new CreditCardAccountFrame(this).setVisible(true);
     }//GEN-LAST:event_btnCreditCardAccountActionPerformed
 
     private void btnSavingAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSavingAccountActionPerformed
         // TODO add your handling code here:
+        this.setVisible(false);
+        new SavingAccountFrame(this).setVisible(true);
     }//GEN-LAST:event_btnSavingAccountActionPerformed
 
     private void btnHomeLoanAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeLoanAccountActionPerformed
         // TODO add your handling code here:
+        this.setVisible(false);
+         new HomeLoanAccountFrame(this).setVisible(true);
     }//GEN-LAST:event_btnHomeLoanAccountActionPerformed
 
     /**

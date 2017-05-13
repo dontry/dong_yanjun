@@ -13,7 +13,7 @@ import banksystemprototype.users.Customer;
  */
 public interface AccountContract {
 
-    public interface CustomerHomeView {
+    public interface View {
         void showSavingAccount(long accountId);
         void showTermDepositAccount(long accountId);
         void showCreditCardAccount(long accountId);

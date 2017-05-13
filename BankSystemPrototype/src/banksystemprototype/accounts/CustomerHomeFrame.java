@@ -17,7 +17,7 @@ import javax.swing.JFrame;
  *
  * @author caidong
  */
-public class CustomerHomeFrame extends javax.swing.JFrame implements AccountContract.CustomerHomeView {
+public class CustomerHomeFrame extends javax.swing.JFrame implements AccountContract.View {
 
     /**
      * Creates new form CustomerHomeFrame

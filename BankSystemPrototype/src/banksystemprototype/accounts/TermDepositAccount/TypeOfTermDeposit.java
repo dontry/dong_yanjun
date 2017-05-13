@@ -15,4 +15,4 @@ public enum TypeOfTermDeposit {
     int month(){
         return month;
     }
-}
+ }

@@ -63,9 +63,9 @@ public class TermDeposit {
     
     private double initInterestRate(TypeOfTermDeposit type) {
         switch(type) {
-            case THREE_MONTHS: return 0.03;
-            case SIX_MONTHS: return 0.04;
-            case TWELVE_MONTHS: return 0.05;
+            case THREE_MONTHS: return 0.03;  // interest rate 3%
+            case SIX_MONTHS: return 0.04;    // interest rate 4%
+            case TWELVE_MONTHS: return 0.05;  // interest rate 5%
                 
         }
         return 0;

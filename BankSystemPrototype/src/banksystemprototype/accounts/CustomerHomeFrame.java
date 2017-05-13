@@ -5,7 +5,13 @@
  */
 package banksystemprototype.accounts;
 
+import banksystemprototype.accounts.HomeLoanAccount.HomeLoanAccountFrame;
+import banksystemprototype.accounts.CreditCardAccount.CreditCardAccountFrame;
+import banksystemprototype.accounts.SavingAccount.SavingAccountFrame;
+import banksystemprototype.accounts.TermDepositAccount.TermDepositAccountFrame;
 import banksystemprototype.users.Customer;
+import banksystemprototype.users.LoginFrame;
+import javax.swing.JFrame;
 
 /**
  *
@@ -16,10 +22,11 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
     /**
      * Creates new form CustomerHomeFrame
      */
- 
+    private LoginFrame loginFrame;
             
-    public CustomerHomeFrame() {
+    public CustomerHomeFrame(JFrame login) {
         initComponents();
+        loginFrame = (LoginFrame) login;
     }
 
     /**
@@ -40,6 +47,7 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
         jSeparator1 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        btnLogout = new javax.swing.JButton();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -140,23 +148,34 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
             }
         });
 
+        btnLogout.setText("Logout");
+        btnLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogoutActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnViewProfile))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(15, 15, 15)
+                        .addComponent(btnLogout)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnViewProfile)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(btnViewProfile)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnViewProfile)
+                    .addComponent(btnLogout))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(54, Short.MAX_VALUE))
@@ -167,20 +186,29 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
 
     private void btnTermDepositAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTermDepositAccountActionPerformed
         // TODO add your handling code here:
+        this.setVisible(false);
+        new TermDepositAccountFrame(this).setVisible(true);
     }//GEN-LAST:event_btnTermDepositAccountActionPerformed
 
     private void btnCreditCardAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreditCardAccountActionPerformed
         // TODO add your handling code here:
+        this.setVisible(false);
+        new CreditCardAccountFrame(this).setVisible(true);
     }//GEN-LAST:event_btnCreditCardAccountActionPerformed
 
     private void btnSavingAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSavingAccountActionPerformed
         // TODO add your handling code here:
+        this.setVisible(false);
+        new SavingAccountFrame(this).setVisible(true);
     }//GEN-LAST:event_btnSavingAccountActionPerformed
 
     private void btnHomeLoanAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeLoanAccountActionPerformed
         // TODO add your handling code here:
+        this.setVisible(false);
+         new HomeLoanAccountFrame(this).setVisible(true);
     }//GEN-LAST:event_btnHomeLoanAccountActionPerformed
 
+<<<<<<< HEAD
     private void btnViewProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewProfileActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnViewProfileActionPerformed
@@ -219,10 +247,19 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
             }
         });
     }
+=======
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        loginFrame.logout();
+    }//GEN-LAST:event_btnLogoutActionPerformed
+
+>>>>>>> dontry/master
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private final javax.swing.JButton btnCreditCardAccount = new javax.swing.JButton();
     private final javax.swing.JButton btnHomeLoanAccount = new javax.swing.JButton();
+    private javax.swing.JButton btnLogout;
     private final javax.swing.JButton btnSavingAccount = new javax.swing.JButton();
     private javax.swing.JButton btnTermDepositAccount;
     private final javax.swing.JButton btnViewProfile = new javax.swing.JButton();

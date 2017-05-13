@@ -5,7 +5,9 @@
  */
 package banksystemprototype.accounts.TermDepositAccount;
 
+import banksystemprototype.accounts.CustomerHomeFrame;
 import banksystemprototype.accounts.SavingAccount.SavingAccountFrame;
+import javax.swing.JFrame;
 
 /**
  *
@@ -16,8 +18,10 @@ public class TermDepositAccountFrame extends javax.swing.JFrame {
     /**
      * Creates new form SavingAccountFrame
      */
-    public TermDepositAccountFrame() {
+    private final CustomerHomeFrame homeFrame;
+    public TermDepositAccountFrame(JFrame home) {
         initComponents();
+        homeFrame = (CustomerHomeFrame) home;
     }
 
     /**
@@ -30,7 +34,7 @@ public class TermDepositAccountFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel2 = new javax.swing.JLabel();
-        tfAmount = new javax.swing.JTextField();
+        tfTransferAmount = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -47,6 +51,7 @@ public class TermDepositAccountFrame extends javax.swing.JFrame {
         btnViewTransaction = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         labelBalanceValue = new javax.swing.JLabel();
+        btnBack = new javax.swing.JButton();
 
         dialogTransfer.setTitle("Withdraw");
         dialogTransfer.addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -57,13 +62,13 @@ public class TermDepositAccountFrame extends javax.swing.JFrame {
 
         jLabel2.setText("Amount:");
 
-        tfAmount.addActionListener(new java.awt.event.ActionListener() {
+        tfTransferAmount.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfAmountActionPerformed(evt);
+                tfTransferAmountActionPerformed(evt);
             }
         });
 
-        btnOK.setText("OK");
+        btnTransferOK.setText("OK");
 
         btnCancel.setText("Cancel");
 
@@ -72,9 +77,9 @@ public class TermDepositAccountFrame extends javax.swing.JFrame {
 
         jLabel8.setText("To Account:");
 
-        tfToAccount.addActionListener(new java.awt.event.ActionListener() {
+        tfTransferToAccount.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfToAccountActionPerformed(evt);
+                tfTransferToAccountActionPerformed(evt);
             }
         });
 
@@ -87,7 +92,7 @@ public class TermDepositAccountFrame extends javax.swing.JFrame {
                 .addGroup(dialogTransferLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(dialogTransferLayout.createSequentialGroup()
                         .addGap(26, 26, 26)
-                        .addComponent(btnOK)
+                        .addComponent(btnTransferOK)
                         .addGap(31, 31, 31)
                         .addComponent(btnCancel))
                     .addGroup(dialogTransferLayout.createSequentialGroup()
@@ -96,8 +101,8 @@ public class TermDepositAccountFrame extends javax.swing.JFrame {
                             .addComponent(jLabel2))
                         .addGap(18, 18, 18)
                         .addGroup(dialogTransferLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tfToAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(tfTransferAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfTransferToAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(63, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dialogTransferLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -111,15 +116,15 @@ public class TermDepositAccountFrame extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(dialogTransferLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfAmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfTransferAmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(dialogTransferLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfToAccount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfTransferToAccount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))
                 .addGap(18, 18, 18)
                 .addGroup(dialogTransferLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnOK)
+                    .addComponent(btnTransferOK)
                     .addComponent(btnCancel))
                 .addContainerGap(11, Short.MAX_VALUE))
         );
@@ -212,7 +217,12 @@ public class TermDepositAccountFrame extends javax.swing.JFrame {
 
         jLabel6.setText("Term Deposit");
 
-        btnOK2.setText("OK");
+        btnWithdrawOK.setText("OK");
+        btnWithdrawOK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnWithdrawOKActionPerformed(evt);
+            }
+        });
 
         btnCancel2.setText("Cancel");
 
@@ -227,7 +237,7 @@ public class TermDepositAccountFrame extends javax.swing.JFrame {
                 .addGroup(dialogWithdrawLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(dialogWithdrawLayout.createSequentialGroup()
                         .addGap(111, 111, 111)
-                        .addComponent(btnOK2)
+                        .addComponent(btnWithdrawOK)
                         .addGap(31, 31, 31)
                         .addComponent(btnCancel2))
                     .addGroup(dialogWithdrawLayout.createSequentialGroup()
@@ -252,7 +262,7 @@ public class TermDepositAccountFrame extends javax.swing.JFrame {
                     .addComponent(spTermDepositWithdraw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(dialogWithdrawLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnOK2)
+                    .addComponent(btnWithdrawOK)
                     .addComponent(btnCancel2))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
@@ -322,25 +332,41 @@ public class TermDepositAccountFrame extends javax.swing.JFrame {
         labelBalanceValue.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         labelBalanceValue.setText("number");
 
+        btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(102, 102, 102)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(labelBalanceValue, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(btnBack)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(102, 102, 102)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelBalanceValue, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(68, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(btnBack)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(labelBalanceValue))
@@ -368,13 +394,13 @@ public class TermDepositAccountFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnViewTransactionActionPerformed
 
-    private void tfAmountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfAmountActionPerformed
+    private void tfTransferAmountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfTransferAmountActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tfAmountActionPerformed
+    }//GEN-LAST:event_tfTransferAmountActionPerformed
 
-    private void tfToAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfToAccountActionPerformed
+    private void tfTransferToAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfTransferToAccountActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tfToAccountActionPerformed
+    }//GEN-LAST:event_tfTransferToAccountActionPerformed
 
     private void dialogTransferComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_dialogTransferComponentHidden
         // TODO add your handling code here:
@@ -392,53 +418,28 @@ public class TermDepositAccountFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_dialogWithdrawComponentHidden
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SavingAccountFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SavingAccountFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SavingAccountFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SavingAccountFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
+    private void btnWithdrawOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnWithdrawOKActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnWithdrawOKActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new SavingAccountFrame().setVisible(true);
-            }
-        });
-    }
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        homeFrame.setVisible(true);
+    }//GEN-LAST:event_btnBackActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBack;
     private final javax.swing.JButton btnCancel = new javax.swing.JButton();
     private final javax.swing.JButton btnCancel1 = new javax.swing.JButton();
     private final javax.swing.JButton btnCancel2 = new javax.swing.JButton();
     private final javax.swing.JButton btnCreateTermDeposit = new javax.swing.JButton();
-    private final javax.swing.JButton btnOK = new javax.swing.JButton();
     private final javax.swing.JButton btnOK1 = new javax.swing.JButton();
-    private final javax.swing.JButton btnOK2 = new javax.swing.JButton();
     private final javax.swing.JButton btnTransfer = new javax.swing.JButton();
+    private final javax.swing.JButton btnTransferOK = new javax.swing.JButton();
     private javax.swing.JButton btnViewTransaction;
     private final javax.swing.JButton btnWithdraw = new javax.swing.JButton();
+    private final javax.swing.JButton btnWithdrawOK = new javax.swing.JButton();
     private datechooser.beans.DateChooserCombo dateChooserCombo1;
     private final javax.swing.JDialog dialogCreateTermDeposit = new javax.swing.JDialog();
     private final javax.swing.JDialog dialogTransfer = new javax.swing.JDialog();
@@ -457,8 +458,8 @@ public class TermDepositAccountFrame extends javax.swing.JFrame {
     private javax.swing.JLabel labelBalanceValue;
     private javax.swing.JSpinner spTermDepositWithdraw;
     private javax.swing.JSpinner spTermPeriod;
-    private javax.swing.JTextField tfAmount;
     private javax.swing.JTextField tfAmount1;
-    private final javax.swing.JTextField tfToAccount = new javax.swing.JTextField();
+    private javax.swing.JTextField tfTransferAmount;
+    private final javax.swing.JTextField tfTransferToAccount = new javax.swing.JTextField();
     // End of variables declaration//GEN-END:variables
 }

@@ -10,31 +10,38 @@ import java.util.List;
  */
 public class SavingAccountController implements SavingAccountContract.UserActionListener {
     private SavingAccount mSavingAccount;
+    private SavingAccountContract.View view;
+    
+    public SavingAccountController(SavingAccountContract.View v) {
+        view = v;
+    }
 
     @Override
     public double deposit(double amount) {
         double balance = mSavingAccount.getmBalance();
         balance += amount;
         mSavingAccount.setmBalance(balance);
+        view.refreshBalance(String.valueOf(balance));
         return balance;
     }
 
     @Override
-    public double withdraw(double amount) throws Exception {
+    public double withdraw(double amount) throws BalanceLimitException {
         double balance = mSavingAccount.getmBalance();
         balance -= amount;
         if(balance - amount < 0) throw new BalanceLimitException();
         mSavingAccount.setmBalance(balance);
+        view.refreshBalance(String.valueOf(balance));
         return balance;
     }
 
     @Override
-    public double transfer(double amount, long toAccountId) throws Exception {
+    public double transfer(double amount, long toAccountId) throws BalanceLimitException {
         double balance = mSavingAccount.getmBalance();
         balance -= amount;
         if(balance - amount < 0) throw new BalanceLimitException();
         mSavingAccount.setmBalance(balance);
-        //TODO
+        view.refreshBalance(String.valueOf(balance));
         return balance;
     }
 

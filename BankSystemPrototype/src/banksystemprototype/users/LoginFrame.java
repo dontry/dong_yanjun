@@ -5,15 +5,20 @@
  */
 package banksystemprototype.users;
 
+import banksystemprototype.accounts.CustomerHomeFrame;
+
 /**
  *
  * @author caidong
  */
-public class LoginFrame extends javax.swing.JFrame {
+public class LoginFrame extends javax.swing.JFrame implements UserContract.View{
 
     /**
      * Creates new form LoginFrame
      */
+    private static UserContract.UserActionListener mActionListener;
+    
+    
     public LoginFrame() {
         initComponents();
     }
@@ -27,50 +32,102 @@ public class LoginFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        dialogNotVerified = new javax.swing.JDialog();
+        jLabel5 = new javax.swing.JLabel();
+        btnOK = new javax.swing.JButton();
         tv_title_username = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        tfUsername = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        jLogin = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        tfPwd = new javax.swing.JPasswordField();
+        spUserType = new javax.swing.JSpinner();
+
+        jLabel5.setText("Your username or password is incorrect");
+
+        btnOK.setText("OK");
+        btnOK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOKActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout dialogNotVerifiedLayout = new javax.swing.GroupLayout(dialogNotVerified.getContentPane());
+        dialogNotVerified.getContentPane().setLayout(dialogNotVerifiedLayout);
+        dialogNotVerifiedLayout.setHorizontalGroup(
+            dialogNotVerifiedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dialogNotVerifiedLayout.createSequentialGroup()
+                .addGroup(dialogNotVerifiedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(dialogNotVerifiedLayout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(jLabel5))
+                    .addGroup(dialogNotVerifiedLayout.createSequentialGroup()
+                        .addGap(111, 111, 111)
+                        .addComponent(btnOK)))
+                .addContainerGap(32, Short.MAX_VALUE))
+        );
+        dialogNotVerifiedLayout.setVerticalGroup(
+            dialogNotVerifiedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dialogNotVerifiedLayout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addComponent(jLabel5)
+                .addGap(18, 18, 18)
+                .addComponent(btnOK)
+                .addContainerGap(11, Short.MAX_VALUE))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Username:");
+        jLabel1.setText("User name:");
+
+        tfUsername.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfUsernameActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Bank System Prototype");
 
         jLabel3.setText("Password:");
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        jLogin.setText("Login");
+        jLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                jLoginActionPerformed(evt);
             }
         });
 
-        jButton1.setText("Login");
+        jLabel4.setText("User type:");
+
+        tfPwd.setText("jPasswordField1");
+
+        spUserType.setModel(new javax.swing.SpinnerListModel(new String[] {"Customer", "Administrator"}));
 
         javax.swing.GroupLayout tv_title_usernameLayout = new javax.swing.GroupLayout(tv_title_username);
         tv_title_username.setLayout(tv_title_usernameLayout);
         tv_title_usernameLayout.setHorizontalGroup(
             tv_title_usernameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tv_title_usernameLayout.createSequentialGroup()
-                .addGap(51, 51, 51)
-                .addGroup(tv_title_usernameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel2)
+                .addGroup(tv_title_usernameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(tv_title_usernameLayout.createSequentialGroup()
+                        .addGap(51, 51, 51)
                         .addGroup(tv_title_usernameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel3)
-                            .addComponent(jLabel1))
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(tv_title_usernameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField2))))
-                .addContainerGap(90, Short.MAX_VALUE))
-            .addGroup(tv_title_usernameLayout.createSequentialGroup()
-                .addGap(111, 111, 111)
-                .addComponent(jButton1)
+                            .addComponent(tfUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfPwd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(spUserType, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(tv_title_usernameLayout.createSequentialGroup()
+                        .addGap(103, 103, 103)
+                        .addComponent(jLogin))
+                    .addGroup(tv_title_usernameLayout.createSequentialGroup()
+                        .addGap(68, 68, 68)
+                        .addComponent(jLabel2)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         tv_title_usernameLayout.setVerticalGroup(
@@ -78,17 +135,21 @@ public class LoginFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tv_title_usernameLayout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(tv_title_usernameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(tv_title_usernameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
-                .addGap(12, 12, 12))
+                    .addComponent(tfPwd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(tv_title_usernameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(spUserType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jLogin)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -111,9 +172,28 @@ public class LoginFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void jLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jLoginActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+        String username = tfUsername.getText();
+        String password = tfPwd.getPassword().toString();
+        String userType = spUserType.getValue().toString();
+        boolean isVerified = mActionListener.verifyUser(username, password, userType);
+        if(isVerified) {
+            this.setVisible(false);
+            new CustomerHomeFrame(this).setVisible(true);
+        } else {
+            dialogNotVerified.setVisible(true);
+        }
+    }//GEN-LAST:event_jLoginActionPerformed
+
+    private void tfUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfUsernameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfUsernameActionPerformed
+
+    private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
+        // TODO add your handling code here:
+        dialogNotVerified.setVisible(false);
+    }//GEN-LAST:event_btnOKActionPerformed
 
     /**
      * @param args the command line arguments
@@ -145,18 +225,37 @@ public class LoginFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new LoginFrame().setVisible(true);
+                LoginFrame view = new LoginFrame();
+                view.setVisible(true);
+                mActionListener = new UserController(view);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnOK;
+    private javax.swing.JDialog dialogNotVerified;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JButton jLogin;
+    private javax.swing.JSpinner spUserType;
+    private javax.swing.JPasswordField tfPwd;
+    private javax.swing.JTextField tfUsername;
     private javax.swing.JPanel tv_title_username;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void login() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
+    public void logout() {
+        this.setVisible(true);
+        tfUsername.setText("");
+        tfPwd.setText("");
+    }
 }

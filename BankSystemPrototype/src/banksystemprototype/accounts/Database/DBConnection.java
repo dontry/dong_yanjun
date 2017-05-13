@@ -19,7 +19,11 @@ import oracle.jdbc.OracleDriver;
 public final class DBConnection {
     // TODO  DBConnection 
     public static final String DB_DRIVER = "oracle.jdbc,driver.OracleDriver";
+<<<<<<< HEAD
     public static final String DB_CONNECTION =  "jdbc:oracle:thins:@hippo.its.monash.edu.au:1521:FIT5148A";
+=======
+    public static final String DB_CONNECTION =  "jdbc:oracle:thin:@hippo.its.monash.edu.au:1521:FIT5148A";
+>>>>>>> dontry/master
     public static final String DB_USER = "S27624366";
     public static final String DB_PASSWORD = "student";
     
@@ -27,13 +31,21 @@ public final class DBConnection {
     public static Connection getConnection(){
         try {
             DriverManager.registerDriver(new OracleDriver());
+<<<<<<< HEAD
             conn = DriverManager.getConnection("jdbc:oracle:thin:@hippo.its.monash.edu.au:1521:FIT5148A", "S27624366", "student");
+=======
+            conn = DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASSWORD);
+>>>>>>> dontry/master
             System.out.println("Connected to Oracle");
         } catch (SQLException ex) {
             Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
         return conn;
     }
+<<<<<<< HEAD
+=======
+    
+>>>>>>> dontry/master
     
     public static void closeConnection(){
         try {

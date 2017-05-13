@@ -9,6 +9,7 @@ import java.util.List;
  */
 public interface SavingAccountContract {
     interface View {
+        void refreshBalance(String amount);
     }
     interface UserActionListener {
         double deposit(double amount);

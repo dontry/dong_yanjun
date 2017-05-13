@@ -27,18 +27,7 @@ public final class DBConnection {
     public static Connection getConnection(){
         try {
             DriverManager.registerDriver(new OracleDriver());
-            conn = DriverManager.getConnection("jdbc:oracle:thin:@hippo.its.monash.edu.au:1521:FIT5148a", "Student60", "student");
-            System.out.println("Connected to Oracle");
-        } catch (SQLException ex) {
-            Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return conn;
-    }
-    
-    public static Connection getConnectionB(){
-        try {
-            DriverManager.registerDriver(new OracleDriver());
-            conn = DriverManager.getConnection("jdbc:oracle:thin:@hippo.its.monash.edu.au:1521:FIT5148b", "Student60", "student");
+            conn = DriverManager.getConnection("jdbc:oracle:thin:@hippo.its.monash.edu.au:1521:FIT5148A", "S27624366", "student");
             System.out.println("Connected to Oracle");
         } catch (SQLException ex) {
             Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);

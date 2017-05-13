@@ -19,7 +19,7 @@ import oracle.jdbc.OracleDriver;
 public final class DBConnection {
     // TODO  DBConnection 
     public static final String DB_DRIVER = "oracle.jdbc,driver.OracleDriver";
-    public static final String DB_CONNECTION =  "jdbc:oracle:thin:@hippo.its.monash.edu.au:1521:FIT5148A";
+    public static final String DB_CONNECTION =  "jdbc:oracle:thins:@hippo.its.monash.edu.au:1521:FIT5148A";
     public static final String DB_USER = "S27624366";
     public static final String DB_PASSWORD = "student";
     
@@ -34,7 +34,6 @@ public final class DBConnection {
         }
         return conn;
     }
-    
     
     public static void closeConnection(){
         try {

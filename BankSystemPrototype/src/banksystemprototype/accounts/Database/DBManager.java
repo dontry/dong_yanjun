@@ -29,7 +29,7 @@ public class DBManager {
         Object[] rowData = {};
         try {
             stmt = conn.createStatement();
-            ResultSet rset = stmt.executeQuery("select * from " + tableName + " where " + condition ); // get all records from the student table 
+            ResultSet rset = stmt.executeQuery("SELECT * FRME " + tableName + " WHERE " + condition ); // get all records from the student table 
 
             mdata = rset.getMetaData();
 
@@ -56,14 +56,14 @@ public class DBManager {
         return rowData;
     }
   
-    public void update(String tableName, HashMap<String, String> attributes) {
+    public void update(String tableName, HashMap<String, String> attributes, String condition) {
         Connection conn = DBConnection.getConnection();
         Statement stmt = null;
         String stringAttributes = concatenateAttributes(attributes);
         try {
             stmt = conn.createStatement();
             /* update a membership record using the values from JTextField txtID1 and txtName1 */
-            String sql = "UPDATE " + tableName + " SET  " + stringAttributes;
+            String sql = "UPDATE " + tableName + " SET  " + stringAttributes + " WHERE " + condition;
             stmt.executeUpdate(sql);
         } catch (SQLException f) {
             System.out.println(f.getMessage());

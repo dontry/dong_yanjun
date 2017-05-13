@@ -11,6 +11,9 @@ import java.util.List;
  * Created by caidong on 10/05/2017.
  */
 public interface CreditCardContract {
+    interface View {
+        void refreshBalance(String amount);
+    }
     interface UserActionListener {
         void depositMoney( double amount);
         double withdrawMoney( double amount);

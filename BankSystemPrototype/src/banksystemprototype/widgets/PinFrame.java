@@ -9,7 +9,7 @@ package banksystemprototype.widgets;
  *
  * @author caidong
  */
-public class PinFrame extends javax.swing.JFrame {
+public class PinFrame extends javax.swing.JFrame implements PinServiceApi {
 
     /**
      * Creates new form PinFrame
@@ -88,12 +88,23 @@ public class PinFrame extends javax.swing.JFrame {
 
     private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
         // TODO add your handling code here:
+        Long pin = Long.parseLong(tfPin.getPassword().toString());
+        verifyPin(pin, new PinServiceCallback() {
+            @Override
+            public void onload(Object pin) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+            
+        });
     }//GEN-LAST:event_btnOKActionPerformed
 
     private void tfPinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfPinActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfPinActionPerformed
 
+    public void verifyPin(long pin, PinServiceCallback callback) {
+        callback.onload(pin);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private final javax.swing.JButton btnCancel = new javax.swing.JButton();
     private javax.swing.JButton btnOK;

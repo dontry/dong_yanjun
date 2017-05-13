@@ -142,6 +142,11 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
         );
 
         btnViewProfile.setText("View Profile");
+        btnViewProfile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewProfileActionPerformed(evt);
+            }
+        });
 
         btnLogout.setText("Logout");
         btnLogout.addActionListener(new java.awt.event.ActionListener() {
@@ -203,12 +208,16 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
          new HomeLoanAccountFrame(this).setVisible(true);
     }//GEN-LAST:event_btnHomeLoanAccountActionPerformed
 
+    private void btnViewProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewProfileActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnViewProfileActionPerformed
+
+    
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         // TODO add your handling code here:
         this.dispose();
         loginFrame.logout();
     }//GEN-LAST:event_btnLogoutActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private final javax.swing.JButton btnCreditCardAccount = new javax.swing.JButton();

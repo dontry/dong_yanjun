@@ -16,8 +16,11 @@ public interface SavingAccountContract {
         double withdraw(double amount) throws Exception;
         double transfer(double amount, long toAccountId) throws Exception;
         List<Transaction> checkTransactions(Date startingDate,  Date endingDate);
+        boolean verifyPIN(long pin);
         void openAccount( long accountId);
         void showAccount();
-        void saveAccount();
+    }
+    interface Callback {
+        
     }
 }

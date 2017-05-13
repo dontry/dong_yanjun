@@ -12,15 +12,18 @@ import javax.swing.JFrame;
  *
  * @author caidong
  */
-public class CreditCardAccountFrame extends javax.swing.JFrame {
+public class CreditCardAccountFrame extends javax.swing.JFrame implements CreditCardContract.View{
 
     /**
      * Creates new form SavingAccountForm
      */
     private final CustomerHomeFrame homeFrame;
+    private final CreditCardContract.UserActionListener mActionListener;
+    
     public CreditCardAccountFrame(JFrame home) {
         initComponents();
         homeFrame = (CustomerHomeFrame) home;
+        mActionListener = new CreditCardController();
     }
 
     /**
@@ -42,6 +45,7 @@ public class CreditCardAccountFrame extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         tfAmount1 = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
+        dialogViewTransaction = new javax.swing.JDialog();
         jPanel1 = new javax.swing.JPanel();
         btnViewTransaction = new javax.swing.JButton();
         jLayeredPane1 = new javax.swing.JLayeredPane();
@@ -146,6 +150,11 @@ public class CreditCardAccountFrame extends javax.swing.JFrame {
         });
 
         btnOK2.setText("OK");
+        btnOK2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOK2ActionPerformed(evt);
+            }
+        });
 
         btnCancel2.setText("Cancel");
 
@@ -248,6 +257,19 @@ public class CreditCardAccountFrame extends javax.swing.JFrame {
                     .addComponent(btnOK1)
                     .addComponent(btnCancel1))
                 .addContainerGap(15, Short.MAX_VALUE))
+        );
+
+        dialogViewTransaction.setTitle("Transaction");
+
+        javax.swing.GroupLayout dialogViewTransactionLayout = new javax.swing.GroupLayout(dialogViewTransaction.getContentPane());
+        dialogViewTransaction.getContentPane().setLayout(dialogViewTransactionLayout);
+        dialogViewTransactionLayout.setHorizontalGroup(
+            dialogViewTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        dialogViewTransactionLayout.setVerticalGroup(
+            dialogViewTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -433,18 +455,22 @@ public class CreditCardAccountFrame extends javax.swing.JFrame {
 
     private void btnDepositActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDepositActionPerformed
         // TODO add your handling code here:
+        dialogDeposit.setVisible(true);
     }//GEN-LAST:event_btnDepositActionPerformed
 
     private void btnWithdrawActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnWithdrawActionPerformed
         // TODO add your handling code here:
+        dialogWithdraw.setVisible(true);
     }//GEN-LAST:event_btnWithdrawActionPerformed
 
     private void btnTransferActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransferActionPerformed
         // TODO add your handling code here:
+        dialogTransfer.setVisible(true);
     }//GEN-LAST:event_btnTransferActionPerformed
 
     private void btnViewTransactionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewTransactionActionPerformed
         // TODO add your handling code here:
+        dialogViewTransaction.setVisible(true);
     }//GEN-LAST:event_btnViewTransactionActionPerformed
 
     private void tfAmountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfAmountActionPerformed
@@ -481,6 +507,10 @@ public class CreditCardAccountFrame extends javax.swing.JFrame {
         homeFrame.setVisible(true);
     }//GEN-LAST:event_btnBackActionPerformed
 
+    private void btnOK2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOK2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnOK2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
@@ -496,6 +526,7 @@ public class CreditCardAccountFrame extends javax.swing.JFrame {
     private final javax.swing.JButton btnWithdraw = new javax.swing.JButton();
     private final javax.swing.JDialog dialogDeposit = new javax.swing.JDialog();
     private final javax.swing.JDialog dialogTransfer = new javax.swing.JDialog();
+    private javax.swing.JDialog dialogViewTransaction;
     private final javax.swing.JDialog dialogWithdraw = new javax.swing.JDialog();
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -518,4 +549,9 @@ public class CreditCardAccountFrame extends javax.swing.JFrame {
     private javax.swing.JTextField tfAmount2;
     private final javax.swing.JTextField tfToAccount = new javax.swing.JTextField();
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void refreshBalance(String amount) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

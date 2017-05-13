@@ -606,4 +606,9 @@ public class SavingAccountFrame extends javax.swing.JFrame implements SavingAcco
     public void refreshBalance(String amount) {
       labelBalanceValue.setText(amount);
     }
+
+    @Override
+    public void enterPIN(Object callback) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

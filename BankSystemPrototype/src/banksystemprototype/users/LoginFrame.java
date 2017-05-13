@@ -5,6 +5,7 @@
  */
 package banksystemprototype.users;
 
+import banksystemprototype.accounts.AdminHomeFrame;
 import banksystemprototype.accounts.CustomerHomeFrame;
 
 /**
@@ -40,7 +41,7 @@ public class LoginFrame extends javax.swing.JFrame implements UserContract.View{
         tfUsername = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLogin = new javax.swing.JButton();
+        btnLogin = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         tfPwd = new javax.swing.JPasswordField();
         spUserType = new javax.swing.JSpinner();
@@ -92,10 +93,10 @@ public class LoginFrame extends javax.swing.JFrame implements UserContract.View{
 
         jLabel3.setText("Password:");
 
-        jLogin.setText("Login");
-        jLogin.addActionListener(new java.awt.event.ActionListener() {
+        btnLogin.setText("Login");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jLoginActionPerformed(evt);
+                btnLoginActionPerformed(evt);
             }
         });
 
@@ -124,7 +125,7 @@ public class LoginFrame extends javax.swing.JFrame implements UserContract.View{
                             .addComponent(spUserType, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(tv_title_usernameLayout.createSequentialGroup()
                         .addGap(103, 103, 103)
-                        .addComponent(jLogin))
+                        .addComponent(btnLogin))
                     .addGroup(tv_title_usernameLayout.createSequentialGroup()
                         .addGap(68, 68, 68)
                         .addComponent(jLabel2)))
@@ -148,7 +149,7 @@ public class LoginFrame extends javax.swing.JFrame implements UserContract.View{
                     .addComponent(jLabel4)
                     .addComponent(spUserType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jLogin)
+                .addComponent(btnLogin)
                 .addContainerGap())
         );
 
@@ -172,7 +173,7 @@ public class LoginFrame extends javax.swing.JFrame implements UserContract.View{
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jLoginActionPerformed
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
         String username = tfUsername.getText();
         String password = tfPwd.getPassword().toString();
@@ -180,11 +181,18 @@ public class LoginFrame extends javax.swing.JFrame implements UserContract.View{
         boolean isVerified = mActionListener.verifyUser(username, password, userType);
         if(isVerified) {
             this.setVisible(false);
-            new CustomerHomeFrame(this).setVisible(true);
+            switch(userType) {
+                case "Customer":
+                    new CustomerHomeFrame(this).setVisible(true);
+                    break;
+                case "Administrator":
+                    new AdminHomeFrame(this).setVisible(true);
+                    break;
+            }
         } else {
             dialogNotVerified.setVisible(true);
         }
-    }//GEN-LAST:event_jLoginActionPerformed
+    }//GEN-LAST:event_btnLoginActionPerformed
 
     private void tfUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfUsernameActionPerformed
         // TODO add your handling code here:
@@ -233,6 +241,7 @@ public class LoginFrame extends javax.swing.JFrame implements UserContract.View{
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnOK;
     private javax.swing.JDialog dialogNotVerified;
     private javax.swing.JLabel jLabel1;
@@ -240,7 +249,6 @@ public class LoginFrame extends javax.swing.JFrame implements UserContract.View{
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JButton jLogin;
     private javax.swing.JSpinner spUserType;
     private javax.swing.JPasswordField tfPwd;
     private javax.swing.JTextField tfUsername;

@@ -20,5 +20,6 @@ public interface TermDepositAccountContract {
         void openAccount( long accountId);
         void showAccount();
         void saveAccount();
+        void back();
     }
 }

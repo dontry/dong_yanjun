@@ -6,22 +6,28 @@
 package banksystemprototype.accounts.TermDepositAccount;
 
 import banksystemprototype.accounts.CustomerHomeFrame;
+import banksystemprototype.accounts.Database.DBConnection;
 import banksystemprototype.accounts.SavingAccount.SavingAccountFrame;
+import java.sql.Connection;
 import javax.swing.JFrame;
 
 /**
  *
  * @author caidong
  */
-public class TermDepositAccountFrame extends javax.swing.JFrame {
+public class TermDepositAccountFrame extends javax.swing.JFrame implements TermDepositAccountContract.View{
 
     /**
      * Creates new form SavingAccountFrame
      */
     private final CustomerHomeFrame homeFrame;
+    private final TermDepositAccountContract.UserActionListener mActionListener;
+    private Connection conn;
     public TermDepositAccountFrame(JFrame home) {
         initComponents();
         homeFrame = (CustomerHomeFrame) home;
+        mActionListener = new TermDepositAccountController();
+        conn = DBConnection.getConnection();
     }
 
     /**

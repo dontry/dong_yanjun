@@ -14,7 +14,8 @@ public class PinFrame extends javax.swing.JFrame implements PinServiceApi {
     /**
      * Creates new form PinFrame
      */
-    public PinFrame() {
+    
+    public PinFrame(Listener listener) {
         initComponents();
     }
 
@@ -89,7 +90,7 @@ public class PinFrame extends javax.swing.JFrame implements PinServiceApi {
     private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
         // TODO add your handling code here:
         Long pin = Long.parseLong(tfPin.getPassword().toString());
-        verifyPin(pin, new PinServiceCallback() {
+        verifyPin(pin, new Callback() {
             @Override
             public void onload(Object pin) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -102,7 +103,7 @@ public class PinFrame extends javax.swing.JFrame implements PinServiceApi {
         // TODO add your handling code here:
     }//GEN-LAST:event_tfPinActionPerformed
 
-    public void verifyPin(long pin, PinServiceCallback callback) {
+    public void verifyPin(long pin, Callback callback) {
         callback.onload(pin);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -7,10 +7,12 @@ package banksystemprototype.accounts;
 
 import banksystemprototype.accounts.HomeLoanAccount.HomeLoanAccountFrame;
 import banksystemprototype.accounts.CreditCardAccount.CreditCardAccountFrame;
+import banksystemprototype.accounts.Database.DBConnection;
 import banksystemprototype.accounts.SavingAccount.SavingAccountFrame;
 import banksystemprototype.accounts.TermDepositAccount.TermDepositAccountFrame;
 import banksystemprototype.users.Customer;
 import banksystemprototype.users.LoginFrame;
+import java.sql.Connection;
 import javax.swing.JFrame;
 
 /**
@@ -23,10 +25,12 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
      * Creates new form CustomerHomeFrame
      */
     private LoginFrame loginFrame;
+    private Connection conn;
             
     public CustomerHomeFrame(JFrame login) {
         initComponents();
         loginFrame = (LoginFrame) login;
+        conn = DBConnection.getConnection();
     }
 
     /**

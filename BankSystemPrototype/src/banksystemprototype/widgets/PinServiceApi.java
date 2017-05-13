@@ -10,10 +10,10 @@ package banksystemprototype.widgets;
  * @author caidong
  */
 public interface PinServiceApi {
-     interface PinServiceCallback<T> {
+     interface Callback<T> {
         public void onload(T pin);
     }
-     interface PinServiceListener<T> {
-         
+     interface Listener<T> {
+         public void verifyPin(T pin);
      }
 }

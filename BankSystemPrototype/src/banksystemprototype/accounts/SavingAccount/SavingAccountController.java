@@ -1,14 +1,16 @@
 package banksystemprototype.accounts.SavingAccount;
 
 import banksystemprototype.Exceptions.BalanceLimitException;
+import banksystemprototype.accounts.Database.DBConnection;
 import banksystemprototype.accounts.Transaction.Transaction;
+import banksystemprototype.widgets.PinServiceApi;
 import java.util.Date;
 import java.util.List;
 
 /**
  * Created by caidong on 10/05/2017.
  */
-public class SavingAccountController implements SavingAccountContract.UserActionListener {
+public class SavingAccountController implements SavingAccountContract.UserActionListener, PinServiceApi.Listener {
     private SavingAccount mSavingAccount;
     private SavingAccountContract.View view;
     
@@ -59,9 +61,14 @@ public class SavingAccountController implements SavingAccountContract.UserAction
     public void showAccount() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+   
     @Override
-    public boolean verfiyPIN(long pin) {
-        return false;
+    public void verifyPin(Object pin) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void back() {
+        DBConnection.closeConnection();
     }
 }

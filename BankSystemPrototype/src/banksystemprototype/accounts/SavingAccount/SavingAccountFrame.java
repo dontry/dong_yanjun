@@ -7,6 +7,9 @@ package banksystemprototype.accounts.SavingAccount;
 
 import banksystemprototype.Exceptions.BalanceLimitException;
 import banksystemprototype.accounts.CustomerHomeFrame;
+import banksystemprototype.accounts.Database.DBConnection;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -22,12 +25,14 @@ public class SavingAccountFrame extends javax.swing.JFrame implements SavingAcco
      */
     private static SavingAccountContract.UserActionListener mActionListener;
     private final CustomerHomeFrame homeFrame;
+    private Connection conn;
 
     
     public SavingAccountFrame(JFrame home) {
         initComponents();
         homeFrame = (CustomerHomeFrame) home;
         mActionListener = new SavingAccountController(this);
+        conn = DBConnection.getConnection();
     }
 
     /**
@@ -525,6 +530,7 @@ public class SavingAccountFrame extends javax.swing.JFrame implements SavingAcco
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
+        mActionListener.back();
         this.dispose();
         homeFrame.setVisible(true);
     }//GEN-LAST:event_btnBackActionPerformed
@@ -605,10 +611,5 @@ public class SavingAccountFrame extends javax.swing.JFrame implements SavingAcco
     @Override
     public void refreshBalance(String amount) {
       labelBalanceValue.setText(amount);
-    }
-
-    @Override
-    public void enterPIN(Object callback) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

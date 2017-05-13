@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package banksystemprototype.accounts.CreditCardAccount;
+package banksystemprototype.accounts.TermDepositAccount;
 
 import banksystemprototype.accounts.Database.DBConnection;
 import banksystemprototype.accounts.Transaction.Transaction;
@@ -14,20 +14,35 @@ import java.util.List;
  *
  * @author caidong
  */
-public class CreditCardController implements CreditCardContract.UserActionListener{
+public class TermDepositAccountController implements TermDepositAccountContract.UserActionListener {
 
     @Override
-    public void depositMoney(double amount) {
+    public double withdrawMoneyFromTermDepsoit(long termDeposit) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public double withdrawMoney(double amount) {
+    public void createTermDeposit(double amount, TypeOfTermDeposit type, Date startingDate) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void transferMoney(double amount, long toAccountId) {
+    public void deleteTermDeposit(long termDeposit) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public double transferMoney(double amount, long toAccountId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public TermDeposit checkTermDeposit(long termId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<TermDeposit> getAllTermDeposit() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

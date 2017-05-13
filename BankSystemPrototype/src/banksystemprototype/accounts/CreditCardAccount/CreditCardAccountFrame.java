@@ -6,6 +6,8 @@
 package banksystemprototype.accounts.CreditCardAccount;
 
 import banksystemprototype.accounts.CustomerHomeFrame;
+import banksystemprototype.accounts.Database.DBConnection;
+import java.sql.Connection;
 import javax.swing.JFrame;
 
 /**
@@ -19,11 +21,13 @@ public class CreditCardAccountFrame extends javax.swing.JFrame implements Credit
      */
     private final CustomerHomeFrame homeFrame;
     private final CreditCardContract.UserActionListener mActionListener;
+    private Connection conn;
     
     public CreditCardAccountFrame(JFrame home) {
         initComponents();
         homeFrame = (CustomerHomeFrame) home;
         mActionListener = new CreditCardController();
+        conn = DBConnection.getConnection();
     }
 
     /**
@@ -503,6 +507,7 @@ public class CreditCardAccountFrame extends javax.swing.JFrame implements Credit
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
+        mActionListener.back();
         this.dispose();
         homeFrame.setVisible(true);
     }//GEN-LAST:event_btnBackActionPerformed

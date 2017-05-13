@@ -22,5 +22,6 @@ public interface CreditCardContract {
         void openAccount( long accountId);
         void showAccount();
         void saveAccount();
+        void back();
     }
 }

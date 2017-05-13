@@ -6,21 +6,27 @@
 package banksystemprototype.accounts.HomeLoanAccount;
 
 import banksystemprototype.accounts.CustomerHomeFrame;
+import banksystemprototype.accounts.Database.DBConnection;
+import java.sql.Connection;
 import javax.swing.JFrame;
 
 /**
  *
  * @author caidong
  */
-public class HomeLoanAccountFrame extends javax.swing.JFrame {
+public class HomeLoanAccountFrame extends javax.swing.JFrame implements HomeLoanAccountContract.View{
 
     /**
      * Creates new form SavingAccountForm
      */ 
     private final CustomerHomeFrame homeFrame;
+    private final HomeLoanAccountContract.UserActionListener mActionListener;
+    private Connection conn;
     public HomeLoanAccountFrame(JFrame home) {
         initComponents();
         homeFrame = (CustomerHomeFrame) home;
+        mActionListener = new HomeLoanAccountController(this);
+        conn = DBConnection.getConnection();
     }
 
     /**

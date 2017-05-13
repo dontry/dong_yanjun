@@ -7,6 +7,7 @@ package banksystemprototype.users;
 
 import banksystemprototype.accounts.AdminHomeFrame;
 import banksystemprototype.accounts.CustomerHomeFrame;
+import banksystemprototype.accounts.Database.DBConnection;
 
 /**
  *
@@ -186,7 +187,7 @@ public class LoginFrame extends javax.swing.JFrame implements UserContract.View{
                     new CustomerHomeFrame(this).setVisible(true);
                     break;
                 case "Administrator":
-                    new AdminHomeFrame(this).setVisible(true);
+                    new AdminHomeFrame().setVisible(true);
                     break;
             }
         } else {
@@ -265,5 +266,6 @@ public class LoginFrame extends javax.swing.JFrame implements UserContract.View{
         this.setVisible(true);
         tfUsername.setText("");
         tfPwd.setText("");
+        DBConnection.closeConnection();
     }
 }

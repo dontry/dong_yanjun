@@ -20,8 +20,8 @@ public final class DBConnection {
     // TODO  DBConnection 
     public static final String DB_DRIVER = "oracle.jdbc,driver.OracleDriver";
     public static final String DB_CONNECTION =  "jdbc:oracle:thins:@hippo.its.monash.edu.au:1521:FIT5148A";
-    public static final String DB_USER = "username";
-    public static final String DB_PASSWORD = "password";
+    public static final String DB_USER = "S27624366";
+    public static final String DB_PASSWORD = "student";
     
     public static Connection conn = null;
     public static Connection getConnection(){

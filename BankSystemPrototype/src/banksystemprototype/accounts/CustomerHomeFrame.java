@@ -134,6 +134,11 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
         );
 
         btnViewProfile.setText("View Profile");
+        btnViewProfile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewProfileActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -175,6 +180,10 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
     private void btnHomeLoanAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeLoanAccountActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnHomeLoanAccountActionPerformed
+
+    private void btnViewProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewProfileActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnViewProfileActionPerformed
 
     /**
      * @param args the command line arguments

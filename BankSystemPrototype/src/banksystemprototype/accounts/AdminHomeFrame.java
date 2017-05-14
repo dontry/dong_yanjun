@@ -7,8 +7,11 @@ package banksystemprototype.accounts;
 import banksystemprototype.accounts.Database.*;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -16,15 +19,26 @@ import java.util.logging.Logger;
  */
 public class AdminHomeFrame extends javax.swing.JFrame {
 
-    DBConnection con = new DBConnection();
-    Connection conn = null;
-    PreparedStatement stmt = null;
-    ResultSet rs = null;
+    //DBConnection con = new DBConnection();
+    //Connection conn = null;
+    //PreparedStatement stmt = null;
+    //ResultSet rs = null;
     
+    Connection conn = null;
+    Statement stmt = null;
+    ResultSetMetaData mdata;
+    DefaultTableModel dtm = new DefaultTableModel(new String[]{
+    "Account_id", "username", "account type", "lock_status", "balance"}, 0);
+    DefaultComboBoxModel dcm = new DefaultComboBoxModel(); 
+    //DefaultTableModel dtmHomeLoan;
+    DefaultTableModel dtmHomeLoan = new DefaultTableModel(new String[]{
+    "Application_no", "username", "Amount", "Period", "Start_date", "End_Date"}, 0);
     
     public AdminHomeFrame() {
         initComponents();
+        conn = DBConnection.getConnection();
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -35,9 +49,8 @@ public class AdminHomeFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jInternalFrame1 = new javax.swing.JInternalFrame();
-        jCreateCustomer = new javax.swing.JDialog();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jdCreateCustomer = new javax.swing.JDialog();
+        cbCreateIDType = new javax.swing.JComboBox<>();
         jLabel15 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -48,42 +61,54 @@ public class AdminHomeFrame extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
-        jTextField9 = new javax.swing.JTextField();
+        tfCreateUsername = new javax.swing.JTextField();
+        tfCreateFname = new javax.swing.JTextField();
+        tfCreateLname = new javax.swing.JTextField();
+        tfCreateEmail = new javax.swing.JTextField();
+        tfCreateAddress = new javax.swing.JTextField();
+        tfCreatePhone = new javax.swing.JTextField();
+        tfCreateIDNo = new javax.swing.JTextField();
         btnSubmit = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
+        pfCreatePassword = new javax.swing.JPasswordField();
+        pfCreatePin = new javax.swing.JPasswordField();
+        jTextField1 = new javax.swing.JTextField();
         jOptionPane1 = new javax.swing.JOptionPane();
+        jdAdminAccountManage = new javax.swing.JDialog();
+        btnViewAllAccount = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLabel14 = new javax.swing.JLabel();
+        tfSearchUsername = new javax.swing.JTextField();
+        btnSearchAccountByCustomer = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jdChangePin = new javax.swing.JDialog();
+        tfInputUsername = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        pfResetPin = new javax.swing.JPasswordField();
+        btnSubmitPinReset = new javax.swing.JButton();
+        btnCancelResetPin = new javax.swing.JButton();
+        jdHomeLoan = new javax.swing.JDialog();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblHomeLoan = new javax.swing.JTable();
+        btnViewHomeLoanApplication = new javax.swing.JButton();
+        btnApproveHomeLoan = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         btnTermDepositAccount = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
-        jInternalFrame1.setVisible(true);
+        jdCreateCustomer.setMinimumSize(new java.awt.Dimension(466, 550));
+        jdCreateCustomer.setSize(getPreferredSize());
 
-        javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
-        jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
-        jInternalFrame1Layout.setHorizontalGroup(
-            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 305, Short.MAX_VALUE)
-        );
-        jInternalFrame1Layout.setVerticalGroup(
-            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 306, Short.MAX_VALUE)
-        );
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Passport", "Driver License", "ID card" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        cbCreateIDType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Passport", "Driver License", "ID card" }));
+        cbCreateIDType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                cbCreateIDTypeActionPerformed(evt);
             }
         });
 
@@ -115,280 +140,646 @@ public class AdminHomeFrame extends javax.swing.JFrame {
         });
 
         btnCancel.setText("Cancel");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout jCreateCustomerLayout = new javax.swing.GroupLayout(jCreateCustomer.getContentPane());
-        jCreateCustomer.getContentPane().setLayout(jCreateCustomerLayout);
-        jCreateCustomerLayout.setHorizontalGroup(
-            jCreateCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jCreateCustomerLayout.createSequentialGroup()
-                .addGroup(jCreateCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jCreateCustomerLayout.createSequentialGroup()
-                        .addGap(64, 64, 64)
+        pfCreatePassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pfCreatePasswordActionPerformed(evt);
+            }
+        });
+
+        jTextField1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jTextField1.setText("Create Customer");
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jdCreateCustomerLayout = new javax.swing.GroupLayout(jdCreateCustomer.getContentPane());
+        jdCreateCustomer.getContentPane().setLayout(jdCreateCustomerLayout);
+        jdCreateCustomerLayout.setHorizontalGroup(
+            jdCreateCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jdCreateCustomerLayout.createSequentialGroup()
+                .addGap(52, 52, 52)
+                .addGroup(jdCreateCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jdCreateCustomerLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel12))
-                    .addGroup(jCreateCustomerLayout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addGroup(jCreateCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jCreateCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel5)
-                                .addGroup(jCreateCustomerLayout.createSequentialGroup()
-                                    .addGroup(jCreateCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel15)
-                                        .addComponent(jLabel11)
-                                        .addComponent(jLabel6)
-                                        .addComponent(jLabel4)
-                                        .addComponent(jLabel7)
-                                        .addComponent(jLabel10)
-                                        .addComponent(jLabel9))
-                                    .addGap(12, 12, 12))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jCreateCustomerLayout.createSequentialGroup()
-                                    .addGap(20, 20, 20)
-                                    .addComponent(jLabel8)))
-                            .addGroup(jCreateCustomerLayout.createSequentialGroup()
-                                .addGap(11, 11, 11)
-                                .addComponent(btnSubmit)))))
-                .addGroup(jCreateCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jCreateCustomerLayout.createSequentialGroup()
+                    .addGroup(jdCreateCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel5)
+                        .addGroup(jdCreateCustomerLayout.createSequentialGroup()
+                            .addGroup(jdCreateCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel15)
+                                .addComponent(jLabel11)
+                                .addComponent(jLabel6)
+                                .addComponent(jLabel4)
+                                .addComponent(jLabel7)
+                                .addComponent(jLabel10)
+                                .addComponent(jLabel9))
+                            .addGap(12, 12, 12))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jdCreateCustomerLayout.createSequentialGroup()
+                            .addGap(20, 20, 20)
+                            .addComponent(jLabel8)))
+                    .addGroup(jdCreateCustomerLayout.createSequentialGroup()
+                        .addGap(11, 11, 11)
+                        .addComponent(btnSubmit)))
+                .addGroup(jdCreateCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jdCreateCustomerLayout.createSequentialGroup()
                         .addGap(7, 7, 7)
-                        .addGroup(jCreateCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField1)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
-                            .addComponent(jTextField7, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
-                            .addComponent(jTextField8, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
-                            .addComponent(jTextField9, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap(77, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jCreateCustomerLayout.createSequentialGroup()
+                        .addGroup(jdCreateCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(tfCreateUsername)
+                            .addComponent(tfCreateFname)
+                            .addComponent(tfCreateLname)
+                            .addComponent(tfCreateEmail)
+                            .addComponent(tfCreateAddress)
+                            .addComponent(tfCreatePhone)
+                            .addComponent(tfCreateIDNo)
+                            .addComponent(cbCreateIDType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(pfCreatePassword)
+                            .addComponent(pfCreatePin, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jdCreateCustomerLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnCancel)
-                        .addGap(53, 53, 53))))
+                        .addComponent(btnCancel)))
+                .addGap(82, 82, 82))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jdCreateCustomerLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(118, 118, 118))
         );
-        jCreateCustomerLayout.setVerticalGroup(
-            jCreateCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jCreateCustomerLayout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(jCreateCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        jdCreateCustomerLayout.setVerticalGroup(
+            jdCreateCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jdCreateCustomerLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jdCreateCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfCreateUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jCreateCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jCreateCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jdCreateCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(pfCreatePassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jdCreateCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfCreateFname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jCreateCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jCreateCustomerLayout.createSequentialGroup()
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(3, 3, 3)
-                        .addGroup(jCreateCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(8, 8, 8)
-                        .addGroup(jCreateCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jdCreateCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jdCreateCustomerLayout.createSequentialGroup()
+                        .addComponent(tfCreateLname, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jCreateCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(jdCreateCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(tfCreateEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jdCreateCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(tfCreateAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jdCreateCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
-                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(tfCreatePhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jLabel15))
-                .addGap(18, 18, 18)
-                .addGroup(jCreateCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jdCreateCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cbCreateIDType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10))
-                .addGap(18, 18, 18)
-                .addGroup(jCreateCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jdCreateCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel11)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jCreateCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfCreateIDNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jdCreateCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pfCreatePin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jCreateCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jdCreateCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSubmit)
                     .addComponent(btnCancel))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addGap(40, 40, 40))
         );
 
-        jLabel3.setText("jLabel3");
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        btnTermDepositAccount.setText("Home Loan Approval");
-        btnTermDepositAccount.addActionListener(new java.awt.event.ActionListener() {
+        btnViewAllAccount.setText("View All Customer Accounts");
+        btnViewAllAccount.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTermDepositAccountActionPerformed(evt);
+                btnViewAllAccountActionPerformed(evt);
             }
         });
 
-        btnChangePIN.setText("Change Customer PIN");
-        btnChangePIN.addActionListener(new java.awt.event.ActionListener() {
+        jTable1.setModel(dtm);
+        jScrollPane1.setViewportView(jTable1);
+
+        jLabel14.setText("Enter Customer Username:");
+
+        btnSearchAccountByCustomer.setText("Search Accounts by customer");
+        btnSearchAccountByCustomer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnChangePINActionPerformed(evt);
+                btnSearchAccountByCustomerActionPerformed(evt);
             }
         });
 
-        btnCreateCustomer.setText("Create Customer ");
-        btnCreateCustomer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCreateCustomerActionPerformed(evt);
-            }
-        });
+        jButton3.setText("Back To Home Page");
 
-        btnHomeLoanAccount.setText("Customer Account Management");
-        btnHomeLoanAccount.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnHomeLoanAccountActionPerformed(evt);
-            }
-        });
-
-        jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        jLabel1.setText("Welcome Back");
-
-        jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        jLabel2.setText("username");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jSeparator1))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(128, 128, 128)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(159, 159, 159)
-                        .addComponent(jLabel2)))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnChangePIN, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
-                    .addComponent(btnCreateCustomer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnTermDepositAccount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnHomeLoanAccount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        javax.swing.GroupLayout jdAdminAccountManageLayout = new javax.swing.GroupLayout(jdAdminAccountManage.getContentPane());
+        jdAdminAccountManage.getContentPane().setLayout(jdAdminAccountManageLayout);
+        jdAdminAccountManageLayout.setHorizontalGroup(
+            jdAdminAccountManageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jdAdminAccountManageLayout.createSequentialGroup()
+                .addGroup(jdAdminAccountManageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jdAdminAccountManageLayout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(btnViewAllAccount)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton3))
+                    .addGroup(jdAdminAccountManageLayout.createSequentialGroup()
+                        .addGap(37, 37, 37)
+                        .addGroup(jdAdminAccountManageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jdAdminAccountManageLayout.createSequentialGroup()
+                                .addComponent(jLabel14)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tfSearchUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(39, 39, 39)
+                                .addComponent(btnSearchAccountByCustomer)))))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
+        jdAdminAccountManageLayout.setVerticalGroup(
+            jdAdminAccountManageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jdAdminAccountManageLayout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addGroup(jdAdminAccountManageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(tfSearchUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSearchAccountByCustomer))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
-                .addGap(51, 51, 51)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnCreateCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnChangePIN, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnTermDepositAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnHomeLoanAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jdAdminAccountManageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnViewAllAccount)
+                    .addComponent(jButton3))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
-        btnViewProfile.setText("View Profile");
-        btnViewProfile.addActionListener(new java.awt.event.ActionListener() {
+        jdChangePin.setMinimumSize(getPreferredSize());
+
+        jLabel3.setText("Input Customer username:");
+
+        jLabel13.setText("Reset pin:");
+
+        pfResetPin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnViewProfileActionPerformed(evt);
+                pfResetPinActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnViewProfile))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+        btnSubmitPinReset.setText("Submit");
+        btnSubmitPinReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSubmitPinResetActionPerformed(evt);
+            }
+        });
+
+        btnCancelResetPin.setText("Cancel");
+        btnCancelResetPin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelResetPinActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jdChangePinLayout = new javax.swing.GroupLayout(jdChangePin.getContentPane());
+        jdChangePin.getContentPane().setLayout(jdChangePinLayout);
+        jdChangePinLayout.setHorizontalGroup(
+            jdChangePinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jdChangePinLayout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addGroup(jdChangePinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addGroup(jdChangePinLayout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addGroup(jdChangePinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnSubmitPinReset)
+                            .addComponent(jLabel13))))
+                .addGap(26, 26, 26)
+                .addGroup(jdChangePinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jdChangePinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(tfInputUsername)
+                        .addComponent(pfResetPin, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnCancelResetPin))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(btnViewProfile)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        jdChangePinLayout.setVerticalGroup(
+            jdChangePinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jdChangePinLayout.createSequentialGroup()
+                .addContainerGap(76, Short.MAX_VALUE)
+                .addGroup(jdChangePinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(tfInputUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addGroup(jdChangePinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(pfResetPin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addGroup(jdChangePinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSubmitPinReset)
+                    .addComponent(btnCancelResetPin))
+                .addGap(17, 17, 17))
         );
 
-        pack();
+        jdHomeLoan.setMinimumSize(getPreferredSize());
+
+        /*
+        DefaultTableModel dtmHomeLoan = new DefaultTableModel(new String[]{
+            "Application_no", "username", "Amount", "Period", "Start_date", "End_Date"}, 0);
+    */
+    tblHomeLoan.setModel(dtmHomeLoan);
+    jScrollPane2.setViewportView(tblHomeLoan);
+
+    btnViewHomeLoanApplication.setText("View All Home Loan Application");
+    btnViewHomeLoanApplication.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnViewHomeLoanApplicationActionPerformed(evt);
+        }
+    });
+
+    btnApproveHomeLoan.setText("Approve Home Loan");
+    btnApproveHomeLoan.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnApproveHomeLoanActionPerformed(evt);
+        }
+    });
+
+    jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+    jButton1.setText("Back To Home Page");
+    jButton1.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jButton1ActionPerformed(evt);
+        }
+    });
+
+    javax.swing.GroupLayout jdHomeLoanLayout = new javax.swing.GroupLayout(jdHomeLoan.getContentPane());
+    jdHomeLoan.getContentPane().setLayout(jdHomeLoanLayout);
+    jdHomeLoanLayout.setHorizontalGroup(
+        jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(jdHomeLoanLayout.createSequentialGroup()
+            .addGap(21, 21, 21)
+            .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jdHomeLoanLayout.createSequentialGroup()
+                    .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(btnViewHomeLoanApplication, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(btnApproveHomeLoan, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING)))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 502, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addContainerGap(33, Short.MAX_VALUE))
+    );
+    jdHomeLoanLayout.setVerticalGroup(
+        jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(jdHomeLoanLayout.createSequentialGroup()
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(18, 18, 18)
+            .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnApproveHomeLoan))
+            .addGap(18, 18, 18)
+            .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(btnViewHomeLoanApplication)
+                .addComponent(jButton1))
+            .addGap(61, 61, 61))
+    );
+
+    setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+    btnTermDepositAccount.setText("Home Loan Approval");
+    btnTermDepositAccount.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnTermDepositAccountActionPerformed(evt);
+        }
+    });
+
+    btnChangePIN.setText("Change Customer PIN");
+    btnChangePIN.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnChangePINActionPerformed(evt);
+        }
+    });
+
+    btnCreateCustomer.setText("Create Customer ");
+    btnCreateCustomer.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnCreateCustomerActionPerformed(evt);
+        }
+    });
+
+    btnHomeLoanAccount.setText("Customer Account Management");
+    btnHomeLoanAccount.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnHomeLoanAccountActionPerformed(evt);
+        }
+    });
+
+    jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+    jLabel1.setText("Welcome Back");
+
+    jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+    jLabel2.setText("username");
+
+    javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+    jPanel1.setLayout(jPanel1Layout);
+    jPanel1Layout.setHorizontalGroup(
+        jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(jPanel1Layout.createSequentialGroup()
+            .addContainerGap()
+            .addComponent(jSeparator1))
+        .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(128, 128, 128)
+                    .addComponent(jLabel1))
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(159, 159, 159)
+                    .addComponent(jLabel2)))
+            .addGap(0, 0, Short.MAX_VALUE))
+        .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addComponent(btnChangePIN, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
+                .addComponent(btnCreateCustomer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addComponent(btnTermDepositAccount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnHomeLoanAccount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+    );
+    jPanel1Layout.setVerticalGroup(
+        jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(jPanel1Layout.createSequentialGroup()
+            .addContainerGap()
+            .addComponent(jLabel1)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addComponent(jLabel2)
+            .addGap(51, 51, 51)
+            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addComponent(btnCreateCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(btnChangePIN, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addComponent(btnTermDepositAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(btnHomeLoanAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+    );
+
+    btnViewProfile.setText("View Profile");
+    btnViewProfile.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnViewProfileActionPerformed(evt);
+        }
+    });
+
+    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+    getContentPane().setLayout(layout);
+    layout.setHorizontalGroup(
+        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(layout.createSequentialGroup()
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnViewProfile))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addContainerGap())
+    );
+    layout.setVerticalGroup(
+        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGap(18, 18, 18)
+            .addComponent(btnViewProfile)
+            .addGap(18, 18, 18)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+    );
+
+    pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTermDepositAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTermDepositAccountActionPerformed
-        // TODO add your handling code here:
+        jdHomeLoan.setVisible(true);
+        this.setEnabled(false);
     }//GEN-LAST:event_btnTermDepositAccountActionPerformed
 
     private void btnChangePINActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangePINActionPerformed
-        // TODO add your handling code here:
+        jdChangePin.setVisible(true);
+        this.setEnabled(false);
     }//GEN-LAST:event_btnChangePINActionPerformed
 
     private void btnCreateCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateCustomerActionPerformed
-        jCreateCustomer.setVisible(true);
+        jdCreateCustomer.setVisible(true);
         this.setEnabled(false);
     }//GEN-LAST:event_btnCreateCustomerActionPerformed
 
     private void btnHomeLoanAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeLoanAccountActionPerformed
-        // TODO add your handling code here:
+        jdAdminAccountManage.setVisible(true);
+        this.setEnabled(false);
     }//GEN-LAST:event_btnHomeLoanAccountActionPerformed
 
     private void btnViewProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewProfileActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnViewProfileActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void cbCreateIDTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCreateIDTypeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_cbCreateIDTypeActionPerformed
 
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
-         try {
-               conn = con.getConnection();
-            /* insert a membership record using the values from JTextField txtID and txtName */
-            //String sql = "INSERT INTO Student60.CUSTOMER VALUES(" + txtCustomerNo.getText() + ",'" + txtMembershipTier.getText() + "','" + txtTitle.getText() + "','" + txtFname.getText() +"','" + txtLname.getText() +"',TO_DATE('" + txtDOB.getText() + "','DD-MM-YYYY'),'" +  txtCountry.getText() + "','" +  txtCity.getText() + "','" +  txtStreet.getText() + "','" + txtPostalCode.getText() + "'," + txtMembershipCredit.getText() + "," + txtPhone.getText() + ",'"+ txtEmail.getText() + "')";
-                String sql = "Insert into S27624366.Customer (username, password, fname, lname, email, address, phone, id_type, ID_no, pin) values (?,?,?,?,?,?,?,?,?,?)";
-                PreparedStatement pst = conn.prepareStatement(sql);
-                pst.setString(1, jTextField1.getText());
-                pst.setString(2, jTextField2.getText());
-                pst.setString(3, jTextField3.getText());
-                pst.setString(4, jTextField4.getText());
-                pst.setString(5, jTextField5.getText());
-                pst.setString(6, jTextField6.getText());
-                int phone = Integer.parseInt(jTextField7.getText());
-                pst.setInt(7, phone);
-                String id_type;
-                id_type = jComboBox1.getSelectedItem().toString();
-                pst.setString(8, id_type);
-                pst.setString(9, jTextField8.getText());
-                int pin = Integer.parseInt(jTextField9.getText());
-                pst.setInt(10,pin);  
-                pst.executeUpdate(sql);
-                jOptionPane1.showMessageDialog(null,"insert successfully!");
-
+        try 
+        {
+            String sql = "Insert into S27624366.Customer (username, password, fname, lname, email, address, phone, id_type, ID_no, pin) values (?,?,?,?,?,?,?,?,?,?)";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, tfCreateUsername.getText());
+            pst.setString(2, pfCreatePassword.getPassword().toString());
+            pst.setString(3, tfCreateFname.getText());
+            pst.setString(4, tfCreateLname.getText());
+            pst.setString(5, tfCreateEmail.getText());
+            pst.setString(6, tfCreateAddress.getText());
+            Long phone = Long.parseLong(tfCreatePhone.getText());
+            pst.setLong(7, phone);
+            String id_type;
+            id_type = cbCreateIDType.getSelectedItem().toString();
+            pst.setString(8, id_type);
+            pst.setString(9, tfCreateIDNo.getText());
+            pst.setString(10,pfCreatePin.getPassword().toString());  
+            pst.executeUpdate();
+            jOptionPane1.showMessageDialog(null,"insert successfully!");
         }
-            catch(SQLException ex){
-         jOptionPane1.showMessageDialog(null,ex);
+        catch(SQLException ex)
+        {
+            jOptionPane1.showMessageDialog(null,ex);
         }
-        
     }//GEN-LAST:event_btnSubmitActionPerformed
+
+    private void btnViewAllAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewAllAccountActionPerformed
+        if (dtm.getRowCount() > 0) {
+            /* clear the default table model */
+            for (int i = dtm.getRowCount() - 1; i > -1; i--) {
+                dtm.removeRow(i);
+            }
+        }
+        try {
+
+            stmt = conn.createStatement();
+            ResultSet rset = stmt.executeQuery("select * from S27624366.Account"); // get all records from the student table 
+
+            mdata = rset.getMetaData();
+
+            int numberOfColumns = mdata.getColumnCount(); // get number of columns from metadata of the Resultset object
+            while (rset.next()) {
+                Object[] rowData = new Object[numberOfColumns]; // create a row of an array of Objects with the number of columns          
+                for (int i = 0; i < rowData.length; i++) {
+                    /* put an Object to the row using the value of the designated column in the current row of this ResultSet object */
+                    rowData[i] = rset.getObject(i + 1); 
+                }
+                dtm.addRow(rowData); // adds a row to the end of the model
+            }
+            rset.close();
+
+        } catch (SQLException f) {
+            System.out.println(f.getMessage());
+        } finally {
+            try {
+                stmt.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(AdminHomeFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_btnViewAllAccountActionPerformed
+
+    private void pfCreatePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pfCreatePasswordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pfCreatePasswordActionPerformed
+
+    private void btnSubmitPinResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitPinResetActionPerformed
+        try 
+        {
+            String sql = "update S27624366.Customer set PIN = ? where username = ?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, pfResetPin.getPassword().toString());
+            pst.setString(2, tfInputUsername.getText());
+            pst.executeUpdate();
+            jOptionPane1.showMessageDialog(null,"Pin has been reset successfully!");
+        }
+        catch(SQLException ex)
+        {
+            jOptionPane1.showMessageDialog(null,ex);
+        }    
+    }//GEN-LAST:event_btnSubmitPinResetActionPerformed
+
+    private void pfResetPinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pfResetPinActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pfResetPinActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void btnViewHomeLoanApplicationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewHomeLoanApplicationActionPerformed
+        if (dtmHomeLoan.getRowCount() > 0) {
+            /* clear the default table model */
+            for (int i = dtmHomeLoan.getRowCount() - 1; i > -1; i--) {
+                dtmHomeLoan.removeRow(i);
+            }
+        }
+        try {
+
+            stmt = conn.createStatement();
+            ResultSet rset = stmt.executeQuery("select * from S27624366.home_loan_application"); // get all records from the student table
+
+            mdata = rset.getMetaData();
+
+            int numberOfColumns = mdata.getColumnCount(); // get number of columns from metadata of the Resultset object
+            while (rset.next()) {
+                Object[] rowData = new Object[numberOfColumns]; // create a row of an array of Objects with the number of columns
+                for (int i = 0; i < rowData.length; i++) {
+                    /* put an Object to the row using the value of the designated column in the current row of this ResultSet object */
+                    rowData[i] = rset.getObject(i + 1);
+                }
+                dtmHomeLoan.addRow(rowData); // adds a row to the end of the model
+            }
+            rset.close();
+
+        } catch (SQLException f) {
+            System.out.println(f.getMessage());
+        } finally {
+            try {
+                stmt.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(AdminHomeFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_btnViewHomeLoanApplicationActionPerformed
+
+    private void btnApproveHomeLoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApproveHomeLoanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnApproveHomeLoanActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        jdCreateCustomer.dispose();
+        this.setEnabled(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void btnCancelResetPinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelResetPinActionPerformed
+        jdChangePin.dispose();
+        this.setEnabled(true);
+    }//GEN-LAST:event_btnCancelResetPinActionPerformed
+
+    private void btnSearchAccountByCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchAccountByCustomerActionPerformed
+        if (dtm.getRowCount() > 0) {
+            for (int i = dtm.getRowCount() - 1; i > -1; i--) {
+                dtm.removeRow(i);
+            }
+        }
+        try {
+
+            stmt = conn.createStatement();
+            ResultSet rset = stmt.executeQuery("select * from S27624366.Account where username = "
+                    + "'" + tfSearchUsername.getText() + "'"); // get all records from the student table 
+
+            mdata = rset.getMetaData();
+
+            int numberOfColumns = mdata.getColumnCount(); // get number of columns from metadata of the Resultset object
+            while (rset.next()) {
+                Object[] rowData = new Object[numberOfColumns]; // create a row of an array of Objects with the number of columns          
+                for (int i = 0; i < rowData.length; i++) {
+                    /* put an Object to the row using the value of the designated column in the current row of this ResultSet object */
+                    rowData[i] = rset.getObject(i + 1); 
+                }
+                dtm.addRow(rowData); // adds a row to the end of the model
+            }
+            rset.close();
+
+        } catch (SQLException f) {
+            System.out.println(f.getMessage());
+        } finally {
+            try {
+                stmt.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(AdminHomeFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_btnSearchAccountByCustomerActionPerformed
 
     /**
      * @param args the command line arguments
@@ -429,20 +820,29 @@ public class AdminHomeFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnApproveHomeLoan;
     private javax.swing.JButton btnCancel;
+    private javax.swing.JButton btnCancelResetPin;
     private final javax.swing.JButton btnChangePIN = new javax.swing.JButton();
     private final javax.swing.JButton btnCreateCustomer = new javax.swing.JButton();
     private final javax.swing.JButton btnHomeLoanAccount = new javax.swing.JButton();
+    private javax.swing.JButton btnSearchAccountByCustomer;
     private javax.swing.JButton btnSubmit;
+    private javax.swing.JButton btnSubmitPinReset;
     private javax.swing.JButton btnTermDepositAccount;
+    private javax.swing.JButton btnViewAllAccount;
+    private javax.swing.JButton btnViewHomeLoanApplication;
     private final javax.swing.JButton btnViewProfile = new javax.swing.JButton();
+    private javax.swing.JComboBox<String> cbCreateIDType;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JDialog jCreateCustomer;
-    private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -454,15 +854,27 @@ public class AdminHomeFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JOptionPane jOptionPane1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JDialog jdAdminAccountManage;
+    private javax.swing.JDialog jdChangePin;
+    private javax.swing.JDialog jdCreateCustomer;
+    private javax.swing.JDialog jdHomeLoan;
+    private javax.swing.JPasswordField pfCreatePassword;
+    private javax.swing.JPasswordField pfCreatePin;
+    private javax.swing.JPasswordField pfResetPin;
+    private javax.swing.JTable tblHomeLoan;
+    private javax.swing.JTextField tfCreateAddress;
+    private javax.swing.JTextField tfCreateEmail;
+    private javax.swing.JTextField tfCreateFname;
+    private javax.swing.JTextField tfCreateIDNo;
+    private javax.swing.JTextField tfCreateLname;
+    private javax.swing.JTextField tfCreatePhone;
+    private javax.swing.JTextField tfCreateUsername;
+    private javax.swing.JTextField tfInputUsername;
+    private javax.swing.JTextField tfSearchUsername;
     // End of variables declaration//GEN-END:variables
 }

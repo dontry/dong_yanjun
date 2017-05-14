@@ -7,13 +7,16 @@ package banksystemprototype.accounts;
 
 import banksystemprototype.accounts.HomeLoanAccount.HomeLoanAccountFrame;
 import banksystemprototype.accounts.CreditCardAccount.CreditCardAccountFrame;
-import banksystemprototype.accounts.Database.DBConnection;
+import banksystemprototype.accounts.Database.*;
 import banksystemprototype.accounts.SavingAccount.SavingAccountFrame;
 import banksystemprototype.accounts.TermDepositAccount.TermDepositAccountFrame;
 import banksystemprototype.users.Customer;
 import banksystemprototype.users.LoginFrame;
-import java.sql.Connection;
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -24,13 +27,20 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
     /**
      * Creates new form CustomerHomeFrame
      */
+    //Connection conn = null;
+    //Statement stmt = null;
+    //ResultSetMetaData mdata;
+    DefaultTableModel dtm = new DefaultTableModel(new String[]{
+    "Transaction No", "Username", "Date", "Current Balance", "Amount", "Account ID","Account Type"}, 0);
     private LoginFrame loginFrame;
     private Connection conn;
+    private String username;
             
-    public CustomerHomeFrame(JFrame login) {
+    public CustomerHomeFrame(JFrame login, String username) {
         initComponents();
         loginFrame = (LoginFrame) login;
         conn = DBConnection.getConnection();
+        this.username = username;
     }
 
     /**
@@ -46,6 +56,10 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         jSeparator2 = new javax.swing.JSeparator();
+        jdViewTransaction = new javax.swing.JDialog();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblTransaction = new javax.swing.JTable();
+        btnViewTransaction = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         btnTermDepositAccount = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
@@ -58,6 +72,37 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
         jMenu1.setText("jMenu1");
 
         jMenu2.setText("jMenu2");
+
+        tblTransaction.setModel(dtm);
+        jScrollPane1.setViewportView(tblTransaction);
+
+        btnViewTransaction.setText("View Transaction");
+        btnViewTransaction.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewTransactionActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jdViewTransactionLayout = new javax.swing.GroupLayout(jdViewTransaction.getContentPane());
+        jdViewTransaction.getContentPane().setLayout(jdViewTransactionLayout);
+        jdViewTransactionLayout.setHorizontalGroup(
+            jdViewTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jdViewTransactionLayout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addGroup(jdViewTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnViewTransaction)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(47, Short.MAX_VALUE))
+        );
+        jdViewTransactionLayout.setVerticalGroup(
+            jdViewTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jdViewTransactionLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38)
+                .addComponent(btnViewTransaction)
+                .addContainerGap(43, Short.MAX_VALUE))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -236,9 +281,24 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
     }//GEN-LAST:event_btnLogoutActionPerformed
 
     private void btnViewTransactionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewTransactionsActionPerformed
-        // TODO add your handling code here:
+        jdViewTransaction.setVisible(true);
+        this.setEnabled(false);
     }//GEN-LAST:event_btnViewTransactionsActionPerformed
 
+    private void btnViewTransactionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewTransactionActionPerformed
+        if (dtm.getRowCount() > 0) {
+            /* clear the default table model */
+            for (int i = dtm.getRowCount() - 1; i > -1; i--) {
+                dtm.removeRow(i);
+            }
+        }
+        String condition = "where username =" + username;
+        String table = "transaction_log";
+        String condition2 = "";
+        dtm.addRow(DBManager.check(table, condition2));
+    }//GEN-LAST:event_btnViewTransactionActionPerformed
+
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private final javax.swing.JButton btnCreditCardAccount = new javax.swing.JButton();
     private final javax.swing.JButton btnHomeLoanAccount = new javax.swing.JButton();
@@ -246,6 +306,7 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
     private final javax.swing.JButton btnSavingAccount = new javax.swing.JButton();
     private javax.swing.JButton btnTermDepositAccount;
     private final javax.swing.JButton btnViewProfile = new javax.swing.JButton();
+    private javax.swing.JButton btnViewTransaction;
     private final javax.swing.JButton btnViewTransactions = new javax.swing.JButton();
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -253,8 +314,11 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JDialog jdViewTransaction;
+    private javax.swing.JTable tblTransaction;
     // End of variables declaration//GEN-END:variables
     
     
@@ -287,4 +351,41 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
     public void showLogout() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+     public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(AdminHomeFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(AdminHomeFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(AdminHomeFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(AdminHomeFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new CustomerHomeFrame(new LoginFrame(), "abc").setVisible(true);
+            }
+        });
+    }
+    
+    
 }

@@ -162,7 +162,6 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="tfCreateTermDepositAmount" min="-2" pref="160" max="-2" attributes="0"/>
-                              <Component id="dateChooserCombo1" alignment="0" min="-2" pref="330" max="-2" attributes="0"/>
                               <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="spTermPeriod" alignment="0" min="-2" pref="117" max="-2" attributes="0"/>
                           </Group>
@@ -183,10 +182,7 @@
                       <Component id="tfCreateTermDepositAmount" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
-                      <Component id="dateChooserCombo1" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -263,8 +259,6 @@
               </SpinnerModel>
             </Property>
           </Properties>
-        </Component>
-        <Component class="datechooser.beans.DateChooserCombo" name="dateChooserCombo1">
         </Component>
       </SubComponents>
     </Container>

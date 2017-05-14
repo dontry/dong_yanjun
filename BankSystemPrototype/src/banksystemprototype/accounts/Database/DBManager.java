@@ -22,6 +22,7 @@ import static javafx.scene.input.KeyCode.T;
  * @author caidong
  */
 public class DBManager {
+    
     public static Object[] check(String tableName, String condition) {
         Connection conn = DBConnection.getConnection();
         Statement stmt = null;
@@ -29,7 +30,7 @@ public class DBManager {
         Object[] rowData = {};
         try {
             stmt = conn.createStatement();
-            ResultSet rset = stmt.executeQuery("SELECT * FROM " + tableName + " WHERE " + condition ); // get all records from the student table 
+            ResultSet rset = stmt.executeQuery("SELECT * FROM " + tableName  + condition ); // get all records from the student table 
 
             mdata = rset.getMetaData();
 

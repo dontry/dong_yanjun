@@ -51,7 +51,6 @@ public class TermDepositAccountFrame extends javax.swing.JFrame implements TermD
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         spTermPeriod = new javax.swing.JSpinner();
-        dateChooserCombo1 = new datechooser.beans.DateChooserCombo();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         spWithdrawTermDeposit = new javax.swing.JSpinner();
@@ -208,7 +207,6 @@ public class TermDepositAccountFrame extends javax.swing.JFrame implements TermD
                         .addGap(18, 18, 18)
                         .addGroup(dialogCreateTermDepositLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(tfCreateTermDepositAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(dateChooserCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5)
                             .addComponent(spTermPeriod, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -223,9 +221,7 @@ public class TermDepositAccountFrame extends javax.swing.JFrame implements TermD
                     .addComponent(jLabel4)
                     .addComponent(tfCreateTermDepositAmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(dialogCreateTermDepositLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel9)
-                    .addComponent(dateChooserCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLabel9)
                 .addGap(18, 18, 18)
                 .addGroup(dialogCreateTermDepositLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
@@ -532,7 +528,6 @@ public class TermDepositAccountFrame extends javax.swing.JFrame implements TermD
     private final javax.swing.JButton btnWithdraw = new javax.swing.JButton();
     private final javax.swing.JButton btnWithdrawCancel = new javax.swing.JButton();
     private final javax.swing.JButton btnWithdrawOK = new javax.swing.JButton();
-    private datechooser.beans.DateChooserCombo dateChooserCombo1;
     private final javax.swing.JDialog dialogCreateTermDeposit = new javax.swing.JDialog();
     private final javax.swing.JDialog dialogTransfer = new javax.swing.JDialog();
     private javax.swing.JDialog dialogViewTermDeposits;

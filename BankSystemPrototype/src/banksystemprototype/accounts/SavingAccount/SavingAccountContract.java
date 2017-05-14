@@ -21,7 +21,6 @@ public interface SavingAccountContract {
         double deposit();
         double withdraw() throws Exception;
         double transfer() throws Exception;
-        List<Transaction> checkTransactions(Date startingDate,  Date endingDate);
         void openAccount( long accountId);
         void showAccount();
         void back();

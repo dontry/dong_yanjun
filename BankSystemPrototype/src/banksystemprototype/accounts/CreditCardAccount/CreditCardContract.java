@@ -25,7 +25,6 @@ public interface CreditCardContract {
         void deposit();
         double withdraw() throws BalanceLimitException;
         void transfer() throws BalanceLimitException;
-        List<Transaction> checkTransactions(Date startingDate,  Date endingDate);
         void openAccount( long accountId);
         void showAccount();
         void saveAccount();

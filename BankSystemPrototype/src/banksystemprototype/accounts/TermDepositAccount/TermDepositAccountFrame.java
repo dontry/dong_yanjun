@@ -58,11 +58,10 @@ public class TermDepositAccountFrame extends javax.swing.JFrame implements TermD
         tfWithdrawAmount = new javax.swing.JTextField();
         dialogViewTermDeposits = new javax.swing.JDialog();
         jPanel1 = new javax.swing.JPanel();
-        btnViewTransaction = new javax.swing.JButton();
+        btnViewTermDeposits = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         labelBalanceValue = new javax.swing.JLabel();
         btnBack = new javax.swing.JButton();
-        btnViewTermDeposits = new javax.swing.JButton();
 
         dialogTransfer.setTitle("Withdraw");
         dialogTransfer.addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -347,10 +346,10 @@ public class TermDepositAccountFrame extends javax.swing.JFrame implements TermD
             }
         });
 
-        btnViewTransaction.setText("View Transaction");
-        btnViewTransaction.addActionListener(new java.awt.event.ActionListener() {
+        btnViewTermDeposits.setText("View Term Deposit");
+        btnViewTermDeposits.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnViewTransactionActionPerformed(evt);
+                btnViewTermDepositsActionPerformed(evt);
             }
         });
 
@@ -363,11 +362,11 @@ public class TermDepositAccountFrame extends javax.swing.JFrame implements TermD
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnWithdraw, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCreateTermDeposit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnCreateTermDeposit, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnTransfer, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnViewTransaction, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnViewTermDeposits, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -379,7 +378,7 @@ public class TermDepositAccountFrame extends javax.swing.JFrame implements TermD
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTransfer, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnViewTransaction, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnViewTermDeposits, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 8, Short.MAX_VALUE))
         );
 
@@ -393,13 +392,6 @@ public class TermDepositAccountFrame extends javax.swing.JFrame implements TermD
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBackActionPerformed(evt);
-            }
-        });
-
-        btnViewTermDeposits.setText("View Term Deposit");
-        btnViewTermDeposits.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnViewTermDepositsActionPerformed(evt);
             }
         });
 
@@ -424,23 +416,17 @@ public class TermDepositAccountFrame extends javax.swing.JFrame implements TermD
                                 .addComponent(btnBack)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnViewTermDeposits, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnBack)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(labelBalanceValue))
-                .addGap(55, 55, 55)
-                .addComponent(btnViewTermDeposits, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(102, 102, 102)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -463,10 +449,6 @@ public class TermDepositAccountFrame extends javax.swing.JFrame implements TermD
         dialogTransfer.setVisible(true);
        
     }//GEN-LAST:event_btnTransferActionPerformed
-
-    private void btnViewTransactionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewTransactionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnViewTransactionActionPerformed
 
     private void tfTransferAmountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfTransferAmountActionPerformed
         // TODO add your handling code here:
@@ -547,7 +529,6 @@ public class TermDepositAccountFrame extends javax.swing.JFrame implements TermD
     private final javax.swing.JButton btnTransferCancel = new javax.swing.JButton();
     private final javax.swing.JButton btnTransferOK = new javax.swing.JButton();
     private javax.swing.JButton btnViewTermDeposits;
-    private javax.swing.JButton btnViewTransaction;
     private final javax.swing.JButton btnWithdraw = new javax.swing.JButton();
     private final javax.swing.JButton btnWithdrawCancel = new javax.swing.JButton();
     private final javax.swing.JButton btnWithdrawOK = new javax.swing.JButton();

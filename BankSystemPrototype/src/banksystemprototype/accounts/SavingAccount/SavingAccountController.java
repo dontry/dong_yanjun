@@ -56,10 +56,6 @@ public class SavingAccountController implements SavingAccountContract.UserAction
         return balance;
     }
 
-    @Override
-    public List<Transaction> checkTransactions(Date startingDate, Date endingDate) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     @Override
     public void openAccount(long accountId) {

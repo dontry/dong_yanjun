@@ -13,8 +13,7 @@ import banksystemprototype.accounts.TermDepositAccount.TermDepositAccountFrame;
 import banksystemprototype.users.Customer;
 import banksystemprototype.users.LoginFrame;
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
@@ -27,9 +26,6 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
     /**
      * Creates new form CustomerHomeFrame
      */
-    //Connection conn = null;
-    //Statement stmt = null;
-    //ResultSetMetaData mdata;
     DefaultTableModel dtm = new DefaultTableModel(new String[]{
     "Transaction No", "Username", "Date", "Current Balance", "Amount", "Account ID","Account Type"}, 0);
     private LoginFrame loginFrame;
@@ -292,10 +288,12 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
                 dtm.removeRow(i);
             }
         }
-        String condition = "where username =" + username;
-        String table = "transaction_log";
-        String condition2 = "";
-        dtm.addRow(DBManager.check(table, condition2));
+        String condition = "where username = '" + username + "'";
+        String table = "S27624366.transaction_log";
+        ArrayList<Object[]> rows = DBManager.check(table, condition);
+        for(Object[] row: rows) {
+             dtm.addRow(row);
+        }     
     }//GEN-LAST:event_btnViewTransactionActionPerformed
 
     

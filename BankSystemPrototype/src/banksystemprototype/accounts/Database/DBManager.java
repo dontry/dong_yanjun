@@ -23,14 +23,16 @@ import static javafx.scene.input.KeyCode.T;
  */
 public class DBManager {
     
-    public static Object[] check(String tableName, String condition) {
+    public static ArrayList<Object[]> check(String tableName, String condition) {
         Connection conn = DBConnection.getConnection();
         Statement stmt = null;
         ResultSetMetaData mdata;
+        ArrayList<Object[]> resultList = new ArrayList<>();
         Object[] rowData = {};
+        
         try {
             stmt = conn.createStatement();
-            ResultSet rset = stmt.executeQuery("SELECT * FROM " + tableName  + condition ); // get all records from the student table 
+        ResultSet rset = stmt.executeQuery("SELECT * FROM " + tableName  + condition); // get all records from the student table 
 
             mdata = rset.getMetaData();
 
@@ -41,6 +43,7 @@ public class DBManager {
                     /* put an Object to the row using the value of the designated column in the current row of this ResultSet object */
                     rowData[i] = rset.getObject(i + 1); 
                 }
+                resultList.add(rowData);
             }
             rset.close();
 
@@ -54,7 +57,7 @@ public class DBManager {
                 Logger.getLogger(DBManager.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        return rowData;
+        return resultList;
     }
   
     public void update(String tableName, HashMap<String, String> attributes, String condition) {

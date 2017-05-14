@@ -19,18 +19,12 @@ import javax.swing.table.DefaultTableModel;
  */
 public class AdminHomeFrame extends javax.swing.JFrame {
 
-    //DBConnection con = new DBConnection();
-    //Connection conn = null;
-    //PreparedStatement stmt = null;
-    //ResultSet rs = null;
-    
     Connection conn = null;
     Statement stmt = null;
     ResultSetMetaData mdata;
     DefaultTableModel dtm = new DefaultTableModel(new String[]{
     "Account_id", "username", "account type", "lock_status", "balance"}, 0);
     DefaultComboBoxModel dcm = new DefaultComboBoxModel(); 
-    //DefaultTableModel dtmHomeLoan;
     DefaultTableModel dtmHomeLoan = new DefaultTableModel(new String[]{
     "Application_no", "username", "Amount", "Period", "Start_date", "End_Date"}, 0);
     
@@ -81,7 +75,9 @@ public class AdminHomeFrame extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         tfSearchUsername = new javax.swing.JTextField();
         btnSearchAccountByCustomer = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
+        btnCreateAccount = new javax.swing.JButton();
+        btnUnlockAccount = new javax.swing.JButton();
         jdChangePin = new javax.swing.JDialog();
         tfInputUsername = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -96,6 +92,18 @@ public class AdminHomeFrame extends javax.swing.JFrame {
         btnApproveHomeLoan = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
+        jdCreateAccount = new javax.swing.JDialog();
+        jLabel16 = new javax.swing.JLabel();
+        tfUsername = new javax.swing.JTextField();
+        jLabel17 = new javax.swing.JLabel();
+        cbAccountType = new javax.swing.JComboBox<>();
+        btnSubmitCreateAccount = new javax.swing.JButton();
+        btnCancelCreateAccount = new javax.swing.JButton();
+        jdUnlockAccount = new javax.swing.JDialog();
+        btnSubmitUnlock = new javax.swing.JButton();
+        btnCancelUnlock = new javax.swing.JButton();
+        jLabel18 = new javax.swing.JLabel();
+        tfAccountID = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         btnTermDepositAccount = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
@@ -284,19 +292,42 @@ public class AdminHomeFrame extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Back To Home Page");
+        btnBack.setText("Back To Home Page");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
+
+        btnCreateAccount.setText("Create Customer Account");
+        btnCreateAccount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreateAccountActionPerformed(evt);
+            }
+        });
+
+        btnUnlockAccount.setText("Unlock Account");
+        btnUnlockAccount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUnlockAccountActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jdAdminAccountManageLayout = new javax.swing.GroupLayout(jdAdminAccountManage.getContentPane());
         jdAdminAccountManage.getContentPane().setLayout(jdAdminAccountManageLayout);
         jdAdminAccountManageLayout.setHorizontalGroup(
             jdAdminAccountManageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jdAdminAccountManageLayout.createSequentialGroup()
-                .addGroup(jdAdminAccountManageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(jdAdminAccountManageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jdAdminAccountManageLayout.createSequentialGroup()
                         .addGap(28, 28, 28)
-                        .addComponent(btnViewAllAccount)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3))
+                        .addGroup(jdAdminAccountManageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnCreateAccount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnViewAllAccount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE)
+                        .addGroup(jdAdminAccountManageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnBack, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnUnlockAccount, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jdAdminAccountManageLayout.createSequentialGroup()
                         .addGap(37, 37, 37)
                         .addGroup(jdAdminAccountManageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -307,7 +338,7 @@ public class AdminHomeFrame extends javax.swing.JFrame {
                                 .addComponent(tfSearchUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(39, 39, 39)
                                 .addComponent(btnSearchAccountByCustomer)))))
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         jdAdminAccountManageLayout.setVerticalGroup(
             jdAdminAccountManageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -322,8 +353,12 @@ public class AdminHomeFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jdAdminAccountManageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnViewAllAccount)
-                    .addComponent(jButton3))
-                .addContainerGap(38, Short.MAX_VALUE))
+                    .addComponent(btnUnlockAccount))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jdAdminAccountManageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCreateAccount)
+                    .addComponent(btnBack))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
         jdChangePin.setMinimumSize(getPreferredSize());
@@ -457,6 +492,113 @@ public class AdminHomeFrame extends javax.swing.JFrame {
             .addGap(61, 61, 61))
     );
 
+    jLabel16.setText("Username:");
+
+    jLabel17.setText("Account Type:");
+
+    cbAccountType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Saving Account", "Term Deposit Account", "Home Loan Account", "Credit Account" }));
+
+    btnSubmitCreateAccount.setText("Submit");
+    btnSubmitCreateAccount.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnSubmitCreateAccountActionPerformed(evt);
+        }
+    });
+
+    btnCancelCreateAccount.setText("Cancel");
+    btnCancelCreateAccount.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnCancelCreateAccountActionPerformed(evt);
+        }
+    });
+
+    javax.swing.GroupLayout jdCreateAccountLayout = new javax.swing.GroupLayout(jdCreateAccount.getContentPane());
+    jdCreateAccount.getContentPane().setLayout(jdCreateAccountLayout);
+    jdCreateAccountLayout.setHorizontalGroup(
+        jdCreateAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(jdCreateAccountLayout.createSequentialGroup()
+            .addGap(74, 74, 74)
+            .addGroup(jdCreateAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addComponent(btnSubmitCreateAccount)
+                .addComponent(jLabel17)
+                .addComponent(jLabel16))
+            .addGap(49, 49, 49)
+            .addGroup(jdCreateAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jdCreateAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(tfUsername)
+                    .addComponent(cbAccountType, 0, 117, Short.MAX_VALUE))
+                .addComponent(btnCancelCreateAccount))
+            .addContainerGap(76, Short.MAX_VALUE))
+    );
+    jdCreateAccountLayout.setVerticalGroup(
+        jdCreateAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(jdCreateAccountLayout.createSequentialGroup()
+            .addGap(63, 63, 63)
+            .addGroup(jdCreateAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jLabel16)
+                .addComponent(tfUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGap(18, 18, 18)
+            .addGroup(jdCreateAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jLabel17)
+                .addComponent(cbAccountType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGap(68, 68, 68)
+            .addGroup(jdCreateAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(btnSubmitCreateAccount)
+                .addComponent(btnCancelCreateAccount))
+            .addContainerGap(122, Short.MAX_VALUE))
+    );
+
+    jdUnlockAccount.setMinimumSize(getPreferredSize());
+
+    btnSubmitUnlock.setText("Unlock");
+    btnSubmitUnlock.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnSubmitUnlockActionPerformed(evt);
+        }
+    });
+
+    btnCancelUnlock.setText("Cancel");
+    btnCancelUnlock.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnCancelUnlockActionPerformed(evt);
+        }
+    });
+
+    jLabel18.setText("Account ID");
+
+    javax.swing.GroupLayout jdUnlockAccountLayout = new javax.swing.GroupLayout(jdUnlockAccount.getContentPane());
+    jdUnlockAccount.getContentPane().setLayout(jdUnlockAccountLayout);
+    jdUnlockAccountLayout.setHorizontalGroup(
+        jdUnlockAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(jdUnlockAccountLayout.createSequentialGroup()
+            .addGap(51, 51, 51)
+            .addGroup(jdUnlockAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addComponent(btnSubmitUnlock)
+                .addComponent(jLabel18))
+            .addGroup(jdUnlockAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jdUnlockAccountLayout.createSequentialGroup()
+                    .addGap(48, 48, 48)
+                    .addComponent(tfAccountID, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(96, Short.MAX_VALUE))
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jdUnlockAccountLayout.createSequentialGroup()
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCancelUnlock)
+                    .addGap(71, 71, 71))))
+    );
+    jdUnlockAccountLayout.setVerticalGroup(
+        jdUnlockAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jdUnlockAccountLayout.createSequentialGroup()
+            .addGap(63, 63, 63)
+            .addGroup(jdUnlockAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jLabel18)
+                .addComponent(tfAccountID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGap(26, 26, 26)
+            .addGroup(jdUnlockAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(btnSubmitUnlock)
+                .addComponent(btnCancelUnlock))
+            .addContainerGap(98, Short.MAX_VALUE))
+    );
+
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
     btnTermDepositAccount.setText("Home Loan Approval");
@@ -572,6 +714,15 @@ public class AdminHomeFrame extends javax.swing.JFrame {
     pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void addTableModel(DefaultTableModel dcbm){
+        if (dcbm.getRowCount() > 0) {
+            /* clear the default table model */
+            for (int i = dcbm.getRowCount() - 1; i > -1; i--) {
+                dcbm.removeRow(i);
+            }
+        }
+    }
+            
     private void btnTermDepositAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTermDepositAccountActionPerformed
         jdHomeLoan.setVisible(true);
         this.setEnabled(false);
@@ -628,39 +779,13 @@ public class AdminHomeFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSubmitActionPerformed
 
     private void btnViewAllAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewAllAccountActionPerformed
-        if (dtm.getRowCount() > 0) {
-            /* clear the default table model */
-            for (int i = dtm.getRowCount() - 1; i > -1; i--) {
-                dtm.removeRow(i);
-            }
-        }
-        try {
-
-            stmt = conn.createStatement();
-            ResultSet rset = stmt.executeQuery("select * from S27624366.Account"); // get all records from the student table 
-
-            mdata = rset.getMetaData();
-
-            int numberOfColumns = mdata.getColumnCount(); // get number of columns from metadata of the Resultset object
-            while (rset.next()) {
-                Object[] rowData = new Object[numberOfColumns]; // create a row of an array of Objects with the number of columns          
-                for (int i = 0; i < rowData.length; i++) {
-                    /* put an Object to the row using the value of the designated column in the current row of this ResultSet object */
-                    rowData[i] = rset.getObject(i + 1); 
-                }
-                dtm.addRow(rowData); // adds a row to the end of the model
-            }
-            rset.close();
-
-        } catch (SQLException f) {
-            System.out.println(f.getMessage());
-        } finally {
-            try {
-                stmt.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(AdminHomeFrame.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        addTableModel(dtm);
+        String condition = "";
+        String table = "S27624366.Account";
+        ArrayList<Object[]> rows = DBManager.check(table, condition);
+        for(Object[] row: rows) {
+             dtm.addRow(row);
+        }     
     }//GEN-LAST:event_btnViewAllAccountActionPerformed
 
     private void pfCreatePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pfCreatePasswordActionPerformed
@@ -692,39 +817,13 @@ public class AdminHomeFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void btnViewHomeLoanApplicationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewHomeLoanApplicationActionPerformed
-        if (dtmHomeLoan.getRowCount() > 0) {
-            /* clear the default table model */
-            for (int i = dtmHomeLoan.getRowCount() - 1; i > -1; i--) {
-                dtmHomeLoan.removeRow(i);
-            }
-        }
-        try {
-
-            stmt = conn.createStatement();
-            ResultSet rset = stmt.executeQuery("select * from S27624366.home_loan_application"); // get all records from the student table
-
-            mdata = rset.getMetaData();
-
-            int numberOfColumns = mdata.getColumnCount(); // get number of columns from metadata of the Resultset object
-            while (rset.next()) {
-                Object[] rowData = new Object[numberOfColumns]; // create a row of an array of Objects with the number of columns
-                for (int i = 0; i < rowData.length; i++) {
-                    /* put an Object to the row using the value of the designated column in the current row of this ResultSet object */
-                    rowData[i] = rset.getObject(i + 1);
-                }
-                dtmHomeLoan.addRow(rowData); // adds a row to the end of the model
-            }
-            rset.close();
-
-        } catch (SQLException f) {
-            System.out.println(f.getMessage());
-        } finally {
-            try {
-                stmt.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(AdminHomeFrame.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        addTableModel(dtmHomeLoan);
+        String condition = "";
+        String table = "S27624366.home_loan_application";
+        ArrayList<Object[]> rows = DBManager.check(table, condition);
+        for(Object[] row: rows) {
+             dtmHomeLoan.addRow(row);
+        }     
     }//GEN-LAST:event_btnViewHomeLoanApplicationActionPerformed
 
     private void btnApproveHomeLoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApproveHomeLoanActionPerformed
@@ -737,7 +836,8 @@ public class AdminHomeFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-        // TODO add your handling code here:
+        jdCreateCustomer.dispose();
+        this.setEnabled(true);
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnCancelResetPinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelResetPinActionPerformed
@@ -746,40 +846,101 @@ public class AdminHomeFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelResetPinActionPerformed
 
     private void btnSearchAccountByCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchAccountByCustomerActionPerformed
-        if (dtm.getRowCount() > 0) {
-            for (int i = dtm.getRowCount() - 1; i > -1; i--) {
-                dtm.removeRow(i);
-            }
-        }
-        try {
-
-            stmt = conn.createStatement();
-            ResultSet rset = stmt.executeQuery("select * from S27624366.Account where username = "
-                    + "'" + tfSearchUsername.getText() + "'"); // get all records from the student table 
-
-            mdata = rset.getMetaData();
-
-            int numberOfColumns = mdata.getColumnCount(); // get number of columns from metadata of the Resultset object
-            while (rset.next()) {
-                Object[] rowData = new Object[numberOfColumns]; // create a row of an array of Objects with the number of columns          
-                for (int i = 0; i < rowData.length; i++) {
-                    /* put an Object to the row using the value of the designated column in the current row of this ResultSet object */
-                    rowData[i] = rset.getObject(i + 1); 
-                }
-                dtm.addRow(rowData); // adds a row to the end of the model
-            }
-            rset.close();
-
-        } catch (SQLException f) {
-            System.out.println(f.getMessage());
-        } finally {
-            try {
-                stmt.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(AdminHomeFrame.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        addTableModel(dtm);
+        
+//        try {
+//
+//            stmt = conn.createStatement();
+//            ResultSet rset = stmt.executeQuery("select * from S27624366.Account where username = "
+//                    + "'" + tfSearchUsername.getText() + "'"); // get all records from the student table 
+//
+//            mdata = rset.getMetaData();
+//
+//            int numberOfColumns = mdata.getColumnCount(); // get number of columns from metadata of the Resultset object
+//            while (rset.next()) {
+//                Object[] rowData = new Object[numberOfColumns]; // create a row of an array of Objects with the number of columns          
+//                for (int i = 0; i < rowData.length; i++) {
+//                    /* put an Object to the row using the value of the designated column in the current row of this ResultSet object */
+//                    rowData[i] = rset.getObject(i + 1); 
+//                }
+//                dtm.addRow(rowData); // adds a row to the end of the model
+//            }
+//            rset.close();
+//
+//        } catch (SQLException f) {
+//            System.out.println(f.getMessage());
+//        } finally {
+//            try {
+//                stmt.close();
+//            } catch (SQLException ex) {
+//                Logger.getLogger(AdminHomeFrame.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
+//      
+        String condition = "where username = '" + tfSearchUsername.getText() + "'";
+        String table = "S27624366.Account";
+        ArrayList<Object[]> rows = DBManager.check(table, condition);
+        for(Object[] row: rows) {
+             dtm.addRow(row);
+        }    
     }//GEN-LAST:event_btnSearchAccountByCustomerActionPerformed
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        jdAdminAccountManage.dispose();
+        this.setEnabled(true);
+    }//GEN-LAST:event_btnBackActionPerformed
+
+    private void btnCreateAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateAccountActionPerformed
+        jdCreateAccount.setVisible(true);
+        this.setEnabled(false);
+    }//GEN-LAST:event_btnCreateAccountActionPerformed
+
+    private void btnSubmitCreateAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitCreateAccountActionPerformed
+        try 
+        {
+            String sql = "Insert into S27624366.Account (account_id, username, account_type, lock_status, balance) values (accountid_seq.nextval,?,?,'N',0)";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, tfUsername.getText());
+            String account_type = cbAccountType.getSelectedItem().toString();
+            pst.setString(2, account_type);
+            pst.executeUpdate();
+            jOptionPane1.showMessageDialog(null,"Account has been created!");
+        }
+        catch(SQLException ex)
+        {
+            jOptionPane1.showMessageDialog(null,ex);
+        }
+    }//GEN-LAST:event_btnSubmitCreateAccountActionPerformed
+
+    private void btnCancelCreateAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelCreateAccountActionPerformed
+        jdCreateAccount.dispose();
+        this.setEnabled(true);
+    }//GEN-LAST:event_btnCancelCreateAccountActionPerformed
+
+    private void btnUnlockAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUnlockAccountActionPerformed
+        jdUnlockAccount.setVisible(true);
+        this.setEnabled(false);
+    }//GEN-LAST:event_btnUnlockAccountActionPerformed
+
+    private void btnSubmitUnlockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitUnlockActionPerformed
+        try 
+        {
+            String sql = "update S27624366.Account set lock_status = 'N' where account_id = ?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, tfAccountID.getText());
+            pst.executeUpdate();
+            jOptionPane1.showMessageDialog(null,"Account gets unlock successfully!");
+        }
+        catch(SQLException ex)
+        {
+            jOptionPane1.showMessageDialog(null,ex);
+        }    
+    }//GEN-LAST:event_btnSubmitUnlockActionPerformed
+
+    private void btnCancelUnlockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelUnlockActionPerformed
+        jdUnlockAccount.dispose();
+        this.setEnabled(true);
+    }//GEN-LAST:event_btnCancelUnlockActionPerformed
 
     /**
      * @param args the command line arguments
@@ -821,21 +982,28 @@ public class AdminHomeFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnApproveHomeLoan;
+    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnCancel;
+    private javax.swing.JButton btnCancelCreateAccount;
     private javax.swing.JButton btnCancelResetPin;
+    private javax.swing.JButton btnCancelUnlock;
     private final javax.swing.JButton btnChangePIN = new javax.swing.JButton();
+    private javax.swing.JButton btnCreateAccount;
     private final javax.swing.JButton btnCreateCustomer = new javax.swing.JButton();
     private final javax.swing.JButton btnHomeLoanAccount = new javax.swing.JButton();
     private javax.swing.JButton btnSearchAccountByCustomer;
     private javax.swing.JButton btnSubmit;
+    private javax.swing.JButton btnSubmitCreateAccount;
     private javax.swing.JButton btnSubmitPinReset;
+    private javax.swing.JButton btnSubmitUnlock;
     private javax.swing.JButton btnTermDepositAccount;
+    private javax.swing.JButton btnUnlockAccount;
     private javax.swing.JButton btnViewAllAccount;
     private javax.swing.JButton btnViewHomeLoanApplication;
     private final javax.swing.JButton btnViewProfile = new javax.swing.JButton();
+    private javax.swing.JComboBox<String> cbAccountType;
     private javax.swing.JComboBox<String> cbCreateIDType;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -844,6 +1012,9 @@ public class AdminHomeFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -861,12 +1032,15 @@ public class AdminHomeFrame extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JDialog jdAdminAccountManage;
     private javax.swing.JDialog jdChangePin;
+    private javax.swing.JDialog jdCreateAccount;
     private javax.swing.JDialog jdCreateCustomer;
     private javax.swing.JDialog jdHomeLoan;
+    private javax.swing.JDialog jdUnlockAccount;
     private javax.swing.JPasswordField pfCreatePassword;
     private javax.swing.JPasswordField pfCreatePin;
     private javax.swing.JPasswordField pfResetPin;
     private javax.swing.JTable tblHomeLoan;
+    private javax.swing.JTextField tfAccountID;
     private javax.swing.JTextField tfCreateAddress;
     private javax.swing.JTextField tfCreateEmail;
     private javax.swing.JTextField tfCreateFname;
@@ -876,5 +1050,6 @@ public class AdminHomeFrame extends javax.swing.JFrame {
     private javax.swing.JTextField tfCreateUsername;
     private javax.swing.JTextField tfInputUsername;
     private javax.swing.JTextField tfSearchUsername;
+    private javax.swing.JTextField tfUsername;
     // End of variables declaration//GEN-END:variables
 }

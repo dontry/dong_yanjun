@@ -33,4 +33,12 @@ public class DataConverter {
       int diffMonth = diffYear * 12 + endCalendar.get(Calendar.MONTH) - startCalendar.get(Calendar.MONTH);
       return diffMonth;
     }
+      
+    public static String charArraysToString(char[] array) {
+        String str= "";
+        for(int i = 0; i < array.length; ++i) {
+            str += array[i];
+        }
+        return str;
+    }
 }

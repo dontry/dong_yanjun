@@ -5,9 +5,10 @@
  */
 package banksystemprototype.users;
 
-import banksystemprototype.accounts.AdminHomeFrame;
+import banksystemprototype.Utils.DataConverter;
 import banksystemprototype.accounts.CustomerHomeFrame;
 import banksystemprototype.accounts.Database.DBConnection;
+import java.util.Arrays;
 
 /**
  *
@@ -23,6 +24,7 @@ public class LoginFrame extends javax.swing.JFrame implements UserContract.View{
     
     public LoginFrame() {
         initComponents();
+        mActionListener = new UserController(this);
     }
 
     /**
@@ -103,9 +105,7 @@ public class LoginFrame extends javax.swing.JFrame implements UserContract.View{
 
         jLabel4.setText("User type:");
 
-        tfPwd.setText("jPasswordField1");
-
-        spUserType.setModel(new javax.swing.SpinnerListModel(new String[] {"Customer", "Administrator"}));
+        spUserType.setModel(new javax.swing.SpinnerListModel(new String[] {"CUSTOMER", "ADMINISTRATOR"}));
 
         javax.swing.GroupLayout tv_title_usernameLayout = new javax.swing.GroupLayout(tv_title_username);
         tv_title_username.setLayout(tv_title_usernameLayout);
@@ -121,9 +121,10 @@ public class LoginFrame extends javax.swing.JFrame implements UserContract.View{
                             .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(tv_title_usernameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tfPwd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(spUserType, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(spUserType, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(tv_title_usernameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(tfPwd, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(tfUsername, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE))))
                     .addGroup(tv_title_usernameLayout.createSequentialGroup()
                         .addGap(103, 103, 103)
                         .addComponent(btnLogin))
@@ -161,7 +162,7 @@ public class LoginFrame extends javax.swing.JFrame implements UserContract.View{
             .addGroup(layout.createSequentialGroup()
                 .addGap(39, 39, 39)
                 .addComponent(tv_title_username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,22 +178,10 @@ public class LoginFrame extends javax.swing.JFrame implements UserContract.View{
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
         String username = tfUsername.getText();
-        String password = tfPwd.getPassword().toString();
+        String password = DataConverter.charArraysToString(tfPwd.getPassword());
+//        String password = jTextField1.getText();
         String userType = spUserType.getValue().toString();
-        boolean isVerified = mActionListener.verifyUser(username, password, userType);
-        if(isVerified) {
-            this.setVisible(false);
-            switch(userType) {
-                case "Customer":
-                    new CustomerHomeFrame(this).setVisible(true);
-                    break;
-                case "Administrator":
-                    new AdminHomeFrame().setVisible(true);
-                    break;
-            }
-        } else {
-            dialogNotVerified.setVisible(true);
-        }
+        mActionListener.login(username, password, userType);
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void tfUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfUsernameActionPerformed
@@ -257,15 +246,17 @@ public class LoginFrame extends javax.swing.JFrame implements UserContract.View{
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public void login() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    @Override
-    public void logout() {
-        this.setVisible(true);
-        tfUsername.setText("");
+    public void showLogin(TypeOfUser userType, String username) {
         tfPwd.setText("");
-        DBConnection.closeConnection();
+        tfUsername.setText("");
+        switch(userType){
+            case CUSTOMER:
+               new CustomerHomeFrame(this, username).setVisible(true);
+               break;
+            case ADMINISTRATOR:
+//                new AdminHomeFrame(this, username).setVisible(true);
+                break;
+        }
+        this.setVisible(false);
     }
 }

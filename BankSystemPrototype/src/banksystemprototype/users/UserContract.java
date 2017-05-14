@@ -4,13 +4,12 @@ package banksystemprototype.users;
  * Created by caidong on 9/05/2017.
  */
 public interface UserContract {
-    User getUser(String username, String password);
+//    User getUser(String username, String password);
     interface View {
-        void login();
-        void logout();
+        void showLogin(TypeOfUser userType, String username);
     }
     
     interface UserActionListener {
-        boolean verifyUser(String username, String password, String userType);
+        void login(String username, String password, String userType);
     }
 }

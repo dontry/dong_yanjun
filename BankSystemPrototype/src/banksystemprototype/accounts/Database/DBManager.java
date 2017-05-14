@@ -32,8 +32,8 @@ public class DBManager {
         
         try {
             stmt = conn.createStatement();
-        ResultSet rset = stmt.executeQuery("SELECT * FROM " + tableName  + condition); // get all records from the student table 
-
+            String query =  "SELECT * FROM " + tableName  + condition;
+            ResultSet rset = stmt.executeQuery(query); // get all records from the student table 
             mdata = rset.getMetaData();
 
             int numberOfColumns = mdata.getColumnCount(); // get number of columns from metadata of the Resultset object

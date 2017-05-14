@@ -14,6 +14,7 @@ import banksystemprototype.users.Customer;
 import banksystemprototype.users.LoginFrame;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.logging.Level;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
@@ -273,7 +274,7 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        loginFrame.logout();
+        showLogout();
     }//GEN-LAST:event_btnLogoutActionPerformed
 
     private void btnViewTransactionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewTransactionsActionPerformed
@@ -288,6 +289,7 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
                 dtm.removeRow(i);
             }
         }
+
         String condition = "where username = '" + username + "'";
         String table = "S27624366.transaction_log";
         ArrayList<Object[]> rows = DBManager.check(table, condition);
@@ -347,43 +349,15 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
 
     @Override
     public void showLogout() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        loginFrame.setVisible(true);
+        this.dispose();
     }
     
      public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AdminHomeFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AdminHomeFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AdminHomeFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AdminHomeFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new CustomerHomeFrame(new LoginFrame(), "abc").setVisible(true);
             }
         });
     }
-    
-    
 }

@@ -77,6 +77,7 @@ public class AdminHomeFrame extends javax.swing.JFrame {
         btnSearchAccountByCustomer = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
         btnCreateAccount = new javax.swing.JButton();
+        btnUnlockAccount = new javax.swing.JButton();
         jdChangePin = new javax.swing.JDialog();
         tfInputUsername = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -98,6 +99,11 @@ public class AdminHomeFrame extends javax.swing.JFrame {
         cbAccountType = new javax.swing.JComboBox<>();
         btnSubmitCreateAccount = new javax.swing.JButton();
         btnCancelCreateAccount = new javax.swing.JButton();
+        jdUnlockAccount = new javax.swing.JDialog();
+        btnSubmitUnlock = new javax.swing.JButton();
+        btnCancelUnlock = new javax.swing.JButton();
+        jLabel18 = new javax.swing.JLabel();
+        tfAccountID = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         btnTermDepositAccount = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
@@ -300,12 +306,28 @@ public class AdminHomeFrame extends javax.swing.JFrame {
             }
         });
 
+        btnUnlockAccount.setText("Unlock Account");
+        btnUnlockAccount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUnlockAccountActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jdAdminAccountManageLayout = new javax.swing.GroupLayout(jdAdminAccountManage.getContentPane());
         jdAdminAccountManage.getContentPane().setLayout(jdAdminAccountManageLayout);
         jdAdminAccountManageLayout.setHorizontalGroup(
             jdAdminAccountManageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jdAdminAccountManageLayout.createSequentialGroup()
-                .addGroup(jdAdminAccountManageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(jdAdminAccountManageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jdAdminAccountManageLayout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addGroup(jdAdminAccountManageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnCreateAccount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnViewAllAccount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE)
+                        .addGroup(jdAdminAccountManageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnBack, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnUnlockAccount, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jdAdminAccountManageLayout.createSequentialGroup()
                         .addGap(37, 37, 37)
                         .addGroup(jdAdminAccountManageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -315,15 +337,8 @@ public class AdminHomeFrame extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(tfSearchUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(39, 39, 39)
-                                .addComponent(btnSearchAccountByCustomer))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jdAdminAccountManageLayout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addGroup(jdAdminAccountManageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnCreateAccount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnViewAllAccount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnBack)))
-                .addContainerGap(42, Short.MAX_VALUE))
+                                .addComponent(btnSearchAccountByCustomer)))))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         jdAdminAccountManageLayout.setVerticalGroup(
             jdAdminAccountManageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -336,7 +351,9 @@ public class AdminHomeFrame extends javax.swing.JFrame {
                     .addComponent(tfSearchUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSearchAccountByCustomer))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnViewAllAccount)
+                .addGroup(jdAdminAccountManageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnViewAllAccount)
+                    .addComponent(btnUnlockAccount))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jdAdminAccountManageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCreateAccount)
@@ -489,6 +506,11 @@ public class AdminHomeFrame extends javax.swing.JFrame {
     });
 
     btnCancelCreateAccount.setText("Cancel");
+    btnCancelCreateAccount.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnCancelCreateAccountActionPerformed(evt);
+        }
+    });
 
     javax.swing.GroupLayout jdCreateAccountLayout = new javax.swing.GroupLayout(jdCreateAccount.getContentPane());
     jdCreateAccount.getContentPane().setLayout(jdCreateAccountLayout);
@@ -524,6 +546,57 @@ public class AdminHomeFrame extends javax.swing.JFrame {
                 .addComponent(btnSubmitCreateAccount)
                 .addComponent(btnCancelCreateAccount))
             .addContainerGap(122, Short.MAX_VALUE))
+    );
+
+    jdUnlockAccount.setMinimumSize(getPreferredSize());
+
+    btnSubmitUnlock.setText("Unlock");
+    btnSubmitUnlock.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnSubmitUnlockActionPerformed(evt);
+        }
+    });
+
+    btnCancelUnlock.setText("Cancel");
+    btnCancelUnlock.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnCancelUnlockActionPerformed(evt);
+        }
+    });
+
+    jLabel18.setText("Account ID");
+
+    javax.swing.GroupLayout jdUnlockAccountLayout = new javax.swing.GroupLayout(jdUnlockAccount.getContentPane());
+    jdUnlockAccount.getContentPane().setLayout(jdUnlockAccountLayout);
+    jdUnlockAccountLayout.setHorizontalGroup(
+        jdUnlockAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(jdUnlockAccountLayout.createSequentialGroup()
+            .addGap(51, 51, 51)
+            .addGroup(jdUnlockAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addComponent(btnSubmitUnlock)
+                .addComponent(jLabel18))
+            .addGroup(jdUnlockAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jdUnlockAccountLayout.createSequentialGroup()
+                    .addGap(48, 48, 48)
+                    .addComponent(tfAccountID, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(96, Short.MAX_VALUE))
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jdUnlockAccountLayout.createSequentialGroup()
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCancelUnlock)
+                    .addGap(71, 71, 71))))
+    );
+    jdUnlockAccountLayout.setVerticalGroup(
+        jdUnlockAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jdUnlockAccountLayout.createSequentialGroup()
+            .addGap(63, 63, 63)
+            .addGroup(jdUnlockAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jLabel18)
+                .addComponent(tfAccountID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGap(26, 26, 26)
+            .addGroup(jdUnlockAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(btnSubmitUnlock)
+                .addComponent(btnCancelUnlock))
+            .addContainerGap(98, Short.MAX_VALUE))
     );
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -839,6 +912,36 @@ public class AdminHomeFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSubmitCreateAccountActionPerformed
 
+    private void btnCancelCreateAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelCreateAccountActionPerformed
+        jdCreateAccount.dispose();
+        this.setEnabled(true);
+    }//GEN-LAST:event_btnCancelCreateAccountActionPerformed
+
+    private void btnUnlockAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUnlockAccountActionPerformed
+        jdUnlockAccount.setVisible(true);
+        this.setEnabled(false);
+    }//GEN-LAST:event_btnUnlockAccountActionPerformed
+
+    private void btnSubmitUnlockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitUnlockActionPerformed
+        try 
+        {
+            String sql = "update S27624366.Account set lock_status = 'N' where account_id = ?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, tfAccountID.getText());
+            pst.executeUpdate();
+            jOptionPane1.showMessageDialog(null,"Account gets unlock successfully!");
+        }
+        catch(SQLException ex)
+        {
+            jOptionPane1.showMessageDialog(null,ex);
+        }    
+    }//GEN-LAST:event_btnSubmitUnlockActionPerformed
+
+    private void btnCancelUnlockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelUnlockActionPerformed
+        jdUnlockAccount.dispose();
+        this.setEnabled(true);
+    }//GEN-LAST:event_btnCancelUnlockActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -883,6 +986,7 @@ public class AdminHomeFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnCancelCreateAccount;
     private javax.swing.JButton btnCancelResetPin;
+    private javax.swing.JButton btnCancelUnlock;
     private final javax.swing.JButton btnChangePIN = new javax.swing.JButton();
     private javax.swing.JButton btnCreateAccount;
     private final javax.swing.JButton btnCreateCustomer = new javax.swing.JButton();
@@ -891,7 +995,9 @@ public class AdminHomeFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnSubmit;
     private javax.swing.JButton btnSubmitCreateAccount;
     private javax.swing.JButton btnSubmitPinReset;
+    private javax.swing.JButton btnSubmitUnlock;
     private javax.swing.JButton btnTermDepositAccount;
+    private javax.swing.JButton btnUnlockAccount;
     private javax.swing.JButton btnViewAllAccount;
     private javax.swing.JButton btnViewHomeLoanApplication;
     private final javax.swing.JButton btnViewProfile = new javax.swing.JButton();
@@ -908,6 +1014,7 @@ public class AdminHomeFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -928,10 +1035,12 @@ public class AdminHomeFrame extends javax.swing.JFrame {
     private javax.swing.JDialog jdCreateAccount;
     private javax.swing.JDialog jdCreateCustomer;
     private javax.swing.JDialog jdHomeLoan;
+    private javax.swing.JDialog jdUnlockAccount;
     private javax.swing.JPasswordField pfCreatePassword;
     private javax.swing.JPasswordField pfCreatePin;
     private javax.swing.JPasswordField pfResetPin;
     private javax.swing.JTable tblHomeLoan;
+    private javax.swing.JTextField tfAccountID;
     private javax.swing.JTextField tfCreateAddress;
     private javax.swing.JTextField tfCreateEmail;
     private javax.swing.JTextField tfCreateFname;

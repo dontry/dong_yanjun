@@ -29,7 +29,7 @@ public class DBManager {
         Object[] rowData = {};
         try {
             stmt = conn.createStatement();
-            ResultSet rset = stmt.executeQuery("SELECT * FRME " + tableName + " WHERE " + condition ); // get all records from the student table 
+            ResultSet rset = stmt.executeQuery("SELECT * FROM " + tableName + " WHERE " + condition ); // get all records from the student table 
 
             mdata = rset.getMetaData();
 

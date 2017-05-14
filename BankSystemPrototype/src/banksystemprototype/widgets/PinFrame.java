@@ -9,13 +9,15 @@ package banksystemprototype.widgets;
  *
  * @author caidong
  */
-public class PinFrame extends javax.swing.JFrame {
+public class PinFrame extends javax.swing.JFrame implements PinServiceApi {
 
     /**
      * Creates new form PinFrame
      */
-    public PinFrame() {
+    private PinServiceApi.Listener mListener;
+    public PinFrame(PinServiceApi.Listener listener) {
         initComponents();
+        mListener= listener;
     }
 
     /**
@@ -44,6 +46,11 @@ public class PinFrame extends javax.swing.JFrame {
         });
 
         btnCancel.setText("Cancel");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel1.setText("Enter Pin:");
@@ -88,12 +95,29 @@ public class PinFrame extends javax.swing.JFrame {
 
     private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
         // TODO add your handling code here:
+        String pin = tfPin.getPassword().toString();
+        getPin(pin, new Callback() {
+            @Override
+            public void onload(Object pin) {
+                mListener.verifyPin(pin);
+            }
+            
+        });
+        this.dispose();
     }//GEN-LAST:event_btnOKActionPerformed
 
     private void tfPinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfPinActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfPinActionPerformed
 
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnCancelActionPerformed
+
+    public void getPin(String pin, Callback callback) {
+        callback.onload(pin);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private final javax.swing.JButton btnCancel = new javax.swing.JButton();
     private javax.swing.JButton btnOK;

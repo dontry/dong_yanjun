@@ -5,8 +5,11 @@
  */
 package banksystemprototype.accounts.SavingAccount;
 
-import banksystemprototype.Exceptions.BalanceLimitException;
+import banksystemprototype.TypeOfAccountAction;
 import banksystemprototype.accounts.CustomerHomeFrame;
+import banksystemprototype.accounts.Database.DBConnection;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -22,12 +25,14 @@ public class SavingAccountFrame extends javax.swing.JFrame implements SavingAcco
      */
     private static SavingAccountContract.UserActionListener mActionListener;
     private final CustomerHomeFrame homeFrame;
+    private Connection conn;
 
     
     public SavingAccountFrame(JFrame home) {
         initComponents();
         homeFrame = (CustomerHomeFrame) home;
         mActionListener = new SavingAccountController(this);
+        conn = DBConnection.getConnection();
     }
 
     /**
@@ -50,8 +55,6 @@ public class SavingAccountFrame extends javax.swing.JFrame implements SavingAcco
         tfWithdrawAmount = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         dialogViewTransaction = new javax.swing.JDialog();
-        dialogWarning = new javax.swing.JDialog();
-        labelWarningContent = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         btnViewTransaction = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -81,10 +84,10 @@ public class SavingAccountFrame extends javax.swing.JFrame implements SavingAcco
             }
         });
 
-        btnCancel.setText("Cancel");
-        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+        btnTransferCancel.setText("Cancel");
+        btnTransferCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelActionPerformed(evt);
+                btnTransferCancelActionPerformed(evt);
             }
         });
 
@@ -110,7 +113,7 @@ public class SavingAccountFrame extends javax.swing.JFrame implements SavingAcco
                         .addGap(26, 26, 26)
                         .addComponent(btnTransferOK)
                         .addGap(31, 31, 31)
-                        .addComponent(btnCancel))
+                        .addComponent(btnTransferCancel))
                     .addGroup(dialogTransferLayout.createSequentialGroup()
                         .addGroup(dialogTransferLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel8)
@@ -141,7 +144,7 @@ public class SavingAccountFrame extends javax.swing.JFrame implements SavingAcco
                 .addGap(18, 18, 18)
                 .addGroup(dialogTransferLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTransferOK)
-                    .addComponent(btnCancel))
+                    .addComponent(btnTransferCancel))
                 .addContainerGap(11, Short.MAX_VALUE))
         );
 
@@ -168,10 +171,10 @@ public class SavingAccountFrame extends javax.swing.JFrame implements SavingAcco
             }
         });
 
-        btnCancel1.setText("Cancel");
-        btnCancel1.addActionListener(new java.awt.event.ActionListener() {
+        btnDepositCancel.setText("Cancel");
+        btnDepositCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancel1ActionPerformed(evt);
+                btnDepositCancelActionPerformed(evt);
             }
         });
 
@@ -189,7 +192,7 @@ public class SavingAccountFrame extends javax.swing.JFrame implements SavingAcco
                         .addGap(28, 28, 28)
                         .addComponent(btnDepositOK)
                         .addGap(31, 31, 31)
-                        .addComponent(btnCancel1))
+                        .addComponent(btnDepositCancel))
                     .addGroup(dialogDepositLayout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addGap(18, 18, 18)
@@ -212,7 +215,7 @@ public class SavingAccountFrame extends javax.swing.JFrame implements SavingAcco
                 .addGap(18, 18, 18)
                 .addGroup(dialogDepositLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDepositOK)
-                    .addComponent(btnCancel1))
+                    .addComponent(btnDepositCancel))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
@@ -301,41 +304,6 @@ public class SavingAccountFrame extends javax.swing.JFrame implements SavingAcco
             .addGap(0, 297, Short.MAX_VALUE)
         );
 
-        dialogWarning.setTitle("Warning");
-
-        btnWarningOK.setLabel("OK");
-        btnWarningOK.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnWarningOKActionPerformed(evt);
-            }
-        });
-
-        labelWarningContent.setText("Warning");
-
-        javax.swing.GroupLayout dialogWarningLayout = new javax.swing.GroupLayout(dialogWarning.getContentPane());
-        dialogWarning.getContentPane().setLayout(dialogWarningLayout);
-        dialogWarningLayout.setHorizontalGroup(
-            dialogWarningLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dialogWarningLayout.createSequentialGroup()
-                .addGroup(dialogWarningLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(dialogWarningLayout.createSequentialGroup()
-                        .addGap(89, 89, 89)
-                        .addComponent(btnWarningOK))
-                    .addGroup(dialogWarningLayout.createSequentialGroup()
-                        .addGap(102, 102, 102)
-                        .addComponent(labelWarningContent)))
-                .addContainerGap(105, Short.MAX_VALUE))
-        );
-        dialogWarningLayout.setVerticalGroup(
-            dialogWarningLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dialogWarningLayout.createSequentialGroup()
-                .addContainerGap(24, Short.MAX_VALUE)
-                .addComponent(labelWarningContent, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnWarningOK)
-                .addContainerGap())
-        );
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         btnWithdraw.setText("Withdraw");
@@ -391,8 +359,7 @@ public class SavingAccountFrame extends javax.swing.JFrame implements SavingAcco
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTransfer, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnViewTransaction, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 24, Short.MAX_VALUE))
+                    .addComponent(btnViewTransaction, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
@@ -437,9 +404,9 @@ public class SavingAccountFrame extends javax.swing.JFrame implements SavingAcco
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelBalanceValue)
                     .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17))
+                .addContainerGap())
         );
 
         pack();
@@ -491,99 +458,63 @@ public class SavingAccountFrame extends javax.swing.JFrame implements SavingAcco
     }//GEN-LAST:event_dialogWithdrawComponentHidden
 
     private void tfTransferToAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfTransferToAccountActionPerformed
-        // TODO add your handling code here:
-        double amount = Double.parseDouble(tfTransferAmount.getText());
-        long toAccount = Long.parseLong(tfTransferToAccount.getText());
-        try {
-            mActionListener.transfer(amount, toAccount);
-        } catch (Exception ex) {
-            if(ex instanceof BalanceLimitException) {
-                String error = ((BalanceLimitException) ex).getMessage();
-            }
-            Logger.getLogger(SavingAccountFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        // TODO add your handling code here:
     }//GEN-LAST:event_tfTransferToAccountActionPerformed
 
     private void btnDepositOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDepositOKActionPerformed
         // TODO add your handling code here:
-        double amount = Double.parseDouble(tfTransferAmount.getText());
-        mActionListener.deposit(amount);
+//        double amount = Double.parseDouble(tfTransferAmount.getText());
+//        mActionListener.deposit(amount);
+        mActionListener.newAction(TypeOfAccountAction.DEPOSIT);
     }//GEN-LAST:event_btnDepositOKActionPerformed
 
     private void btnWithdrawOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnWithdrawOKActionPerformed
         // TODO add your handling code here:
-        double amount = Double.parseDouble(tfWithdrawAmount.getText());
-        try {
-            mActionListener.withdraw(amount);
-        } catch (Exception ex) {
-            if(ex instanceof BalanceLimitException) {
-                String error = ((BalanceLimitException) ex).getMessage();
-            }
-            Logger.getLogger(SavingAccountFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }      
+        mActionListener.newAction(TypeOfAccountAction.WITHDRAW);
     }//GEN-LAST:event_btnWithdrawOKActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
+        mActionListener.back();
         this.dispose();
         homeFrame.setVisible(true);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnTransferOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransferOKActionPerformed
-        // TODO add your handling code here:
-        double amount = Double.parseDouble(tfTransferAmount.getText());
-        long accountId = Long.parseLong(tfTransferToAccount.getText());
-        try {
-            mActionListener.transfer(amount, accountId);
-        } catch (Exception ex) {
-            if(ex instanceof BalanceLimitException){
-                String msg = ((BalanceLimitException) ex).getMessage();
-                labelWarningContent.setText(msg);
-                dialogWarning.setVisible(true);
-            }
-            Logger.getLogger(SavingAccountFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        dialogTransfer.dispose();
+        mActionListener.newAction(TypeOfAccountAction.TRANSFER);
     }//GEN-LAST:event_btnTransferOKActionPerformed
 
-    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+    private void btnTransferCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransferCancelActionPerformed
         // TODO add your handling code here:
-        dialogTransfer.dispose();
-    }//GEN-LAST:event_btnCancelActionPerformed
+        disposeActionDialog(TypeOfAccountAction.TRANSFER);
+    }//GEN-LAST:event_btnTransferCancelActionPerformed
 
-    private void btnWarningOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnWarningOKActionPerformed
+    private void btnDepositCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDepositCancelActionPerformed
         // TODO add your handling code here:
-        dialogWarning.setVisible(false);
-    }//GEN-LAST:event_btnWarningOKActionPerformed
-
-    private void btnCancel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancel1ActionPerformed
-        // TODO add your handling code here:
-        dialogDeposit.dispose();
-    }//GEN-LAST:event_btnCancel1ActionPerformed
+        disposeActionDialog(TypeOfAccountAction.DEPOSIT);
+    }//GEN-LAST:event_btnDepositCancelActionPerformed
 
     private void btnWithdrawCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnWithdrawCancelActionPerformed
         // TODO add your handling code here:
-        dialogWithdraw.dispose();
+        disposeActionDialog(TypeOfAccountAction.WITHDRAW);
     }//GEN-LAST:event_btnWithdrawCancelActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
-    private final javax.swing.JButton btnCancel = new javax.swing.JButton();
-    private final javax.swing.JButton btnCancel1 = new javax.swing.JButton();
     private final javax.swing.JButton btnDeposit = new javax.swing.JButton();
+    private final javax.swing.JButton btnDepositCancel = new javax.swing.JButton();
     private final javax.swing.JButton btnDepositOK = new javax.swing.JButton();
     private final javax.swing.JButton btnTransfer = new javax.swing.JButton();
+    private final javax.swing.JButton btnTransferCancel = new javax.swing.JButton();
     private final javax.swing.JButton btnTransferOK = new javax.swing.JButton();
     private javax.swing.JButton btnViewTransaction;
-    private final javax.swing.JButton btnWarningOK = new javax.swing.JButton();
     private final javax.swing.JButton btnWithdraw = new javax.swing.JButton();
     private final javax.swing.JButton btnWithdrawCancel = new javax.swing.JButton();
     private final javax.swing.JButton btnWithdrawOK = new javax.swing.JButton();
     private final javax.swing.JDialog dialogDeposit = new javax.swing.JDialog();
     private final javax.swing.JDialog dialogTransfer = new javax.swing.JDialog();
     private javax.swing.JDialog dialogViewTransaction;
-    private javax.swing.JDialog dialogWarning;
     private final javax.swing.JDialog dialogWithdraw = new javax.swing.JDialog();
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -595,15 +526,56 @@ public class SavingAccountFrame extends javax.swing.JFrame implements SavingAcco
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel labelBalanceValue;
-    private javax.swing.JLabel labelWarningContent;
     private javax.swing.JTextField tfDepositAmount;
     private javax.swing.JTextField tfTransferAmount;
     private final javax.swing.JTextField tfTransferToAccount = new javax.swing.JTextField();
     private javax.swing.JTextField tfWithdrawAmount;
     // End of variables declaration//GEN-END:variables
+   @Override
+    public double getWithdrawAmount() {
+        return Double.parseDouble(tfWithdrawAmount.getText());
+    }
+
+    @Override
+    public double getDepositAmount() {
+        return Double.parseDouble(tfDepositAmount.getText());
+    }
+
+    @Override
+    public double getTransferAmount() {
+        return Double.parseDouble(tfTransferAmount.getText());
+    }
+
+    @Override
+    public long getTransferAccountId() {
+        return Long.parseLong(tfTransferAmount.getText());
+    }
 
     @Override
     public void refreshBalance(String amount) {
-      labelBalanceValue.setText(amount);
+        dialogWithdraw.dispose();
+        dialogTransfer.dispose();
+        dialogDeposit.dispose();
+        labelBalanceValue.setText(amount);
+    }
+
+    @Override
+    public void disposeActionDialog(TypeOfAccountAction action) {
+        switch(action) {
+            case TRANSFER:
+                dialogTransfer.setVisible(false);
+                tfTransferAmount.setText("");
+                break;
+            case WITHDRAW:
+                dialogWithdraw.setVisible(false);
+                tfWithdrawAmount.setText("");
+                break;
+            case DEPOSIT:
+                dialogDeposit.setVisible(false);
+                tfDepositAmount.setText("");
+                break;
+            default:
+                break;
+        }
     }
 }

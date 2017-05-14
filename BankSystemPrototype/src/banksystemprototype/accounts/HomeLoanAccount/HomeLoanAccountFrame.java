@@ -5,22 +5,29 @@
  */
 package banksystemprototype.accounts.HomeLoanAccount;
 
+import banksystemprototype.TypeOfAccountAction;
 import banksystemprototype.accounts.CustomerHomeFrame;
+import banksystemprototype.accounts.Database.DBConnection;
+import java.sql.Connection;
 import javax.swing.JFrame;
 
 /**
  *
  * @author caidong
  */
-public class HomeLoanAccountFrame extends javax.swing.JFrame {
+public class HomeLoanAccountFrame extends javax.swing.JFrame implements HomeLoanAccountContract.View{
 
     /**
      * Creates new form SavingAccountForm
      */ 
     private final CustomerHomeFrame homeFrame;
+    private final HomeLoanAccountContract.UserActionListener mActionListener;
+    private Connection conn;
     public HomeLoanAccountFrame(JFrame home) {
         initComponents();
         homeFrame = (CustomerHomeFrame) home;
+        mActionListener = new HomeLoanAccountController(this);
+        conn = DBConnection.getConnection();
     }
 
     /**
@@ -148,7 +155,7 @@ public class HomeLoanAccountFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnBack)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(labelBalanceValue1))
@@ -166,22 +173,27 @@ public class HomeLoanAccountFrame extends javax.swing.JFrame {
 
     private void btnDepositActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDepositActionPerformed
         // TODO add your handling code here:
+        mActionListener.newAction(TypeOfAccountAction.DEPOSIT);
     }//GEN-LAST:event_btnDepositActionPerformed
 
     private void btnWithdrawActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnWithdrawActionPerformed
         // TODO add your handling code here:
+        mActionListener.newAction(TypeOfAccountAction.WITHDRAW);
     }//GEN-LAST:event_btnWithdrawActionPerformed
 
     private void btnTransferActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransferActionPerformed
         // TODO add your handling code here:
+        mActionListener.newAction(TypeOfAccountAction.TRANSFER);
     }//GEN-LAST:event_btnTransferActionPerformed
 
     private void btnViewTransactionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewTransactionActionPerformed
         // TODO add your handling code here:
+        mActionListener.newAction(TypeOfAccountAction.VIEW_TRANSACTION);
     }//GEN-LAST:event_btnViewTransactionActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
+        mActionListener.back();
         this.dispose();
         homeFrame.setVisible(true);
     }//GEN-LAST:event_btnBackActionPerformed
@@ -198,4 +210,14 @@ public class HomeLoanAccountFrame extends javax.swing.JFrame {
     private javax.swing.JLabel labelBalanceValue;
     private javax.swing.JLabel labelBalanceValue1;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public double getTransferAmount() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public double getDepositAmount() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

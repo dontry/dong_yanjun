@@ -1,5 +1,6 @@
 package banksystemprototype.accounts.SavingAccount;
 
+import banksystemprototype.TypeOfAccountAction;
 import banksystemprototype.accounts.Transaction.Transaction;
 import java.util.Date;
 import java.util.List;
@@ -10,14 +11,20 @@ import java.util.List;
 public interface SavingAccountContract {
     interface View {
         void refreshBalance(String amount);
+        double getWithdrawAmount();
+        double getDepositAmount();
+        double getTransferAmount();
+        long getTransferAccountId();
+        void disposeActionDialog(TypeOfAccountAction action);
     }
     interface UserActionListener {
-        double deposit(double amount);
-        double withdraw(double amount) throws Exception;
-        double transfer(double amount, long toAccountId) throws Exception;
+        double deposit();
+        double withdraw() throws Exception;
+        double transfer() throws Exception;
         List<Transaction> checkTransactions(Date startingDate,  Date endingDate);
         void openAccount( long accountId);
         void showAccount();
-        void saveAccount();
+        void back();
+        void newAction(TypeOfAccountAction action);
     }
 }

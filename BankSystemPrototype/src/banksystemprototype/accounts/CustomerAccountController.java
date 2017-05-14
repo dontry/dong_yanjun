@@ -14,9 +14,9 @@ import banksystemprototype.users.Customer;
 public class CustomerAccountController implements AccountContract.CustomerActionListener{
 
     private final CustomerRepository mCustomerRepository;
-    private final AccountContract.CustomerHomeView mHomeView;
+    private final AccountContract.View mHomeView;
 
-    public CustomerAccountController(CustomerRepository mCustomerRepository, AccountContract.CustomerHomeView mHomeView) {
+    public CustomerAccountController(CustomerRepository mCustomerRepository, AccountContract.View mHomeView) {
         this.mCustomerRepository = mCustomerRepository;
         this.mHomeView = mHomeView;
     }

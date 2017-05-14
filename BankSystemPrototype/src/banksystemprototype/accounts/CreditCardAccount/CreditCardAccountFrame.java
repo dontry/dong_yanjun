@@ -583,41 +583,71 @@ public class CreditCardAccountFrame extends javax.swing.JFrame implements Credit
 
     @Override
     public double getTransferAmount() {
-        return Double.parseDouble(tfTransferAmount.getText());
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public double getWithdrawAmount() {
-        return Double.parseDouble(tfWithdrawAmount.getText());
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public double getDepositAmount() {
-        return Double.parseDouble(tfDepositAmount.getText());
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public long getTransferId() {
-        return Long.parseLong(tfTransferAccount.getText());
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void disposeActionDialog(TypeOfAccountAction action) {
-        switch(action) {
-            case TRANSFER:
-                dialogTransfer.setVisible(false);
-                tfTransferAmount.setText("");
-                break;
-            case WITHDRAW:
-                dialogWithdraw.setVisible(false);
-                tfWithdrawAmount.setText("");
-                break;
-            case DEPOSIT:
-                dialogDeposit.setVisible(false);
-                tfDepositAmount.setText("");
-                break;
-            default:
-                break;
-        }
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+//    @Override
+//    public void refreshBalance(String amount) {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
+//
+//    @Override
+//    public double getTransferAmount() {
+//        return Double.parseDouble(tfTransferAmount.getText());
+//    }
+//
+//    @Override
+//    public double getWithdrawAmount() {
+//        return Double.parseDouble(tfWithdrawAmount.getText());
+//    }
+//
+//    @Override
+//    public double getDepositAmount() {
+//        return Double.parseDouble(tfDepositAmount.getText());
+//    }
+//
+//    @Override
+//    public long getTransferId() {
+//        return Long.parseLong(tfTransferAccount.getText());
+//    }
+//
+//    @Override
+//    public void disposeActionDialog(TypeOfAccountAction action) {
+//        switch(action) {
+//            case TRANSFER:
+//                dialogTransfer.setVisible(false);
+//                tfTransferAmount.setText("");
+//                break;
+//            case WITHDRAW:
+//                dialogWithdraw.setVisible(false);
+//                tfWithdrawAmount.setText("");
+//                break;
+//            case DEPOSIT:
+//                dialogDeposit.setVisible(false);
+//                tfDepositAmount.setText("");
+//                break;
+//            default:
+//                break;
+//        }
+//    }
 }

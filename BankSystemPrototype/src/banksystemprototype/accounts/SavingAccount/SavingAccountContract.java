@@ -16,12 +16,13 @@ public interface SavingAccountContract {
         double getTransferAmount();
         long getTransferAccountId();
         void disposeActionDialog(TypeOfAccountAction action);
+        String getUsername();
     }
     interface UserActionListener {
         double deposit();
         double withdraw() throws Exception;
         double transfer() throws Exception;
-        void openAccount( long accountId);
+        void openAccount(String username);
         void showAccount();
         void back();
         void newAction(TypeOfAccountAction action);

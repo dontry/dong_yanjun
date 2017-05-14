@@ -26,6 +26,7 @@ public class SavingAccountFrame extends javax.swing.JFrame implements SavingAcco
     private static SavingAccountContract.UserActionListener mActionListener;
     private final CustomerHomeFrame homeFrame;
     private Connection conn;
+    private String username;
 
     
     public SavingAccountFrame(JFrame home) {
@@ -33,6 +34,8 @@ public class SavingAccountFrame extends javax.swing.JFrame implements SavingAcco
         homeFrame = (CustomerHomeFrame) home;
         mActionListener = new SavingAccountController(this);
         conn = DBConnection.getConnection();
+        username = homeFrame.getUsername();
+        mActionListener.openAccount(username);
     }
 
     /**
@@ -561,4 +564,18 @@ public class SavingAccountFrame extends javax.swing.JFrame implements SavingAcco
                 break;
         }
     }
+    
+     public static void main(String args[]) {
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                SavingAccountFrame view = new SavingAccountFrame(new JFrame());
+                view.setVisible(true);
+            }
+        });
+    }
+     @Override
+     public String getUsername() {
+        return username;
+     }
 }

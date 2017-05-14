@@ -60,7 +60,7 @@ public class DBManager {
         return resultList;
     }
   
-    public void update(String tableName, HashMap<String, String> attributes, String condition) {
+    public static void update(String tableName, HashMap<String, String> attributes, String condition) {
         Connection conn = DBConnection.getConnection();
         Statement stmt = null;
         String stringAttributes = concatenateAttributes(attributes);
@@ -82,7 +82,7 @@ public class DBManager {
     }
 
     
-    public  void insert(String tableName, String[] values) {
+    public static void insert(String tableName, String[] values) {
         Connection conn = DBConnection.getConnection();
         Statement stmt = null;
         String joinValues = String.join(",", values);
@@ -105,7 +105,7 @@ public class DBManager {
         }
     };
         
-    public void delete(String tableName, String condition) {
+    public static void delete(String tableName, String condition) {
         Connection conn = DBConnection.getConnection();
         Statement stmt = null;
          try {
@@ -127,7 +127,7 @@ public class DBManager {
     }
     
     
-    private String concatenateAttributes(HashMap<String, String> attributes) {
+    private static String concatenateAttributes(HashMap<String, String> attributes) {
         //HOW TO DEAL WITH DATE TYPE?
         ArrayList<String> attributesList = new ArrayList<>();
         for(Map.Entry attr: attributes.entrySet()) {

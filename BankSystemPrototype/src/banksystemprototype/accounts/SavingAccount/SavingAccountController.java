@@ -3,6 +3,7 @@ package banksystemprototype.accounts.SavingAccount;
 import banksystemprototype.Exceptions.BalanceLimitException;
 import banksystemprototype.TypeOfAccountAction;
 import banksystemprototype.accounts.Database.DBConnection;
+import banksystemprototype.accounts.Database.DBManager;
 import banksystemprototype.accounts.Transaction.Transaction;
 import banksystemprototype.widgets.PinFrame;
 import banksystemprototype.widgets.PinServiceApi;
@@ -18,6 +19,9 @@ public class SavingAccountController implements SavingAccountContract.UserAction
     private SavingAccount mSavingAccount;
     private SavingAccountContract.View view;
     private TypeOfAccountAction mAccountAction;
+    private String ACCOUNT_TABLE_NAME =  "S27624366.ACCOUNT";
+    private String CUSTOMER_TABLE_NAME = "S27624366.CUSTOMER";
+    private String mUsername;
     
     public SavingAccountController(SavingAccountContract.View v) {
         view = v;
@@ -58,8 +62,11 @@ public class SavingAccountController implements SavingAccountContract.UserAction
 
 
     @Override
-    public void openAccount(long accountId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void openAccount(String username) {
+        String condition = " WHERE username = '" + username + "'";
+        mUsername = username;
+        Object[] obj = DBManager.check(ACCOUNT_TABLE_NAME, condition).get(0);
+        
     }
 
     @Override
@@ -70,35 +77,18 @@ public class SavingAccountController implements SavingAccountContract.UserAction
     @Override
     public boolean verifyPin(Object pin) {
         //verifyPin
-        boolean isVerified = true;
+        String condition = " WHERE username = '" + mUsername + "' AND pin = " + pin ;
+        Object[] obj = DBManager.check(CUSTOMER_TABLE_NAME, condition).get(0);
+        boolean isVerified = obj.length > 0;
         if(isVerified) {
-            switch(mAccountAction) {
-                case DEPOSIT:
-                    deposit();
-                    break;
-                case TRANSFER:
-            {
-                try {
-                    transfer();
-                } catch (BalanceLimitException ex) {
-                    Logger.getLogger(SavingAccountController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-                    break;
-                case WITHDRAW:
-            {
-                try {
-                    withdraw();
-                } catch (BalanceLimitException ex) {
-                    Logger.getLogger(SavingAccountController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-                    break;
+            try {
+                proceedTransaction();
+                        } catch (BalanceLimitException ex) {
+                Logger.getLogger(SavingAccountController.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             
         }
-        System.out.println("pin verified is" + String.valueOf(isVerified));
         return isVerified;
     }
 
@@ -112,4 +102,20 @@ public class SavingAccountController implements SavingAccountContract.UserAction
         mAccountAction = action;
         new PinFrame(this).setVisible(true);
     }
+    
+      private void proceedTransaction() throws BalanceLimitException {
+        switch(mAccountAction) {
+            case CREATE_DEPOSIT:
+                deposit();
+                break;
+            case TRANSFER:
+                transfer();
+                break;
+            case WITHDRAW:
+                withdraw();              
+                break;
+        }
+        view.disposeActionDialog(mAccountAction);
+    }
+
 }

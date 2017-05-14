@@ -38,6 +38,7 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
         loginFrame = (LoginFrame) login;
         conn = DBConnection.getConnection();
         this.username = username;
+        labelUsername.setText(username);
     }
 
     /**
@@ -61,7 +62,7 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
         btnTermDepositAccount = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        labelUsername = new javax.swing.JLabel();
         btnLogout = new javax.swing.JButton();
 
         jMenuItem1.setText("jMenuItem1");
@@ -134,8 +135,8 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         jLabel1.setText("Welcome Back");
 
-        jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        jLabel2.setText("username");
+        labelUsername.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        labelUsername.setText("username");
 
         btnViewTransactions.setText("View Transaction");
         btnViewTransactions.setActionCommand("View Transactions");
@@ -159,7 +160,7 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
                         .addComponent(jLabel1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(159, 159, 159)
-                        .addComponent(jLabel2)))
+                        .addComponent(labelUsername)))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -181,7 +182,7 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
+                .addComponent(labelUsername)
                 .addGap(51, 51, 51)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -309,7 +310,6 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
     private javax.swing.JButton btnViewTransaction;
     private final javax.swing.JButton btnViewTransactions = new javax.swing.JButton();
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuItem jMenuItem1;
@@ -318,6 +318,7 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JDialog jdViewTransaction;
+    private javax.swing.JLabel labelUsername;
     private javax.swing.JTable tblTransaction;
     // End of variables declaration//GEN-END:variables
     
@@ -359,5 +360,9 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
                 new CustomerHomeFrame(new LoginFrame(), "abc").setVisible(true);
             }
         });
+    }
+     
+    public String getUsername(){
+        return username;
     }
 }

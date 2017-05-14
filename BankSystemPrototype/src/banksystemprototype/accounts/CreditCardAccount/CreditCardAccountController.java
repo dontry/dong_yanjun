@@ -43,13 +43,6 @@ public class CreditCardAccountController implements CreditCardContract.UserActio
     public void transfer() throws BalanceLimitException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-
-    @Override
-    public List<Transaction> checkTransactions(Date startingDate, Date endingDate) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
 
     @Override
     public void openAccount(long accountId) {
@@ -78,7 +71,7 @@ public class CreditCardAccountController implements CreditCardContract.UserActio
         if(isVerified) {
             proceedTransaction();
         } else {
-            
+            //
         }
         System.out.println("pin verified is" + String.valueOf(isVerified));
         return isVerified;

@@ -56,7 +56,6 @@ public class SavingAccountFrame extends javax.swing.JFrame implements SavingAcco
         jLabel7 = new javax.swing.JLabel();
         dialogViewTransaction = new javax.swing.JDialog();
         jPanel1 = new javax.swing.JPanel();
-        btnViewTransaction = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         labelBalanceValue = new javax.swing.JLabel();
         btnBack = new javax.swing.JButton();
@@ -327,13 +326,6 @@ public class SavingAccountFrame extends javax.swing.JFrame implements SavingAcco
             }
         });
 
-        btnViewTransaction.setText("View Transaction");
-        btnViewTransaction.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnViewTransactionActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -343,11 +335,10 @@ public class SavingAccountFrame extends javax.swing.JFrame implements SavingAcco
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnWithdraw, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnDeposit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnDeposit, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnTransfer, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnViewTransaction, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -357,9 +348,7 @@ public class SavingAccountFrame extends javax.swing.JFrame implements SavingAcco
                     .addComponent(btnWithdraw, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDeposit, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnTransfer, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnViewTransaction, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(btnTransfer, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
@@ -427,11 +416,6 @@ public class SavingAccountFrame extends javax.swing.JFrame implements SavingAcco
         // TODO add your handling code here:
         dialogTransfer.setVisible(true);
     }//GEN-LAST:event_btnTransferActionPerformed
-
-    private void btnViewTransactionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewTransactionActionPerformed
-        // TODO add your handling code here:
-        dialogViewTransaction.setVisible(true);
-    }//GEN-LAST:event_btnViewTransactionActionPerformed
 
     private void tfTransferAmountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfTransferAmountActionPerformed
         // TODO add your handling code here:
@@ -508,7 +492,6 @@ public class SavingAccountFrame extends javax.swing.JFrame implements SavingAcco
     private final javax.swing.JButton btnTransfer = new javax.swing.JButton();
     private final javax.swing.JButton btnTransferCancel = new javax.swing.JButton();
     private final javax.swing.JButton btnTransferOK = new javax.swing.JButton();
-    private javax.swing.JButton btnViewTransaction;
     private final javax.swing.JButton btnWithdraw = new javax.swing.JButton();
     private final javax.swing.JButton btnWithdrawCancel = new javax.swing.JButton();
     private final javax.swing.JButton btnWithdrawOK = new javax.swing.JButton();

@@ -14,9 +14,10 @@ public class PinFrame extends javax.swing.JFrame implements PinServiceApi {
     /**
      * Creates new form PinFrame
      */
-    
-    public PinFrame(Listener listener) {
+    private PinServiceApi.Listener mListener;
+    public PinFrame(PinServiceApi.Listener listener) {
         initComponents();
+        mListener= listener;
     }
 
     /**
@@ -45,6 +46,11 @@ public class PinFrame extends javax.swing.JFrame implements PinServiceApi {
         });
 
         btnCancel.setText("Cancel");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel1.setText("Enter Pin:");
@@ -89,21 +95,27 @@ public class PinFrame extends javax.swing.JFrame implements PinServiceApi {
 
     private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
         // TODO add your handling code here:
-        Long pin = Long.parseLong(tfPin.getPassword().toString());
-        verifyPin(pin, new Callback() {
+        String pin = tfPin.getPassword().toString();
+        getPin(pin, new Callback() {
             @Override
             public void onload(Object pin) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                mListener.verifyPin(pin);
             }
             
         });
+        this.dispose();
     }//GEN-LAST:event_btnOKActionPerformed
 
     private void tfPinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfPinActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfPinActionPerformed
 
-    public void verifyPin(long pin, Callback callback) {
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnCancelActionPerformed
+
+    public void getPin(String pin, Callback callback) {
         callback.onload(pin);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

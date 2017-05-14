@@ -3,12 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package banksystemprototype.accounts.TermDepositAccount;
+package banksystemprototype.accounts.CreditCardAccount;
 
 import banksystemprototype.Exceptions.BalanceLimitException;
 import banksystemprototype.TypeOfAccountAction;
 import banksystemprototype.accounts.Database.DBConnection;
-import banksystemprototype.accounts.SavingAccount.SavingAccountController;
 import banksystemprototype.accounts.Transaction.Transaction;
 import banksystemprototype.widgets.PinFrame;
 import banksystemprototype.widgets.PinServiceApi;
@@ -21,68 +20,36 @@ import java.util.logging.Logger;
  *
  * @author caidong
  */
-public class TermDepositAccountController implements TermDepositAccountContract.UserActionListener, PinServiceApi.Listener {
+public class CreditCardAccountController implements CreditCardContract.UserActionListener, PinServiceApi.Listener{
     private TypeOfAccountAction mAccountAction;
-    private TermDepositAccountContract.View view;
-    private TermDeposit mTermDeposit;
+    private CreditCardContract.View view;
     
-    public TermDepositAccountController(TermDepositAccountContract.View v) {
+    public CreditCardAccountController(CreditCardContract.View v) {
         view = v;
     }
+
     
     @Override
-    public double withdraw() {
-        double amount = view.getWithdrawAmount();
-        //update Table;
-        deleteTermDeposit(mTermDeposit.getmTermId());
-        
-        return amount;
-    }
-
-    @Override
-    public void createTermDeposit() {
-        double amount = view.getCreateDepositAmount();
-        TypeOfTermDeposit type = view.getTypeOfTermDeposit();
-        Date startingDate = view.getTermDepositStartingDate();
-        //insert to  table
-        
-    }
-
-   
-    private void deleteTermDeposit(long termDepositId) {
+    public void deposit() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public double transfer() {
-        double amount = view.getTransferAmount();
-        long toAccountId = view.getTransferAccountId();
-        //update table
-        deleteTermDeposit(mTermDeposit.getmTermId());
-        
-        return amount;
+    public double withdraw() throws BalanceLimitException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void transfer() throws BalanceLimitException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    @Override
-    public void viewAllTermDeposits() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public TermDeposit checkTermDeposit(long termId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        
-    }
-
-    @Override
-    public List<TermDeposit> getAllTermDeposit() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     @Override
     public List<Transaction> checkTransactions(Date startingDate, Date endingDate) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
 
     @Override
     public void openAccount(long accountId) {
@@ -108,34 +75,45 @@ public class TermDepositAccountController implements TermDepositAccountContract.
     public boolean verifyPin(Object pin) {
         //verifyPin
         boolean isVerified = true;
-        if(isVerified){
+        if(isVerified) {
             proceedTransaction();
+        } else {
+            
         }
+        System.out.println("pin verified is" + String.valueOf(isVerified));
         return isVerified;
     }
-    
 
     @Override
     public void newAction(TypeOfAccountAction action) {
         mAccountAction = action;
-        new PinFrame(this).setVisible(true);    
+        new PinFrame(this).setVisible(true);   
     }
     
-    private void proceedTransaction() {
+    private void proceedTransaction(){
         switch(mAccountAction) {
-            case CREATE_DEPOSIT:
-                createTermDeposit();
+            case DEPOSIT:
+                deposit();
                 break;
             case TRANSFER:
+        {
+            try {
                 transfer();
+            } catch (BalanceLimitException ex) {
+                Logger.getLogger(CreditCardAccountController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
                 break;
             case WITHDRAW:
-                withdraw();              
+        {
+            try {
+                withdraw();
+            } catch (BalanceLimitException ex) {
+                Logger.getLogger(CreditCardAccountController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
                 break;
         }
         view.disposeActionDialog(mAccountAction);
     }
-
-
- }
-    
+}

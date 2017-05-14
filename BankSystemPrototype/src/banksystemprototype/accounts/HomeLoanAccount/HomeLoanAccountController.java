@@ -5,11 +5,15 @@
  */
 package banksystemprototype.accounts.HomeLoanAccount;
 
+import banksystemprototype.TypeOfAccountAction;
+import banksystemprototype.accounts.Database.DBConnection;
+import banksystemprototype.widgets.PinServiceApi;
+
 /**
  *
  * @author caidong
  */
-public class HomeLoanAccountController implements HomeLoanAccountContract.UserActionListener {
+public class HomeLoanAccountController implements HomeLoanAccountContract.UserActionListener, PinServiceApi.Listener {
     private HomeLoanAccountContract.View view;
     public HomeLoanAccountController(HomeLoanAccountContract.View v) {
      view = v;   
@@ -41,6 +45,16 @@ public class HomeLoanAccountController implements HomeLoanAccountContract.UserAc
 
     @Override
     public void back() {
+        DBConnection.closeConnection();
+    }
+
+    @Override
+    public boolean verifyPin(Object pin) {
+        return false;
+    }
+
+    @Override
+    public void newAction(TypeOfAccountAction action) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

@@ -3,17 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package banksystemprototype.widgets;
+package banksystemprototype;
 
 /**
  *
  * @author caidong
  */
-public interface PinServiceApi {
-     interface Callback<T> {
-        public void onload(T pin);
-    }
-     interface Listener<T> {
-         public boolean verifyPin(T pin);
-     }
+public enum TypeOfAccountAction {
+    TRANSFER, WITHDRAW, DEPOSIT, CREATE_DEPOSIT, CREATE_LOAN, VIEW_TRANSACTION
 }

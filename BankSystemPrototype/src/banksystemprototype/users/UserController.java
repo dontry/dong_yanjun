@@ -5,6 +5,7 @@
  */
 package banksystemprototype.users;
 
+import banksystemprototype.TypeOfMessageDialog;
 import banksystemprototype.accounts.Database.DBConnection;
 import banksystemprototype.accounts.Database.DBManager;
 import java.sql.Connection;
@@ -19,6 +20,7 @@ public class UserController implements UserContract.UserActionListener {
     private static final String ADMINISTRATOR = "ADMINISTRATOR";
     private UserContract.View view;
     private Connection conn;
+
     
     public UserController(UserContract.View v) {
         view = v;
@@ -31,7 +33,7 @@ public class UserController implements UserContract.UserActionListener {
         if(isVerified) {
                 view.showLogin(TypeOfUser.valueOf(userType), username);
          } else {
-                
+            view.showMessageDialog("Sorry, your password or username is incorrect", TypeOfMessageDialog.WARNING);
         }
       
     }

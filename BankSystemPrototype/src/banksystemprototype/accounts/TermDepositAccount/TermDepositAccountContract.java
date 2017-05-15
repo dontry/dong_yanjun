@@ -2,6 +2,7 @@ package banksystemprototype.accounts.TermDepositAccount;
 
 
 import banksystemprototype.TypeOfAccountAction;
+import banksystemprototype.TypeOfMessageDialog;
 import banksystemprototype.accounts.Transaction.Transaction;
 import java.util.Date;
 import java.util.List;
@@ -20,6 +21,9 @@ public interface TermDepositAccountContract {
         long getTransferTermDepositId();
         long getWithdrawTermDepositId();
         void disposeActionDialog(TypeOfAccountAction action);
+        void showMessageDialog(String msg, TypeOfMessageDialog type);
+        void refreshBalance(String balance);
+        void showTermDeposit(List<TermDeposit> terms);
     }
     interface UserActionListener {
         double withdraw();
@@ -29,7 +33,7 @@ public interface TermDepositAccountContract {
         TermDeposit checkTermDeposit(long termId);
         List<TermDeposit> getAllTermDeposit();
         List<Transaction> checkTransactions(Date startingDate,  Date endingDate);
-        void openAccount( long accountId);
+        void openAccount(String username);
         void showAccount();
         void saveAccount();
         void back();

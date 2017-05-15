@@ -1,9 +1,13 @@
 package banksystemprototype.accounts.TermDepositAccount;
 
 import banksystemprototype.Utils.DataConverter;
+import banksystemprototype.accounts.Account;
+import banksystemprototype.accounts.TypeOfAccount;
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 //import org.joda.time.Days;
 
 /**
@@ -16,14 +20,16 @@ public class TermDeposit {
     private Date mStartingDate;
     private double mOverallBalance;
     private double mInterestRate;
+    private boolean mIsfinished;
 
-    public TermDeposit(long mTermId, double mBaseDeposit, TypeOfTermDeposit mTypeOfTermDeposit,  Date mStartingDate) {
+    public TermDeposit(long mTermId, double mBaseDeposit, TypeOfTermDeposit mTypeOfTermDeposit,  Date mStartingDate, boolean isFinished ) {
         this.mTermId = mTermId;
         this.mBaseDeposit = mBaseDeposit;
         this.mTypeOfTermDeposit = mTypeOfTermDeposit;
         this.mStartingDate =  mStartingDate;
         this.mInterestRate = initInterestRate(mTypeOfTermDeposit);
         this.mOverallBalance = mBaseDeposit;
+        this.mIsfinished = isFinished;
     }
 
     public double getmInterestRate() {return mInterestRate; };
@@ -91,5 +97,28 @@ public class TermDeposit {
     public double getTotalAccrueAmount(Date date) {
         double interest = calculateInterest(date);
         return mBaseDeposit * interest;
+    }
+    
+    public static TermDeposit convertToTermDeposit(HashMap<String, Object> map){
+        Long td_purchase_id = ((BigDecimal) map.get("td_purchase_id")).longValueExact();
+        Long account_id = ((BigDecimal) map.get("account_id")).longValueExact();
+        TypeOfTermDeposit type = TypeOfTermDeposit.THREE_MONTHS;
+        switch((Integer)map.get("account_type")) {
+            case 3:
+                type = TypeOfTermDeposit.THREE_MONTHS;
+                break;
+            case 6:
+                type = TypeOfTermDeposit.SIX_MONTHS;
+                break;
+            case 12:
+                type = TypeOfTermDeposit.TWELVE_MONTHS;
+                break;
+        }
+        Date start_date = (Date) map.get("start_date");
+        Date end_date = (Date) map.get("end_date");
+        boolean finish_status = ((String) map.get("finish_status")).equals("N") ? false : true;
+        Double amount = ((BigDecimal) map.get("balance")).doubleValue();
+     
+        return new TermDeposit(td_purchase_id, amount, type, start_date, finish_status);
     }
 }

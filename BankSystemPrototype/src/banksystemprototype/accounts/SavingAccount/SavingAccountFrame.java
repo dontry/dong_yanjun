@@ -584,7 +584,7 @@ public class SavingAccountFrame extends javax.swing.JFrame implements SavingAcco
      }
 
     @Override
-    public void showMessage(String msg, TypeOfMessageDialog type) {
+    public void showMessageDialog(String msg, TypeOfMessageDialog type) {
         switch(type) {
             case WARNING: 
                 JOptionPane.showMessageDialog(this, msg, type.toString(), JOptionPane.WARNING_MESSAGE);

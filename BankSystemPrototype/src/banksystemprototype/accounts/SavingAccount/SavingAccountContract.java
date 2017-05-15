@@ -18,10 +18,10 @@ public interface SavingAccountContract {
         long getTransferAccountId();
         void disposeActionDialog(TypeOfAccountAction action);
         String getUsername();
-        void showMessage(String msg, TypeOfMessageDialog type);
+        void showMessageDialog(String msg, TypeOfMessageDialog type);
     }
     interface UserActionListener {
-        double deposit();
+        double deposit() throws Exception;
         double withdraw() throws Exception;
         double transfer() throws Exception;
         void openAccount(String username);

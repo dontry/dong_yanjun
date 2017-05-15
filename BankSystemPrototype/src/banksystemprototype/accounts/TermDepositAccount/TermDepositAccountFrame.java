@@ -6,11 +6,23 @@
 package banksystemprototype.accounts.TermDepositAccount;
 
 import banksystemprototype.TypeOfAccountAction;
+import banksystemprototype.TypeOfMessageDialog;
 import banksystemprototype.accounts.CustomerHomeFrame;
 import banksystemprototype.accounts.Database.DBConnection;
+import static java.lang.System.in;
 import java.sql.Connection;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.SpinnerListModel;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  *
@@ -29,6 +41,8 @@ public class TermDepositAccountFrame extends javax.swing.JFrame implements TermD
         homeFrame = (CustomerHomeFrame) home;
         mActionListener = new TermDepositAccountController(this);
         conn = DBConnection.getConnection();
+        
+        dateChooserTermDeposit.setMinDate(Calendar.getInstance());
     }
 
     /**
@@ -51,7 +65,11 @@ public class TermDepositAccountFrame extends javax.swing.JFrame implements TermD
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         spTermPeriod = new javax.swing.JSpinner();
+        dateChooserTermDeposit = new datechooser.beans.DateChooserCombo();
+        dialogWithdraw = new javax.swing.JDialog();
         jLabel6 = new javax.swing.JLabel();
+        btnWithdrawOK = new javax.swing.JButton();
+        btnWithdrawCancel = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         spWithdrawTermDeposit = new javax.swing.JSpinner();
         tfWithdrawAmount = new javax.swing.JTextField();
@@ -207,26 +225,31 @@ public class TermDepositAccountFrame extends javax.swing.JFrame implements TermD
                         .addGap(18, 18, 18)
                         .addGroup(dialogCreateTermDepositLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(tfCreateTermDepositAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5)
-                            .addComponent(spTermPeriod, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(spTermPeriod, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dateChooserTermDeposit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(dialogCreateTermDepositLayout.createSequentialGroup()
+                        .addGap(93, 93, 93)
+                        .addComponent(jLabel5)))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         dialogCreateTermDepositLayout.setVerticalGroup(
             dialogCreateTermDepositLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dialogCreateTermDepositLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
+                .addGap(29, 29, 29)
                 .addComponent(jLabel5)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(dialogCreateTermDepositLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(tfCreateTermDepositAmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel9)
+                .addGroup(dialogCreateTermDepositLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9)
+                    .addComponent(dateChooserTermDeposit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(dialogCreateTermDepositLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(spTermPeriod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addGroup(dialogCreateTermDepositLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCreateTermDepositOK)
                     .addComponent(btnCreateTermDepositCancel))
@@ -258,6 +281,8 @@ public class TermDepositAccountFrame extends javax.swing.JFrame implements TermD
 
         jLabel7.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel7.setText("Withdraw Money");
+
+        spWithdrawTermDeposit.setModel(new javax.swing.SpinnerListModel(new String[] {""}));
 
         tfWithdrawAmount.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -466,15 +491,6 @@ public class TermDepositAccountFrame extends javax.swing.JFrame implements TermD
         // TODO add your handling code here:
     }//GEN-LAST:event_dialogCreateTermDepositComponentHidden
 
-    private void dialogWithdrawComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_dialogWithdrawComponentHidden
-        // TODO add your handling code here:
-    }//GEN-LAST:event_dialogWithdrawComponentHidden
-
-    private void btnWithdrawOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnWithdrawOKActionPerformed
-        // TODO add your handling code here:
-        mActionListener.newAction(TypeOfAccountAction.WITHDRAW);
-    }//GEN-LAST:event_btnWithdrawOKActionPerformed
-
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
         mActionListener.back();
@@ -487,10 +503,6 @@ public class TermDepositAccountFrame extends javax.swing.JFrame implements TermD
         mActionListener.newAction(TypeOfAccountAction.TRANSFER);
     }//GEN-LAST:event_btnTransferOKActionPerformed
 
-    private void tfWithdrawAmountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfWithdrawAmountActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfWithdrawAmountActionPerformed
-
     private void btnCreateTermDepositOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateTermDepositOKActionPerformed
         // TODO add your handling code here:
         mActionListener.newAction(TypeOfAccountAction.CREATE_DEPOSIT);
@@ -500,11 +512,6 @@ public class TermDepositAccountFrame extends javax.swing.JFrame implements TermD
         // TODO add your handling code here:
         disposeActionDialog(TypeOfAccountAction.CREATE_DEPOSIT);
     }//GEN-LAST:event_btnCreateTermDepositCancelActionPerformed
-
-    private void btnWithdrawCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnWithdrawCancelActionPerformed
-        // TODO add your handling code here:
-        disposeActionDialog(TypeOfAccountAction.WITHDRAW);
-    }//GEN-LAST:event_btnWithdrawCancelActionPerformed
 
     private void btnTransferCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransferCancelActionPerformed
         // TODO add your handling code here:
@@ -516,6 +523,24 @@ public class TermDepositAccountFrame extends javax.swing.JFrame implements TermD
         dialogViewTermDeposits.setVisible(true);
     }//GEN-LAST:event_btnViewTermDepositsActionPerformed
 
+    private void dialogWithdrawComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_dialogWithdrawComponentHidden
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dialogWithdrawComponentHidden
+
+    private void btnWithdrawCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnWithdrawCancelActionPerformed
+        // TODO add your handling code here:
+        disposeActionDialog(TypeOfAccountAction.WITHDRAW);
+    }//GEN-LAST:event_btnWithdrawCancelActionPerformed
+
+    private void btnWithdrawOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnWithdrawOKActionPerformed
+        // TODO add your handling code here:
+        mActionListener.newAction(TypeOfAccountAction.WITHDRAW);
+    }//GEN-LAST:event_btnWithdrawOKActionPerformed
+
+    private void tfWithdrawAmountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfWithdrawAmountActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfWithdrawAmountActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
     private final javax.swing.JButton btnCreateTermDeposit = new javax.swing.JButton();
@@ -526,12 +551,13 @@ public class TermDepositAccountFrame extends javax.swing.JFrame implements TermD
     private final javax.swing.JButton btnTransferOK = new javax.swing.JButton();
     private javax.swing.JButton btnViewTermDeposits;
     private final javax.swing.JButton btnWithdraw = new javax.swing.JButton();
-    private final javax.swing.JButton btnWithdrawCancel = new javax.swing.JButton();
-    private final javax.swing.JButton btnWithdrawOK = new javax.swing.JButton();
+    private javax.swing.JButton btnWithdrawCancel;
+    private javax.swing.JButton btnWithdrawOK;
+    private datechooser.beans.DateChooserCombo dateChooserTermDeposit;
     private final javax.swing.JDialog dialogCreateTermDeposit = new javax.swing.JDialog();
     private final javax.swing.JDialog dialogTransfer = new javax.swing.JDialog();
     private javax.swing.JDialog dialogViewTermDeposits;
-    private final javax.swing.JDialog dialogWithdraw = new javax.swing.JDialog();
+    private javax.swing.JDialog dialogWithdraw;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -575,12 +601,22 @@ public class TermDepositAccountFrame extends javax.swing.JFrame implements TermD
 
     @Override
     public TypeOfTermDeposit getTypeOfTermDeposit() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String term = spTermPeriod.getValue().toString();
+        switch(term) {
+            case "3 months":
+                return TypeOfTermDeposit.THREE_MONTHS;
+            case "6 months":
+                return TypeOfTermDeposit.SIX_MONTHS;
+            case "12 months":
+                return TypeOfTermDeposit.TWELVE_MONTHS;
+        }
+        return null;
     }
 
     @Override
     public Date getTermDepositStartingDate() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Date selectedDate = dateChooserTermDeposit.getSelectedDate().getTime();
+        return selectedDate;
     }
 
     @Override
@@ -613,4 +649,46 @@ public class TermDepositAccountFrame extends javax.swing.JFrame implements TermD
                 break;
         }
     }
+
+    @Override
+    public void showMessageDialog(String msg,  TypeOfMessageDialog type) {
+         switch(type) {
+            case WARNING: 
+                JOptionPane.showMessageDialog(this, msg, type.toString(), JOptionPane.WARNING_MESSAGE);
+                break;
+            case PLAIN:
+                JOptionPane.showMessageDialog(this, msg, type.toString(), JOptionPane.PLAIN_MESSAGE);
+                break;
+            case ERROR:
+                JOptionPane.showMessageDialog(this, msg, type.toString(), JOptionPane.ERROR_MESSAGE);
+
+        }
+    }
+
+    @Override
+    public void refreshBalance(String balance) {
+        labelBalanceValue.setText(balance);
+    }
+
+    @Override
+    public void showTermDeposit(List<TermDeposit> terms) {
+        String[] options = new String[terms.size()];
+        for(int i = 0; i < options.length; i++) {
+            options[i] = "Term " + i + ": " + terms.get(i).getOverallBalance();
+        }
+        SpinnerModel model = new SpinnerListModel(options);
+        spWithdrawTermDeposit.setModel(model);
+        spWithdrawTermDeposit.addChangeListener(spinnerListener);
+    }
+    
+    private ChangeListener spinnerListener = new  ChangeListener() {
+        @Override
+        public void stateChanged(ChangeEvent e) {
+            String value = spWithdrawTermDeposit.getValue().toString();
+            Pattern p = Pattern.compile("([0-9]+)");
+            Matcher m = p.matcher(new StringBuilder().reverse());
+            String amount = new StringBuilder(m.group(1)).reverse().toString();
+            tfWithdrawAmount.setText(amount);
+        }
+    };
 }

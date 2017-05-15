@@ -34,10 +34,11 @@ public class SavingAccountController implements SavingAccountContract.UserAction
     }
 
     @Override
-    public double deposit() {
+    public double deposit() throws BalanceLimitException{
         double amount = view.getDepositAmount();
         double balance = mSavingAccount.getBalance();
         balance += amount;
+        if(amount < 0) throw new BalanceLimitException();
         mSavingAccount.setBalance(balance);
         HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("balance", balance);
@@ -52,7 +53,7 @@ public class SavingAccountController implements SavingAccountContract.UserAction
         double amount = view.getWithdrawAmount();
         double balance = mSavingAccount.getBalance();
         balance -= amount;
-        if(balance - amount < 0) throw new BalanceLimitException();
+        if(balance - amount < 0 || amount < 0) throw new BalanceLimitException();
         mSavingAccount.setBalance(balance);
         HashMap<String, Object> attributes = new HashMap<>();
         attributes.put("balance", balance);
@@ -68,7 +69,7 @@ public class SavingAccountController implements SavingAccountContract.UserAction
         long toAccountId = view.getTransferAccountId();
         double balance = mSavingAccount.getBalance();
         balance -= amount;
-        if(balance - amount < 0) throw new BalanceLimitException();
+        if(balance - amount < 0 || amount < 0) throw new BalanceLimitException();
         mSavingAccount.setBalance(balance);
         view.refreshBalance(String.valueOf(balance));
         return balance;
@@ -100,11 +101,11 @@ public class SavingAccountController implements SavingAccountContract.UserAction
             try {
                 proceedTransaction();
             } catch (BalanceLimitException ex) {
-                view.showMessage("Sorry, the amount exceeds the limit.", TypeOfMessageDialog.WARNING);
+                view.showMessageDialog("Sorry, the amount exceeds the limit.", TypeOfMessageDialog.WARNING);
                 Logger.getLogger(SavingAccountController.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            view.showMessage("Sorry, your PIN is incorrect.", TypeOfMessageDialog.WARNING);
+            view.showMessageDialog("Sorry, your PIN is incorrect.", TypeOfMessageDialog.WARNING);
         }
         return isVerified;
     }

@@ -288,7 +288,7 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
                 dtm.removeRow(i);
             }
         }
-        String condition = "where username = '" + username + "'";
+        String condition = " where username = '" + username + "'";
         String table = "S27624366.transaction_log";
         ArrayList<Object[]> rows = DBManager.check(table, condition);
         for(Object[] row: rows) {

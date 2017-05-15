@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 
 /**
  * Created by caidong on 9/05/2017.
@@ -32,5 +33,21 @@ public class DataConverter {
       int diffYear = endCalendar.get(Calendar.YEAR) - startCalendar.get(Calendar.YEAR);
       int diffMonth = diffYear * 12 + endCalendar.get(Calendar.MONTH) - startCalendar.get(Calendar.MONTH);
       return diffMonth;
+    }
+      
+    public static String charArraysToString(char[] array) {
+        String str= "";
+        for(int i = 0; i < array.length; ++i) {
+            str += array[i];
+        }
+        return str;
+    }
+    
+    public static HashMap<String, Object> objectArrayToHashMap(String[] names, Object[] objs) {
+        HashMap<String, Object> map = new HashMap<>();
+        for(int i = 0; i < names.length; i++) {
+            map.put(names[i], objs[i]);
+        }
+        return map;
     }
 }

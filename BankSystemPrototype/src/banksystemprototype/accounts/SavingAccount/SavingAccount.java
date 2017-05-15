@@ -7,29 +7,15 @@ import banksystemprototype.accounts.TypeOfAccount;
  * Created by caidong on 8/05/2017.
  */
 public class SavingAccount extends Account {
-    private double mBalance;
-    public SavingAccount(long accountId, double balance, TypeOfAccount typeOfAccount, boolean locked) {
-        super(accountId, typeOfAccount, locked);
-        mBalance = balance;
-    }
-
-    /**
-     *
-     * @return mBalance
-     */
-    public double getmBalance() {
-        return mBalance;
-    }
-
-    public void setmBalance(double mBalance) {
-        this.mBalance = mBalance;
+    public SavingAccount(long accountId, String username, TypeOfAccount typeOfAccount, boolean locked, double balance) {
+        super(accountId, username, typeOfAccount, locked, balance);
     }
 
     public void addMoney(double amount) {
-       mBalance += amount;
+       super.setBalance(super.getBalance()+amount);
     }
 
     public void deductMoney(double amount) {
-        mBalance -= amount;
+       super.setBalance(super.getBalance()-amount);
     }
 }

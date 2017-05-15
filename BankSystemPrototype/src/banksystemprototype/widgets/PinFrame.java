@@ -5,6 +5,8 @@
  */
 package banksystemprototype.widgets;
 
+import banksystemprototype.Utils.DataConverter;
+
 /**
  *
  * @author caidong
@@ -37,6 +39,7 @@ public class PinFrame extends javax.swing.JFrame implements PinServiceApi {
         jButton2.setText("jButton2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(getPreferredSize());
 
         btnOK.setText("OK");
         btnOK.addActionListener(new java.awt.event.ActionListener() {
@@ -95,7 +98,7 @@ public class PinFrame extends javax.swing.JFrame implements PinServiceApi {
 
     private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
         // TODO add your handling code here:
-        String pin = tfPin.getPassword().toString();
+        String pin = DataConverter.charArraysToString(tfPin.getPassword());
         getPin(pin, new Callback() {
             @Override
             public void onload(Object pin) {

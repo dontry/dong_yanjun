@@ -11,8 +11,8 @@ import java.util.HashMap;
 public class HomeLoanAccount extends Account {
     HashMap<Long, HomeLoan> loans;
 
-    public HomeLoanAccount(long accountId, TypeOfAccount typeOfAccount, boolean locked) {
-        super(accountId, typeOfAccount, locked);
+    public HomeLoanAccount(long accountId, String username, TypeOfAccount typeOfAccount, boolean locked, double balance) {
+        super(accountId, username, typeOfAccount, locked, balance);
         this.loans = new HashMap<Long, HomeLoan>();
     }
 

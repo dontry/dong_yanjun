@@ -13,8 +13,8 @@ public class TermDepositAccount extends Account {
     private HashMap<Long, TermDeposit> mTermDeposits;
 
 
-    public TermDepositAccount(long accountId, TypeOfAccount typeOfAccount, boolean locked) {
-        super(accountId, typeOfAccount, locked);
+    public TermDepositAccount(long accountId, String username, TypeOfAccount typeOfAccount, boolean locked, double balance) {
+        super(accountId, username, typeOfAccount, locked, balance);
         mTermDeposits = new HashMap<>();
     }
 

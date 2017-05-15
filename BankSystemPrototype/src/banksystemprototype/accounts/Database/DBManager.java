@@ -32,8 +32,8 @@ public class DBManager {
         
         try {
             stmt = conn.createStatement();
-        ResultSet rset = stmt.executeQuery("SELECT * FROM " + tableName  + condition); // get all records from the student table 
-
+            String query =  "SELECT * FROM " + tableName  + condition;
+            ResultSet rset = stmt.executeQuery(query); // get all records from the student table 
             mdata = rset.getMetaData();
 
             int numberOfColumns = mdata.getColumnCount(); // get number of columns from metadata of the Resultset object
@@ -60,14 +60,14 @@ public class DBManager {
         return resultList;
     }
   
-    public void update(String tableName, HashMap<String, String> attributes, String condition) {
+    public static void update(String tableName, HashMap<String, Object> attributes, String condition) {
         Connection conn = DBConnection.getConnection();
         Statement stmt = null;
         String stringAttributes = concatenateAttributes(attributes);
         try {
             stmt = conn.createStatement();
             /* update a membership record using the values from JTextField txtID1 and txtName1 */
-            String sql = "UPDATE " + tableName + " SET  " + stringAttributes + " WHERE " + condition;
+            String sql = "UPDATE " + tableName + " SET  " + stringAttributes  + condition;
             stmt.executeUpdate(sql);
         } catch (SQLException f) {
             System.out.println(f.getMessage());
@@ -82,7 +82,7 @@ public class DBManager {
     }
 
     
-    public  void insert(String tableName, String[] values) {
+    public static void insert(String tableName, String[] values) {
         Connection conn = DBConnection.getConnection();
         Statement stmt = null;
         String joinValues = String.join(",", values);
@@ -105,7 +105,7 @@ public class DBManager {
         }
     };
         
-    public void delete(String tableName, String condition) {
+    public static void delete(String tableName, String condition) {
         Connection conn = DBConnection.getConnection();
         Statement stmt = null;
          try {
@@ -127,11 +127,16 @@ public class DBManager {
     }
     
     
-    private String concatenateAttributes(HashMap<String, String> attributes) {
+    private static String concatenateAttributes(HashMap<String, Object> attributes) {
         //HOW TO DEAL WITH DATE TYPE?
         ArrayList<String> attributesList = new ArrayList<>();
         for(Map.Entry attr: attributes.entrySet()) {
-            String attrString = attr.getKey() + "=" + attr.getValue();
+              String attrString = "";
+            if(attr.getValue() instanceof Number) {
+                   attrString = attr.getKey() + "=" + attr.getValue();
+             } else if(attr.getValue() instanceof String) {
+                   attrString = attr.getKey() + "= '" + attr.getValue() + "'";
+             }
             attributesList.add(attrString);
         }
         return String.join(",", attributesList);

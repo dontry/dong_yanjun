@@ -14,6 +14,7 @@ import banksystemprototype.users.Customer;
 import banksystemprototype.users.LoginFrame;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.logging.Level;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
@@ -37,6 +38,7 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
         loginFrame = (LoginFrame) login;
         conn = DBConnection.getConnection();
         this.username = username;
+        labelUsername.setText(username);
     }
 
     /**
@@ -60,7 +62,7 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
         btnTermDepositAccount = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        labelUsername = new javax.swing.JLabel();
         btnLogout = new javax.swing.JButton();
 
         jMenuItem1.setText("jMenuItem1");
@@ -133,8 +135,8 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         jLabel1.setText("Welcome Back");
 
-        jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        jLabel2.setText("username");
+        labelUsername.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        labelUsername.setText("username");
 
         btnViewTransactions.setText("View Transaction");
         btnViewTransactions.setActionCommand("View Transactions");
@@ -158,7 +160,7 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
                         .addComponent(jLabel1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(159, 159, 159)
-                        .addComponent(jLabel2)))
+                        .addComponent(labelUsername)))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -180,7 +182,7 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
+                .addComponent(labelUsername)
                 .addGap(51, 51, 51)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -256,7 +258,7 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
     private void btnSavingAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSavingAccountActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        new SavingAccountFrame(this).setVisible(true);
+        new SavingAccountFrame(this);
     }//GEN-LAST:event_btnSavingAccountActionPerformed
 
     private void btnHomeLoanAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeLoanAccountActionPerformed
@@ -273,7 +275,7 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        loginFrame.logout();
+        showLogout();
     }//GEN-LAST:event_btnLogoutActionPerformed
 
     private void btnViewTransactionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewTransactionsActionPerformed
@@ -288,7 +290,12 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
                 dtm.removeRow(i);
             }
         }
+<<<<<<< HEAD
         String condition = " where username = '" + username + "'";
+=======
+
+        String condition = " WHERE USER = '" + username + "'";
+>>>>>>> dontry/master
         String table = "S27624366.transaction_log";
         ArrayList<Object[]> rows = DBManager.check(table, condition);
         for(Object[] row: rows) {
@@ -307,7 +314,6 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
     private javax.swing.JButton btnViewTransaction;
     private final javax.swing.JButton btnViewTransactions = new javax.swing.JButton();
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuItem jMenuItem1;
@@ -316,6 +322,7 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JDialog jdViewTransaction;
+    private javax.swing.JLabel labelUsername;
     private javax.swing.JTable tblTransaction;
     // End of variables declaration//GEN-END:variables
     
@@ -347,43 +354,19 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
 
     @Override
     public void showLogout() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        loginFrame.setVisible(true);
+        this.dispose();
     }
     
      public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AdminHomeFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AdminHomeFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AdminHomeFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AdminHomeFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new CustomerHomeFrame(new LoginFrame(), "abc").setVisible(true);
             }
         });
     }
-    
-    
+     
+    public String getUsername(){
+        return username;
+    }
 }

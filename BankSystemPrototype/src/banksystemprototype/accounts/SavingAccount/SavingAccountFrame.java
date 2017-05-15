@@ -6,13 +6,16 @@
 package banksystemprototype.accounts.SavingAccount;
 
 import banksystemprototype.TypeOfAccountAction;
+import banksystemprototype.TypeOfMessageDialog;
 import banksystemprototype.accounts.CustomerHomeFrame;
 import banksystemprototype.accounts.Database.DBConnection;
+import banksystemprototype.users.LoginFrame;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -26,13 +29,17 @@ public class SavingAccountFrame extends javax.swing.JFrame implements SavingAcco
     private static SavingAccountContract.UserActionListener mActionListener;
     private final CustomerHomeFrame homeFrame;
     private Connection conn;
+    private String username;
 
     
-    public SavingAccountFrame(JFrame home) {
+    public SavingAccountFrame(CustomerHomeFrame home) {
         initComponents();
-        homeFrame = (CustomerHomeFrame) home;
+        homeFrame = home;
         mActionListener = new SavingAccountController(this);
         conn = DBConnection.getConnection();
+        username = homeFrame.getUsername();
+        mActionListener.openAccount(username);
+        this.setVisible(true);
     }
 
     /**
@@ -61,7 +68,7 @@ public class SavingAccountFrame extends javax.swing.JFrame implements SavingAcco
         btnBack = new javax.swing.JButton();
 
         dialogTransfer.setTitle("Transfer");
-        dialogTransfer.setMinimumSize(getPreferredSize());
+        dialogTransfer.setMinimumSize(new java.awt.Dimension(4, 165));
         dialogTransfer.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentHidden(java.awt.event.ComponentEvent evt) {
                 dialogTransferComponentHidden(evt);
@@ -335,7 +342,7 @@ public class SavingAccountFrame extends javax.swing.JFrame implements SavingAcco
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnWithdraw, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnDeposit, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE))
+                        .addComponent(btnDeposit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnTransfer, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -393,7 +400,7 @@ public class SavingAccountFrame extends javax.swing.JFrame implements SavingAcco
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelBalanceValue)
                     .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -559,6 +566,35 @@ public class SavingAccountFrame extends javax.swing.JFrame implements SavingAcco
                 break;
             default:
                 break;
+        }
+    }
+    
+     public static void main(String args[]) {
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+//                SavingAccountFrame view = new SavingAccountFrame(new CustomerHomeFrame(new LoginFrame()));
+//                view.setVisible(true);
+            }
+        });
+    }
+     @Override
+     public String getUsername() {
+        return username;
+     }
+
+    @Override
+    public void showMessage(String msg, TypeOfMessageDialog type) {
+        switch(type) {
+            case WARNING: 
+                JOptionPane.showMessageDialog(this, msg, type.toString(), JOptionPane.WARNING_MESSAGE);
+                break;
+            case PLAIN:
+                JOptionPane.showMessageDialog(this, msg, type.toString(), JOptionPane.PLAIN_MESSAGE);
+                break;
+            case ERROR:
+                JOptionPane.showMessageDialog(this, msg, type.toString(), JOptionPane.ERROR_MESSAGE);
+
         }
     }
 }

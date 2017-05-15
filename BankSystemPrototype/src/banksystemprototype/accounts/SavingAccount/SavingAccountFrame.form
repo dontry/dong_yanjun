@@ -5,8 +5,8 @@
     <Container class="javax.swing.JDialog" name="dialogTransfer">
       <Properties>
         <Property name="title" type="java.lang.String" value="Transfer"/>
-        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection component="Form" name="preferredSize" type="property"/>
+        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[4, 165]"/>
         </Property>
       </Properties>
       <Events>
@@ -415,7 +415,7 @@
                   <Component id="labelBalanceValue" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="41" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -433,7 +433,7 @@
                       <Group type="102" attributes="0">
                           <Component id="btnWithdraw" min="-2" pref="199" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="btnDeposit" pref="199" max="32767" attributes="0"/>
+                          <Component id="btnDeposit" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <Component id="btnTransfer" min="-2" pref="199" max="-2" attributes="0"/>

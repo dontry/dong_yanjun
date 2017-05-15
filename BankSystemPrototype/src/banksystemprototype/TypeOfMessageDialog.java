@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package banksystemprototype.Utils;
+package banksystemprototype;
 
 /**
  *
  * @author caidong
  */
-public class Constants {
-    public static final String DATABASE_NAME = "S7624366.";
+public enum TypeOfMessageDialog {
+    WARNING, PLAIN, ERROR, INFORMATION, QUESTION
 }

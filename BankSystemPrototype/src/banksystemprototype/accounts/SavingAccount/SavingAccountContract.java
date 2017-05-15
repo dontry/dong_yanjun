@@ -1,6 +1,7 @@
 package banksystemprototype.accounts.SavingAccount;
 
 import banksystemprototype.TypeOfAccountAction;
+import banksystemprototype.TypeOfMessageDialog;
 import banksystemprototype.accounts.Transaction.Transaction;
 import java.util.Date;
 import java.util.List;
@@ -17,6 +18,7 @@ public interface SavingAccountContract {
         long getTransferAccountId();
         void disposeActionDialog(TypeOfAccountAction action);
         String getUsername();
+        void showMessage(String msg, TypeOfMessageDialog type);
     }
     interface UserActionListener {
         double deposit();

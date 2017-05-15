@@ -258,7 +258,7 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
     private void btnSavingAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSavingAccountActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        new SavingAccountFrame(this).setVisible(true);
+        new SavingAccountFrame(this);
     }//GEN-LAST:event_btnSavingAccountActionPerformed
 
     private void btnHomeLoanAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeLoanAccountActionPerformed
@@ -291,7 +291,7 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
             }
         }
 
-        String condition = "where username = '" + username + "'";
+        String condition = " WHERE USER = '" + username + "'";
         String table = "S27624366.transaction_log";
         ArrayList<Object[]> rows = DBManager.check(table, condition);
         for(Object[] row: rows) {

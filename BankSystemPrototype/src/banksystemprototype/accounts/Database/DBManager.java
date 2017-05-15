@@ -60,14 +60,14 @@ public class DBManager {
         return resultList;
     }
   
-    public static void update(String tableName, HashMap<String, String> attributes, String condition) {
+    public static void update(String tableName, HashMap<String, Object> attributes, String condition) {
         Connection conn = DBConnection.getConnection();
         Statement stmt = null;
         String stringAttributes = concatenateAttributes(attributes);
         try {
             stmt = conn.createStatement();
             /* update a membership record using the values from JTextField txtID1 and txtName1 */
-            String sql = "UPDATE " + tableName + " SET  " + stringAttributes + " WHERE " + condition;
+            String sql = "UPDATE " + tableName + " SET  " + stringAttributes  + condition;
             stmt.executeUpdate(sql);
         } catch (SQLException f) {
             System.out.println(f.getMessage());
@@ -127,11 +127,16 @@ public class DBManager {
     }
     
     
-    private static String concatenateAttributes(HashMap<String, String> attributes) {
+    private static String concatenateAttributes(HashMap<String, Object> attributes) {
         //HOW TO DEAL WITH DATE TYPE?
         ArrayList<String> attributesList = new ArrayList<>();
         for(Map.Entry attr: attributes.entrySet()) {
-            String attrString = attr.getKey() + "=" + attr.getValue();
+              String attrString = "";
+            if(attr.getValue() instanceof Number) {
+                   attrString = attr.getKey() + "=" + attr.getValue();
+             } else if(attr.getValue() instanceof String) {
+                   attrString = attr.getKey() + "= '" + attr.getValue() + "'";
+             }
             attributesList.add(attrString);
         }
         return String.join(",", attributesList);

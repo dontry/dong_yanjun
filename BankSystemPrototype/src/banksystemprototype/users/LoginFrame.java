@@ -86,6 +86,7 @@ public class LoginFrame extends javax.swing.JFrame implements UserContract.View{
 
         jLabel1.setText("User name:");
 
+        tfUsername.setText("natalie");
         tfUsername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfUsernameActionPerformed(evt);
@@ -104,6 +105,8 @@ public class LoginFrame extends javax.swing.JFrame implements UserContract.View{
         });
 
         jLabel4.setText("User type:");
+
+        tfPwd.setText("123456");
 
         spUserType.setModel(new javax.swing.SpinnerListModel(new String[] {"CUSTOMER", "ADMINISTRATOR"}));
 

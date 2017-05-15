@@ -8,6 +8,7 @@ package banksystemprototype.users;
 import banksystemprototype.TypeOfMessageDialog;
 import banksystemprototype.Utils.DataConverter;
 import banksystemprototype.accounts.CustomerHomeFrame;
+import banksystemprototype.accounts.AdminHomeFrame;
 import banksystemprototype.accounts.Database.DBConnection;
 import java.util.Arrays;
 import javax.swing.JOptionPane;
@@ -268,7 +269,7 @@ public class LoginFrame extends javax.swing.JFrame implements UserContract.View{
                new CustomerHomeFrame(this, username).setVisible(true);
                break;
             case ADMINISTRATOR:
-//                new AdminHomeFrame(this, username).setVisible(true);
+              new AdminHomeFrame(this, username).setVisible(true);
                 break;
         }
         this.setVisible(false);

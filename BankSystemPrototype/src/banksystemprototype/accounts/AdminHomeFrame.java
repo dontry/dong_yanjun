@@ -12,6 +12,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
+import banksystemprototype.users.LoginFrame;
+import javax.swing.JFrame;
 
 /**
  *
@@ -26,11 +28,18 @@ public class AdminHomeFrame extends javax.swing.JFrame {
     "Account_id", "username", "account type", "lock_status", "balance"}, 0);
     DefaultComboBoxModel dcm = new DefaultComboBoxModel(); 
     DefaultTableModel dtmHomeLoan = new DefaultTableModel(new String[]{
-    "Application_no", "username", "Amount", "Period", "Start_date", "End_Date"}, 0);
+    "loan_id", "Account_id", "Principal", "Interest", "Remain Loan", "$Repayment","interest_rate","period","start_date","end_date","repayment_date","next_repayment_date","finish_status"}, 0);
+    DefaultTableModel CreditTableModel = new DefaultTableModel(new String[]{
+    "Account_id", "daily_payment_limit", "loan_limit"}, 0);
+    private LoginFrame loginFrame;
+    private String username;
     
-    public AdminHomeFrame() {
+    public AdminHomeFrame(JFrame login, String username) {
         initComponents();
         conn = DBConnection.getConnection();
+        loginFrame = (LoginFrame) login;
+        this.username = username;
+        labelUsername.setText(username);
     }
     
 
@@ -78,6 +87,7 @@ public class AdminHomeFrame extends javax.swing.JFrame {
         btnBack = new javax.swing.JButton();
         btnCreateAccount = new javax.swing.JButton();
         btnUnlockAccount = new javax.swing.JButton();
+        btnModifyCreditLimit = new javax.swing.JButton();
         jdChangePin = new javax.swing.JDialog();
         tfInputUsername = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -89,9 +99,24 @@ public class AdminHomeFrame extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tblHomeLoan = new javax.swing.JTable();
         btnViewHomeLoanApplication = new javax.swing.JButton();
-        btnApproveHomeLoan = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        btnCreateHomeLoan = new javax.swing.JButton();
+        btnBackHomepage = new javax.swing.JButton();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
+        tfHomeLoanUsername = new javax.swing.JTextField();
+        tfPrincipal = new javax.swing.JTextField();
+        tfMonthlyRepayment = new javax.swing.JTextField();
+        tfInterestRate = new javax.swing.JTextField();
+        tfPeriod = new javax.swing.JTextField();
+        tfStartDate = new javax.swing.JTextField();
+        tfEndDate = new javax.swing.JTextField();
+        tfRepaymentDate = new javax.swing.JTextField();
         jdCreateAccount = new javax.swing.JDialog();
         jLabel16 = new javax.swing.JLabel();
         tfUsername = new javax.swing.JTextField();
@@ -104,11 +129,22 @@ public class AdminHomeFrame extends javax.swing.JFrame {
         btnCancelUnlock = new javax.swing.JButton();
         jLabel18 = new javax.swing.JLabel();
         tfAccountID = new javax.swing.JTextField();
+        jdModifyCreditLimit = new javax.swing.JDialog();
+        jLabel27 = new javax.swing.JLabel();
+        tfCreditAccountID = new javax.swing.JTextField();
+        tfCreditLimit = new javax.swing.JTextField();
+        btnSubmitCreditLimitChange = new javax.swing.JButton();
+        Cancel = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        btnViewCreditAccount = new javax.swing.JButton();
+        cbCreditLimitType = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
         btnTermDepositAccount = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        labelUsername = new javax.swing.JLabel();
+        btnLogOut = new javax.swing.JButton();
 
         jdCreateCustomer.setMinimumSize(new java.awt.Dimension(466, 550));
         jdCreateCustomer.setSize(getPreferredSize());
@@ -313,32 +349,37 @@ public class AdminHomeFrame extends javax.swing.JFrame {
             }
         });
 
+        btnModifyCreditLimit.setText("Modify Credit Account limit");
+        btnModifyCreditLimit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModifyCreditLimitActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jdAdminAccountManageLayout = new javax.swing.GroupLayout(jdAdminAccountManage.getContentPane());
         jdAdminAccountManage.getContentPane().setLayout(jdAdminAccountManageLayout);
         jdAdminAccountManageLayout.setHorizontalGroup(
             jdAdminAccountManageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jdAdminAccountManageLayout.createSequentialGroup()
-                .addGroup(jdAdminAccountManageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(37, 37, 37)
+                .addGroup(jdAdminAccountManageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jdAdminAccountManageLayout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addGroup(jdAdminAccountManageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnCreateAccount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnViewAllAccount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE)
                         .addGroup(jdAdminAccountManageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnBack, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnUnlockAccount, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btnViewAllAccount)
+                            .addComponent(btnCreateAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
+                        .addGroup(jdAdminAccountManageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(btnUnlockAccount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnModifyCreditLimit, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
+                            .addComponent(btnBack, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jdAdminAccountManageLayout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addGroup(jdAdminAccountManageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jdAdminAccountManageLayout.createSequentialGroup()
-                                .addComponent(jLabel14)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(tfSearchUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(39, 39, 39)
-                                .addComponent(btnSearchAccountByCustomer)))))
-                .addContainerGap(30, Short.MAX_VALUE))
+                        .addComponent(jLabel14)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tfSearchUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39)
+                        .addComponent(btnSearchAccountByCustomer)))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         jdAdminAccountManageLayout.setVerticalGroup(
             jdAdminAccountManageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -357,8 +398,10 @@ public class AdminHomeFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jdAdminAccountManageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCreateAccount)
-                    .addComponent(btnBack))
-                .addContainerGap(50, Short.MAX_VALUE))
+                    .addComponent(btnModifyCreditLimit))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnBack)
+                .addGap(14, 14, 14))
         );
 
         jdChangePin.setMinimumSize(getPreferredSize());
@@ -426,7 +469,7 @@ public class AdminHomeFrame extends javax.swing.JFrame {
                 .addGap(17, 17, 17))
         );
 
-        jdHomeLoan.setMinimumSize(getPreferredSize());
+        jdHomeLoan.setMinimumSize(new java.awt.Dimension(1400, 550));
 
         /*
         DefaultTableModel dtmHomeLoan = new DefaultTableModel(new String[]{
@@ -435,26 +478,54 @@ public class AdminHomeFrame extends javax.swing.JFrame {
     tblHomeLoan.setModel(dtmHomeLoan);
     jScrollPane2.setViewportView(tblHomeLoan);
 
-    btnViewHomeLoanApplication.setText("View All Home Loan Application");
+    btnViewHomeLoanApplication.setText("View All Home Loan");
     btnViewHomeLoanApplication.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             btnViewHomeLoanApplicationActionPerformed(evt);
         }
     });
 
-    btnApproveHomeLoan.setText("Approve Home Loan");
-    btnApproveHomeLoan.addActionListener(new java.awt.event.ActionListener() {
+    btnCreateHomeLoan.setText("Create Home Loan");
+    btnCreateHomeLoan.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            btnApproveHomeLoanActionPerformed(evt);
+            btnCreateHomeLoanActionPerformed(evt);
         }
     });
 
-    jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-    jButton1.setText("Back To Home Page");
-    jButton1.addActionListener(new java.awt.event.ActionListener() {
+    btnBackHomepage.setText("Back To Home Page");
+    btnBackHomepage.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jButton1ActionPerformed(evt);
+            btnBackHomepageActionPerformed(evt);
+        }
+    });
+
+    jLabel19.setText("Username");
+
+    jLabel20.setText("Principal");
+
+    jLabel22.setText("Monthly Repayment ");
+
+    jLabel23.setText("Interest rate");
+
+    jLabel21.setText("Period");
+
+    jLabel24.setText("Start date");
+
+    jLabel25.setText("End date");
+
+    jLabel26.setText("Monthly Repay date");
+
+    tfHomeLoanUsername.setText(" ");
+
+    tfPrincipal.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            tfPrincipalActionPerformed(evt);
+        }
+    });
+
+    tfStartDate.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            tfStartDateActionPerformed(evt);
         }
     });
 
@@ -463,40 +534,98 @@ public class AdminHomeFrame extends javax.swing.JFrame {
     jdHomeLoanLayout.setHorizontalGroup(
         jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(jdHomeLoanLayout.createSequentialGroup()
-            .addGap(21, 21, 21)
-            .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+            .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jdHomeLoanLayout.createSequentialGroup()
-                    .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(btnViewHomeLoanApplication, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGap(21, 21, 21)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 701, Short.MAX_VALUE))
+                .addGroup(jdHomeLoanLayout.createSequentialGroup()
+                    .addGap(237, 237, 237)
+                    .addComponent(btnViewHomeLoanApplication)))
+            .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jdHomeLoanLayout.createSequentialGroup()
+                    .addGap(21, 21, 21)
+                    .addComponent(btnBackHomepage)
+                    .addGap(25, 25, 25))
+                .addGroup(jdHomeLoanLayout.createSequentialGroup()
                     .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(btnApproveHomeLoan, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING)))
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 502, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addContainerGap(33, Short.MAX_VALUE))
+                        .addGroup(jdHomeLoanLayout.createSequentialGroup()
+                            .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel20)
+                                .addComponent(jLabel19)
+                                .addComponent(jLabel23)
+                                .addComponent(jLabel22)
+                                .addComponent(jLabel21)
+                                .addComponent(jLabel24)
+                                .addComponent(jLabel25)
+                                .addComponent(jLabel26))
+                            .addGap(18, 18, 18)
+                            .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(tfHomeLoanUsername)
+                                .addComponent(tfPrincipal)
+                                .addComponent(tfMonthlyRepayment)
+                                .addComponent(tfInterestRate)
+                                .addComponent(tfPeriod)
+                                .addComponent(tfStartDate)
+                                .addComponent(tfEndDate)
+                                .addComponent(tfRepaymentDate, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jdHomeLoanLayout.createSequentialGroup()
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(btnCreateHomeLoan, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGap(18, 18, 18))))
     );
     jdHomeLoanLayout.setVerticalGroup(
         jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(jdHomeLoanLayout.createSequentialGroup()
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jdHomeLoanLayout.createSequentialGroup()
+            .addGap(22, 22, 22)
+            .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jdHomeLoanLayout.createSequentialGroup()
+                    .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel19)
+                        .addComponent(tfHomeLoanUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(18, 18, 18)
+                    .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel20)
+                        .addComponent(tfPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(18, 18, 18)
+                    .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel22)
+                        .addComponent(tfMonthlyRepayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel23)
+                        .addComponent(tfInterestRate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(18, 18, 18)
+                    .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel21)
+                        .addComponent(tfPeriod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel24)
+                        .addComponent(tfStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(18, 18, 18)
+                    .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel25)
+                        .addComponent(tfEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(18, 18, 18)
+                    .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel26)
+                        .addComponent(tfRepaymentDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(18, 18, 18)
+                    .addComponent(btnCreateHomeLoan)
+                    .addGap(14, 14, 14))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGap(18, 18, 18)
             .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(btnApproveHomeLoan))
-            .addGap(18, 18, 18)
-            .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(btnViewHomeLoanApplication)
-                .addComponent(jButton1))
-            .addGap(61, 61, 61))
+                .addComponent(btnBackHomepage)
+                .addComponent(btnViewHomeLoanApplication))
+            .addContainerGap(26, Short.MAX_VALUE))
     );
 
     jLabel16.setText("Username:");
 
     jLabel17.setText("Account Type:");
 
-    cbAccountType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Saving Account", "Term Deposit Account", "Home Loan Account", "Credit Account" }));
+    cbAccountType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SAVING", "TERM_DEPOSIT", "LOAN", "CREDIT" }));
 
     btnSubmitCreateAccount.setText("Submit");
     btnSubmitCreateAccount.addActionListener(new java.awt.event.ActionListener() {
@@ -528,7 +657,7 @@ public class AdminHomeFrame extends javax.swing.JFrame {
                     .addComponent(tfUsername)
                     .addComponent(cbAccountType, 0, 117, Short.MAX_VALUE))
                 .addComponent(btnCancelCreateAccount))
-            .addContainerGap(76, Short.MAX_VALUE))
+            .addContainerGap(83, Short.MAX_VALUE))
     );
     jdCreateAccountLayout.setVerticalGroup(
         jdCreateAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -545,7 +674,7 @@ public class AdminHomeFrame extends javax.swing.JFrame {
             .addGroup(jdCreateAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(btnSubmitCreateAccount)
                 .addComponent(btnCancelCreateAccount))
-            .addContainerGap(122, Short.MAX_VALUE))
+            .addContainerGap(42, Short.MAX_VALUE))
     );
 
     jdUnlockAccount.setMinimumSize(getPreferredSize());
@@ -599,6 +728,97 @@ public class AdminHomeFrame extends javax.swing.JFrame {
             .addContainerGap(98, Short.MAX_VALUE))
     );
 
+    jLabel27.setText("Credit Account ID");
+
+    tfCreditAccountID.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            tfCreditAccountIDActionPerformed(evt);
+        }
+    });
+
+    tfCreditLimit.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            tfCreditLimitActionPerformed(evt);
+        }
+    });
+
+    btnSubmitCreditLimitChange.setText("Submit");
+    btnSubmitCreditLimitChange.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnSubmitCreditLimitChangeActionPerformed(evt);
+        }
+    });
+
+    Cancel.setText("Cancel");
+    Cancel.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            CancelActionPerformed(evt);
+        }
+    });
+
+    jTable2.setModel(CreditTableModel);
+    jScrollPane3.setViewportView(jTable2);
+    DefaultTableModel CreditTableModel = new DefaultTableModel(new String[]{
+        "Account_id", "username", "account type", "lock_status", "balance"}, 0);
+
+btnViewCreditAccount.setText("View Credit Card Status");
+btnViewCreditAccount.addActionListener(new java.awt.event.ActionListener() {
+    public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnViewCreditAccountActionPerformed(evt);
+    }
+    });
+
+    cbCreditLimitType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "daily_payment_limit", "loan_limit" }));
+
+    javax.swing.GroupLayout jdModifyCreditLimitLayout = new javax.swing.GroupLayout(jdModifyCreditLimit.getContentPane());
+    jdModifyCreditLimit.getContentPane().setLayout(jdModifyCreditLimitLayout);
+    jdModifyCreditLimitLayout.setHorizontalGroup(
+        jdModifyCreditLimitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(jdModifyCreditLimitLayout.createSequentialGroup()
+            .addGroup(jdModifyCreditLimitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jdModifyCreditLimitLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(btnViewCreditAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jdModifyCreditLimitLayout.createSequentialGroup()
+                    .addGap(21, 21, 21)
+                    .addGroup(jdModifyCreditLimitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jdModifyCreditLimitLayout.createSequentialGroup()
+                            .addComponent(btnSubmitCreditLimitChange)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Cancel))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jdModifyCreditLimitLayout.createSequentialGroup()
+                            .addComponent(cbCreditLimitType, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tfCreditLimit, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jdModifyCreditLimitLayout.createSequentialGroup()
+                            .addComponent(jLabel27)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tfCreditAccountID, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+            .addContainerGap(53, Short.MAX_VALUE))
+    );
+    jdModifyCreditLimitLayout.setVerticalGroup(
+        jdModifyCreditLimitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jdModifyCreditLimitLayout.createSequentialGroup()
+            .addGap(29, 29, 29)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+            .addGap(18, 18, 18)
+            .addGroup(jdModifyCreditLimitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jLabel27)
+                .addComponent(tfCreditAccountID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnViewCreditAccount)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addGroup(jdModifyCreditLimitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(tfCreditLimit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbCreditLimitType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addGroup(jdModifyCreditLimitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(btnSubmitCreditLimitChange)
+                .addComponent(Cancel))
+            .addGap(30, 30, 30))
+    );
+
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
     btnTermDepositAccount.setText("Home Loan Approval");
@@ -632,8 +852,8 @@ public class AdminHomeFrame extends javax.swing.JFrame {
     jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
     jLabel1.setText("Welcome Back");
 
-    jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-    jLabel2.setText("username");
+    labelUsername.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+    labelUsername.setText("username");
 
     javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
     jPanel1.setLayout(jPanel1Layout);
@@ -649,7 +869,7 @@ public class AdminHomeFrame extends javax.swing.JFrame {
                     .addComponent(jLabel1))
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(159, 159, 159)
-                    .addComponent(jLabel2)))
+                    .addComponent(labelUsername)))
             .addGap(0, 0, Short.MAX_VALUE))
         .addGroup(jPanel1Layout.createSequentialGroup()
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -666,7 +886,7 @@ public class AdminHomeFrame extends javax.swing.JFrame {
             .addContainerGap()
             .addComponent(jLabel1)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(jLabel2)
+            .addComponent(labelUsername)
             .addGap(51, 51, 51)
             .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -689,23 +909,34 @@ public class AdminHomeFrame extends javax.swing.JFrame {
         }
     });
 
+    btnLogOut.setText("Log out");
+    btnLogOut.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnLogOutActionPerformed(evt);
+        }
+    });
+
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(layout.createSequentialGroup()
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createSequentialGroup()
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnViewProfile))
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGap(16, 16, 16)
+                    .addComponent(btnLogOut)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnViewProfile)))
             .addContainerGap())
     );
     layout.setVerticalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
             .addGap(18, 18, 18)
-            .addComponent(btnViewProfile)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(btnViewProfile)
+                .addComponent(btnLogOut))
             .addGap(18, 18, 18)
             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -819,21 +1050,55 @@ public class AdminHomeFrame extends javax.swing.JFrame {
     private void btnViewHomeLoanApplicationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewHomeLoanApplicationActionPerformed
         addTableModel(dtmHomeLoan);
         String condition = "";
-        String table = "S27624366.home_loan_application";
+        String table = "S27624366.home_loan";
         ArrayList<Object[]> rows = DBManager.check(table, condition);
         for(Object[] row: rows) {
              dtmHomeLoan.addRow(row);
         }     
     }//GEN-LAST:event_btnViewHomeLoanApplicationActionPerformed
 
-    private void btnApproveHomeLoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApproveHomeLoanActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnApproveHomeLoanActionPerformed
+    private void btnCreateHomeLoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateHomeLoanActionPerformed
+//        try 
+//        {
+//            stmt = conn.createStatement();
+//            String getAccountID = "select account_id from account where username = " + tfHomeLoanUsername.getText() + " And account_type ='LOAN'";
+//            ResultSet rset = stmt.executeQuery(getAccountID);
+//            mdata = rset.getMetaData();
+//            String sql = "Insert into S27624366.Home_Loan (loanid_seq.nextval, Account_id,principal, interest, remain_loan, repayment_amount, interest_rate, period, start_date, end_date, repay_date, next_repay_date, finish_status) values (loanid_seq.nextval,?,?,0,?,?,?,?,?,?,?,null,'N')";
+//            PreparedStatement pst = conn.prepareStatement(sql);
+//            pst.setString(1, mdata.toString());
+//            Long principal = Long.parseLong(tfPrincipal.getText());
+//            pst.setLong(2, principal);
+//            pst.setLong(3, principal);
+//            Long repayment = Long.parseLong(tfMonthlyRepayment.getText());
+//            pst.setLong(4, repayment);
+//            Long interestRate = Long.parseLong(tfInterestRate.getText());
+//            pst.setLong(5, interestRate);
+//            Long period = Long.parseLong(tfPeriod.getText());
+//            pst.setLong(6, period);
+//            pst.setDate(7,java.sql.Date.valueOf(tfStartDate.getText());
+//            pst.setDate(7, Date(tfStartDate.getTime());
+//            pst.setDate(8, java.sql.Date.valueOf("tfEndDate.getText()"));
+//            Long phone = Long.parseLong(tfCreatePhone.getText());
+//            pst.setLong(7, phone);
+//            String id_type;
+//            id_type = cbCreateIDType.getSelectedItem().toString();
+//            pst.setString(8, id_type);
+//            pst.setString(9, tfCreateIDNo.getText());
+//            pst.setString(10,pfCreatePin.getPassword().toString());  
+//            pst.executeUpdate();
+//            jOptionPane1.showMessageDialog(null,"Home Loan has been created!");
+//        }
+//        catch(SQLException ex)
+//        {
+//            jOptionPane1.showMessageDialog(null,ex);
+//        }
+    }//GEN-LAST:event_btnCreateHomeLoanActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        jdCreateCustomer.dispose();
+    private void btnBackHomepageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackHomepageActionPerformed
+        jdHomeLoan.dispose();
         this.setEnabled(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnBackHomepageActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         jdCreateCustomer.dispose();
@@ -847,37 +1112,7 @@ public class AdminHomeFrame extends javax.swing.JFrame {
 
     private void btnSearchAccountByCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchAccountByCustomerActionPerformed
         addTableModel(dtm);
-        
-//        try {
-//
-//            stmt = conn.createStatement();
-//            ResultSet rset = stmt.executeQuery("select * from S27624366.Account where username = "
-//                    + "'" + tfSearchUsername.getText() + "'"); // get all records from the student table 
-//
-//            mdata = rset.getMetaData();
-//
-//            int numberOfColumns = mdata.getColumnCount(); // get number of columns from metadata of the Resultset object
-//            while (rset.next()) {
-//                Object[] rowData = new Object[numberOfColumns]; // create a row of an array of Objects with the number of columns          
-//                for (int i = 0; i < rowData.length; i++) {
-//                    /* put an Object to the row using the value of the designated column in the current row of this ResultSet object */
-//                    rowData[i] = rset.getObject(i + 1); 
-//                }
-//                dtm.addRow(rowData); // adds a row to the end of the model
-//            }
-//            rset.close();
-//
-//        } catch (SQLException f) {
-//            System.out.println(f.getMessage());
-//        } finally {
-//            try {
-//                stmt.close();
-//            } catch (SQLException ex) {
-//                Logger.getLogger(AdminHomeFrame.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//      
-        String condition = "where username = '" + tfSearchUsername.getText() + "'";
+        String condition = " where username = '" + tfSearchUsername.getText() + "'";
         String table = "S27624366.Account";
         ArrayList<Object[]> rows = DBManager.check(table, condition);
         for(Object[] row: rows) {
@@ -942,6 +1177,70 @@ public class AdminHomeFrame extends javax.swing.JFrame {
         this.setEnabled(true);
     }//GEN-LAST:event_btnCancelUnlockActionPerformed
 
+    private void btnModifyCreditLimitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifyCreditLimitActionPerformed
+        jdModifyCreditLimit.setVisible(true);
+        this.setEnabled(false);
+    }//GEN-LAST:event_btnModifyCreditLimitActionPerformed
+
+    private void btnViewCreditAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewCreditAccountActionPerformed
+        addTableModel(CreditTableModel);
+        String condition = " where account_id = " + tfCreditAccountID.getText();
+        String table = "S27624366.Credit_Account";
+        ArrayList<Object[]> rows = DBManager.check(table, condition);
+        for(Object[] row: rows) {
+             CreditTableModel.addRow(row);
+        }    
+    }//GEN-LAST:event_btnViewCreditAccountActionPerformed
+
+    private void CancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelActionPerformed
+        jdModifyCreditLimit.dispose();
+        this.setEnabled(true);
+    }//GEN-LAST:event_CancelActionPerformed
+
+    private void btnSubmitCreditLimitChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitCreditLimitChangeActionPerformed
+          try 
+        {
+            String sql = "update S27624366.credit_account set " + cbCreditLimitType.getSelectedItem().toString() + " = ? where account_id = ?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            Long creditLimit = Long.parseLong(tfCreditLimit.getText());
+            pst.setLong(1, creditLimit);
+            Long accountId = Long.parseLong(tfCreditAccountID.getText());
+            pst.setLong(2, accountId);
+            pst.executeUpdate();
+            jOptionPane1.showMessageDialog(null,"Credit Card limit has been changed!");
+        }
+        catch(SQLException ex)
+        {
+            jOptionPane1.showMessageDialog(null,ex);
+        }     
+    }//GEN-LAST:event_btnSubmitCreditLimitChangeActionPerformed
+
+    private void tfPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfPrincipalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfPrincipalActionPerformed
+
+    private void tfCreditLimitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfCreditLimitActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfCreditLimitActionPerformed
+
+    private void tfCreditAccountIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfCreditAccountIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfCreditAccountIDActionPerformed
+
+    public void showLogout() {
+        loginFrame.setVisible(true);
+        this.dispose();
+    }
+    
+    private void btnLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogOutActionPerformed
+        this.dispose();
+        showLogout();
+    }//GEN-LAST:event_btnLogOutActionPerformed
+
+    private void tfStartDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfStartDateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfStartDateActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -975,14 +1274,15 @@ public class AdminHomeFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AdminHomeFrame().setVisible(true);
+                new AdminHomeFrame(new LoginFrame(), "123").setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnApproveHomeLoan;
+    private javax.swing.JButton Cancel;
     private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnBackHomepage;
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnCancelCreateAccount;
     private javax.swing.JButton btnCancelResetPin;
@@ -990,21 +1290,25 @@ public class AdminHomeFrame extends javax.swing.JFrame {
     private final javax.swing.JButton btnChangePIN = new javax.swing.JButton();
     private javax.swing.JButton btnCreateAccount;
     private final javax.swing.JButton btnCreateCustomer = new javax.swing.JButton();
+    private javax.swing.JButton btnCreateHomeLoan;
     private final javax.swing.JButton btnHomeLoanAccount = new javax.swing.JButton();
+    private javax.swing.JButton btnLogOut;
+    private javax.swing.JButton btnModifyCreditLimit;
     private javax.swing.JButton btnSearchAccountByCustomer;
     private javax.swing.JButton btnSubmit;
     private javax.swing.JButton btnSubmitCreateAccount;
+    private javax.swing.JButton btnSubmitCreditLimitChange;
     private javax.swing.JButton btnSubmitPinReset;
     private javax.swing.JButton btnSubmitUnlock;
     private javax.swing.JButton btnTermDepositAccount;
     private javax.swing.JButton btnUnlockAccount;
     private javax.swing.JButton btnViewAllAccount;
+    private javax.swing.JButton btnViewCreditAccount;
     private javax.swing.JButton btnViewHomeLoanApplication;
     private final javax.swing.JButton btnViewProfile = new javax.swing.JButton();
     private javax.swing.JComboBox<String> cbAccountType;
     private javax.swing.JComboBox<String> cbCreateIDType;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> cbCreditLimitType;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1015,7 +1319,15 @@ public class AdminHomeFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1027,15 +1339,19 @@ public class AdminHomeFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JDialog jdAdminAccountManage;
     private javax.swing.JDialog jdChangePin;
     private javax.swing.JDialog jdCreateAccount;
     private javax.swing.JDialog jdCreateCustomer;
     private javax.swing.JDialog jdHomeLoan;
+    private javax.swing.JDialog jdModifyCreditLimit;
     private javax.swing.JDialog jdUnlockAccount;
+    private javax.swing.JLabel labelUsername;
     private javax.swing.JPasswordField pfCreatePassword;
     private javax.swing.JPasswordField pfCreatePin;
     private javax.swing.JPasswordField pfResetPin;
@@ -1048,8 +1364,18 @@ public class AdminHomeFrame extends javax.swing.JFrame {
     private javax.swing.JTextField tfCreateLname;
     private javax.swing.JTextField tfCreatePhone;
     private javax.swing.JTextField tfCreateUsername;
+    private javax.swing.JTextField tfCreditAccountID;
+    private javax.swing.JTextField tfCreditLimit;
+    private javax.swing.JTextField tfEndDate;
+    private javax.swing.JTextField tfHomeLoanUsername;
     private javax.swing.JTextField tfInputUsername;
+    private javax.swing.JTextField tfInterestRate;
+    private javax.swing.JTextField tfMonthlyRepayment;
+    private javax.swing.JTextField tfPeriod;
+    private javax.swing.JTextField tfPrincipal;
+    private javax.swing.JTextField tfRepaymentDate;
     private javax.swing.JTextField tfSearchUsername;
+    private javax.swing.JTextField tfStartDate;
     private javax.swing.JTextField tfUsername;
     // End of variables declaration//GEN-END:variables
 }

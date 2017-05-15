@@ -523,6 +523,12 @@ public class AdminHomeFrame extends javax.swing.JFrame {
         }
     });
 
+    tfStartDate.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            tfStartDateActionPerformed(evt);
+        }
+    });
+
     javax.swing.GroupLayout jdHomeLoanLayout = new javax.swing.GroupLayout(jdHomeLoan.getContentPane());
     jdHomeLoan.getContentPane().setLayout(jdHomeLoanLayout);
     jdHomeLoanLayout.setHorizontalGroup(
@@ -534,8 +540,7 @@ public class AdminHomeFrame extends javax.swing.JFrame {
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 701, Short.MAX_VALUE))
                 .addGroup(jdHomeLoanLayout.createSequentialGroup()
                     .addGap(237, 237, 237)
-                    .addComponent(btnViewHomeLoanApplication)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(btnViewHomeLoanApplication)))
             .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jdHomeLoanLayout.createSequentialGroup()
                     .addGap(21, 21, 21)
@@ -1071,6 +1076,7 @@ btnViewCreditAccount.addActionListener(new java.awt.event.ActionListener() {
 //            pst.setLong(5, interestRate);
 //            Long period = Long.parseLong(tfPeriod.getText());
 //            pst.setLong(6, period);
+//            pst.setDate(7,java.sql.Date.valueOf(tfStartDate.getText());
 //            pst.setDate(7, Date(tfStartDate.getTime());
 //            pst.setDate(8, java.sql.Date.valueOf("tfEndDate.getText()"));
 //            Long phone = Long.parseLong(tfCreatePhone.getText());
@@ -1194,13 +1200,12 @@ btnViewCreditAccount.addActionListener(new java.awt.event.ActionListener() {
     private void btnSubmitCreditLimitChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitCreditLimitChangeActionPerformed
           try 
         {
-            String sql = "update S27624366.Account set ? = ? where account_id = ?";
+            String sql = "update S27624366.credit_account set " + cbCreditLimitType.getSelectedItem().toString() + " = ? where account_id = ?";
             PreparedStatement pst = conn.prepareStatement(sql);
-            String updateContent = cbCreditLimitType.getSelectedItem().toString();
-            pst.setString(1, updateContent);
             Long creditLimit = Long.parseLong(tfCreditLimit.getText());
-            pst.setLong(2, creditLimit);
-            pst.setString(3, tfCreditAccountID.getText());
+            pst.setLong(1, creditLimit);
+            Long accountId = Long.parseLong(tfCreditAccountID.getText());
+            pst.setLong(2, accountId);
             pst.executeUpdate();
             jOptionPane1.showMessageDialog(null,"Credit Card limit has been changed!");
         }
@@ -1231,6 +1236,10 @@ btnViewCreditAccount.addActionListener(new java.awt.event.ActionListener() {
         this.dispose();
         showLogout();
     }//GEN-LAST:event_btnLogOutActionPerformed
+
+    private void tfStartDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfStartDateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfStartDateActionPerformed
 
     /**
      * @param args the command line arguments

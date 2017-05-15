@@ -522,7 +522,6 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="237" max="-2" attributes="0"/>
                           <Component id="btnViewHomeLoanApplication" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -767,6 +766,9 @@
         <Component class="javax.swing.JTextField" name="tfPeriod">
         </Component>
         <Component class="javax.swing.JTextField" name="tfStartDate">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfStartDateActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="tfEndDate">
         </Component>

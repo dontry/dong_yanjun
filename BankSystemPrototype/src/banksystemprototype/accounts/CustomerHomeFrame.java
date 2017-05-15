@@ -290,6 +290,7 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
                 dtm.removeRow(i);
             }
         }
+
         String condition = " WHERE USER = '" + username + "'";
         String table = "S27624366.transaction_log";
         ArrayList<Object[]> rows = DBManager.check(table, condition);

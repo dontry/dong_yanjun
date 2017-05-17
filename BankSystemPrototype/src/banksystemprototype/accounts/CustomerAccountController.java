@@ -6,7 +6,7 @@ import banksystemprototype.accounts.CreditCardAccount.CreditCardAccount;
 import banksystemprototype.accounts.HomeLoanAccount.HomeLoanAccount;
 import banksystemprototype.accounts.SavingAccount.SavingAccount;
 import banksystemprototype.accounts.TermDepositAccount.TermDepositAccount;
-import banksystemprototype.users.Customer;
+import banksystemprototype.users._Customer;
 
 /**
  * Created by caidong on 9/05/2017.
@@ -21,12 +21,12 @@ public class CustomerAccountController implements AccountContract.CustomerAction
 
 
     @Override
-    public void viewCustomerProfile( Customer customer) {
+    public void viewCustomerProfile( _Customer customer) {
         mHomeView.showCustomerProfile(customer);
     }
 
     @Override
-    public Account selectAccount(String username, TypeOfAccount typeOfAccount) {
+    public _Account selectAccount(String username, TypeOfAccount typeOfAccount) {
         return null;
     }
 

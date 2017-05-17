@@ -5,7 +5,7 @@ import banksystemprototype.TypeOfAccountAction;
 import banksystemprototype.TypeOfMessageDialog;
 import banksystemprototype.Utils.BspConstants;
 import banksystemprototype.Utils.DataConverter;
-import banksystemprototype.accounts.Account;
+import banksystemprototype.accounts._Account;
 import banksystemprototype.accounts.Database.DBConnection;
 import banksystemprototype.accounts.Database.DBManager;
 import banksystemprototype.accounts.Transaction.Transaction;
@@ -22,7 +22,7 @@ import java.util.logging.Logger;
  * Created by caidong on 10/05/2017.
  */
 public class SavingAccountController implements SavingAccountContract.UserActionListener, PinServiceApi.Listener {
-    private Account mSavingAccount;
+    private _Account mSavingAccount;
     private SavingAccountContract.View view;
     private TypeOfAccountAction mAccountAction;
     private String ACCOUNT_TABLE_NAME =  "S27624366.ACCOUNT";
@@ -82,7 +82,7 @@ public class SavingAccountController implements SavingAccountContract.UserAction
         mUsername = username;
         Object[] objs = DBManager.check(ACCOUNT_TABLE_NAME, condition).get(0);
         HashMap<String, Object> map = DataConverter.objectArrayToHashMap(BspConstants.ACCOUNT_ATTR_NAME, objs);
-        mSavingAccount = Account.convertToAccount(map);
+        mSavingAccount = _Account.convertToAccount(map);
         view.refreshBalance(String.valueOf(mSavingAccount.getBalance()));
     }
 

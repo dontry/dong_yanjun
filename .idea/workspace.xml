@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1be03a33-2d96-4381-892c-e44e618ea866" name="Default" comment="" />
+    <list default="true" id="1be03a33-2d96-4381-892c-e44e618ea866" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BankSystemPrototype/build.xml" afterPath="$PROJECT_DIR$/BankSystemPrototype/build.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BankSystemPrototype/nbproject/project.properties" afterPath="$PROJECT_DIR$/BankSystemPrototype/nbproject/project.properties" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -29,7 +32,7 @@
       <file leaf-file-name="AccountContract.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/monash/accounts/AccountContract.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="353">
+            <state relative-caret-position="375">
               <caret line="33" column="41" lean-forward="false" selection-start-line="33" selection-start-column="41" selection-end-line="33" selection-end-column="41" />
               <folding />
             </state>
@@ -68,9 +71,7 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="255">
               <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="false" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -78,7 +79,7 @@
       <file leaf-file-name="Account.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/monash/accounts/Account.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="116">
+            <state relative-caret-position="150">
               <caret line="10" column="28" lean-forward="false" selection-start-line="10" selection-start-column="28" selection-end-line="10" selection-end-column="28" />
               <folding />
             </state>
@@ -110,11 +111,7 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="105">
               <caret line="11" column="46" lean-forward="false" selection-start-line="11" selection-start-column="46" selection-end-line="11" selection-end-column="46" />
-              <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#541#542#0" expanded="false" />
-                <element signature="e#581#582#0" expanded="false" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -169,7 +166,6 @@
         <option value="$PROJECT_DIR$/src/com/monash/HomeLoanApplication.java" />
         <option value="$PROJECT_DIR$/src/com/monash/users/TypeOfUser.java" />
         <option value="$PROJECT_DIR$/src/com/monash/users/Administator.java" />
-        <option value="$PROJECT_DIR$/src/com/monash/users/Customer.java" />
         <option value="$PROJECT_DIR$/src/com/monash/Utils/Validator.java" />
         <option value="$PROJECT_DIR$/src/com/monash/Utils/DataConverter.java" />
         <option value="$PROJECT_DIR$/src/com/monash/Transaction.java" />
@@ -197,6 +193,7 @@
         <option value="$PROJECT_DIR$/src/com/monash/users/UserContract.java" />
         <option value="$PROJECT_DIR$/src/com/monash/accounts/AccountContract.java" />
         <option value="$PROJECT_DIR$/src/com/monash/GUI/LoginPage.form" />
+        <option value="$PROJECT_DIR$/src/com/monash/users/Customer.java" />
       </list>
     </option>
   </component>
@@ -538,9 +535,46 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bank_system_prototype" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bank_system_prototype" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BankSystemPrototype" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bank_system_prototype" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bank_system_prototype" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BankSystemPrototype" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="banksystemprototype" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="PackagesPane">
         <subPane>
           <PATH>
@@ -605,7 +639,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -829,7 +862,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="42" y="23" width="1398" height="877" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31184056" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -839,7 +871,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3385542" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24836601" sideWeight="0.6247544" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24836601" sideWeight="0.6247544" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24836601" sideWeight="0.37524557" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3997396" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1139,11 +1171,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="11" column="46" lean-forward="false" selection-start-line="11" selection-start-column="46" selection-end-line="11" selection-end-column="46" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#541#542#0" expanded="false" />
-            <element signature="e#581#582#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1175,15 +1203,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/monash/accounts/AccountContract.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="353">
+        <state relative-caret-position="375">
           <caret line="33" column="41" lean-forward="false" selection-start-line="33" selection-start-column="41" selection-end-line="33" selection-end-column="41" />
           <folding />
         </state>
@@ -1204,7 +1230,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/monash/accounts/Account.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="116">
+        <state relative-caret-position="150">
           <caret line="10" column="28" lean-forward="false" selection-start-line="10" selection-start-column="28" selection-end-line="10" selection-end-column="28" />
           <folding />
         </state>

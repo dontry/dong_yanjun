@@ -9,7 +9,7 @@ import banksystemprototype.Exceptions.BalanceLimitException;
 import banksystemprototype.TypeOfAccountAction;
 import banksystemprototype.Utils.BspConstants;
 import banksystemprototype.Utils.DataConverter;
-import banksystemprototype.accounts.Account;
+import banksystemprototype.accounts._Account;
 import banksystemprototype.accounts.Database.DBConnection;
 import banksystemprototype.accounts.Database.DBManager;
 import banksystemprototype.accounts.SavingAccount.SavingAccountController;
@@ -34,7 +34,7 @@ public class TermDepositAccountController implements TermDepositAccountContract.
     private TermDeposit mTermDeposit;
     private static final String TERM_DEPOSIT_TABLE_NAME = "S27624366.TERM_DEPOSIT";
     private String ACCOUNT_TABLE_NAME =  "S27624366.ACCOUNT";
-    private Account mTermDepositAccount;
+    private _Account mTermDepositAccount;
     private String mUsername;
     
     public TermDepositAccountController(TermDepositAccountContract.View v) {
@@ -112,7 +112,7 @@ public class TermDepositAccountController implements TermDepositAccountContract.
         mUsername = username;
         Object[] obj = DBManager.check(ACCOUNT_TABLE_NAME, condition).get(0);
         HashMap<String, Object> map = DataConverter.objectArrayToHashMap(BspConstants.ACCOUNT_ATTR_NAME, obj);
-        mTermDepositAccount = Account.convertToAccount(map);
+        mTermDepositAccount = _Account.convertToAccount(map);
         mTermDepositList  = getAllTermDeposit();
         view.showTermDeposit(mTermDepositList);
        

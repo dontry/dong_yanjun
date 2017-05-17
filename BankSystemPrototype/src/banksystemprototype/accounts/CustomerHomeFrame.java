@@ -10,7 +10,7 @@ import banksystemprototype.accounts.CreditCardAccount.CreditCardAccountFrame;
 import banksystemprototype.accounts.Database.*;
 import banksystemprototype.accounts.SavingAccount.SavingAccountFrame;
 import banksystemprototype.accounts.TermDepositAccount.TermDepositAccountFrame;
-import banksystemprototype.users.Customer;
+import banksystemprototype.users._Customer;
 import banksystemprototype.users.LoginFrame;
 import java.sql.*;
 import java.util.ArrayList;
@@ -344,7 +344,7 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
     }
 
     @Override
-    public void showCustomerProfile(Customer profile) {
+    public void showCustomerProfile(_Customer profile) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

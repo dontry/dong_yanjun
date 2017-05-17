@@ -1,6 +1,6 @@
 package banksystemprototype.Utils;
 
-import banksystemprototype.users.Customer;
+import banksystemprototype.users._Customer;
 
 
 
@@ -10,6 +10,6 @@ import banksystemprototype.users.Customer;
 public class Validator {
     //PIN validator
     public static boolean isPINvalid(Long pin) {
-        return pin.toString().length() == Customer.PIN_LENGTH;
+        return pin.toString().length() == _Customer.PIN_LENGTH;
     }
 }

@@ -1,7 +1,7 @@
 package banksystemprototype.accounts.TermDepositAccount;
 
 import banksystemprototype.Utils.DataConverter;
-import banksystemprototype.accounts.Account;
+import banksystemprototype.accounts._Account;
 import banksystemprototype.accounts.TypeOfAccount;
 import java.math.BigDecimal;
 import java.util.Calendar;

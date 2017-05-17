@@ -2,14 +2,14 @@ package banksystemprototype.accounts.TermDepositAccount;
 
 
 
-import banksystemprototype.accounts.Account;
+import banksystemprototype.accounts._Account;
 import banksystemprototype.accounts.TypeOfAccount;
 import java.util.HashMap;
 
 /**
  * Created by caidong on 8/05/2017.
  */
-public class TermDepositAccount extends Account {
+public class TermDepositAccount extends _Account {
     private HashMap<Long, TermDeposit> mTermDeposits;
 
 

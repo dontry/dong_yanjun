@@ -1,13 +1,13 @@
 package banksystemprototype.accounts.CreditCardAccount;
 
-import banksystemprototype.accounts.Account;
+import banksystemprototype.accounts._Account;
 import banksystemprototype.accounts.TypeOfAccount;
 
 
 /**
  * Created by caidong on 8/05/2017.
  */
-public class CreditCardAccount extends Account {
+public class CreditCardAccount extends _Account {
     private double mWithdrawDailyLimit;
     private double mLoanLimit;
     private double dailyWithdrawal;

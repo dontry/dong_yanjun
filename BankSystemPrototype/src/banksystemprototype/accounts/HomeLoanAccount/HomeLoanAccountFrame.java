@@ -22,12 +22,10 @@ public class HomeLoanAccountFrame extends javax.swing.JFrame implements HomeLoan
      */ 
     private final CustomerHomeFrame homeFrame;
     private final HomeLoanAccountContract.UserActionListener mActionListener;
-    private Connection conn;
     public HomeLoanAccountFrame(JFrame home) {
         initComponents();
         homeFrame = (CustomerHomeFrame) home;
         mActionListener = new HomeLoanAccountController(this);
-        conn = DBConnection.getConnection();
     }
 
     /**
@@ -45,6 +43,7 @@ public class HomeLoanAccountFrame extends javax.swing.JFrame implements HomeLoan
         jLabel2 = new javax.swing.JLabel();
         labelBalanceValue1 = new javax.swing.JLabel();
         btnBack = new javax.swing.JButton();
+        jLabel12 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -95,16 +94,16 @@ public class HomeLoanAccountFrame extends javax.swing.JFrame implements HomeLoan
                 .addGap(0, 24, Short.MAX_VALUE))
         );
 
-        jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel1.setText("Principle:");
 
-        labelBalanceValue.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        labelBalanceValue.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         labelBalanceValue.setText("0.00");
 
-        jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel2.setText("Repayment:");
 
-        labelBalanceValue1.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        labelBalanceValue1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         labelBalanceValue1.setText("0.00");
 
         btnBack.setText("Back");
@@ -113,6 +112,9 @@ public class HomeLoanAccountFrame extends javax.swing.JFrame implements HomeLoan
                 btnBackActionPerformed(evt);
             }
         });
+
+        jLabel12.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jLabel12.setText("Home Loan Account");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -124,27 +126,32 @@ public class HomeLoanAccountFrame extends javax.swing.JFrame implements HomeLoan
                         .addContainerGap()
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(86, 86, 86)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap()
+                        .addComponent(btnBack)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel12)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(labelBalanceValue, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(labelBalanceValue1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnBack)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(labelBalanceValue1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(95, 95, 95))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnBack)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGap(11, 11, 11)
+                .addComponent(jLabel12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(labelBalanceValue1))
@@ -152,7 +159,7 @@ public class HomeLoanAccountFrame extends javax.swing.JFrame implements HomeLoan
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(labelBalanceValue))
-                .addGap(64, 64, 64)
+                .addGap(36, 36, 36)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -187,6 +194,7 @@ public class HomeLoanAccountFrame extends javax.swing.JFrame implements HomeLoan
     private final javax.swing.JButton btnTransfer = new javax.swing.JButton();
     private final javax.swing.JButton btnWithdraw = new javax.swing.JButton();
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel labelBalanceValue;

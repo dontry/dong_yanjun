@@ -59,7 +59,7 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
         jdViewTransaction = new javax.swing.JDialog();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblTransaction = new javax.swing.JTable();
-        btnViewTransaction = new javax.swing.JButton();
+        btnViewTransactionBack = new javax.swing.JButton();
         jdViewProfile = new javax.swing.JDialog();
         jLabel15 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -96,13 +96,15 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
 
         jMenu2.setText("jMenu2");
 
+        jdViewTransaction.setMinimumSize(new java.awt.Dimension(750, 355));
+
         tblTransaction.setModel(dtm);
         jScrollPane1.setViewportView(tblTransaction);
 
-        btnViewTransaction.setText("View Transaction");
-        btnViewTransaction.addActionListener(new java.awt.event.ActionListener() {
+        btnViewTransactionBack.setText("Back");
+        btnViewTransactionBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnViewTransactionActionPerformed(evt);
+                btnViewTransactionBackActionPerformed(evt);
             }
         });
 
@@ -112,19 +114,21 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
             jdViewTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jdViewTransactionLayout.createSequentialGroup()
                 .addGap(42, 42, 42)
-                .addGroup(jdViewTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnViewTransaction)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 624, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(84, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jdViewTransactionLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnViewTransactionBack)
+                .addGap(322, 322, 322))
         );
         jdViewTransactionLayout.setVerticalGroup(
             jdViewTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jdViewTransactionLayout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
-                .addComponent(btnViewTransaction)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnViewTransactionBack)
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         jdViewProfile.setMinimumSize(new java.awt.Dimension(466, 550));
@@ -423,13 +427,13 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
     private void btnTermDepositAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTermDepositAccountActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        new TermDepositAccountFrame(this).setVisible(true);
+        new TermDepositAccountFrame(this);
     }//GEN-LAST:event_btnTermDepositAccountActionPerformed
 
     private void btnCreditCardAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreditCardAccountActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        new CreditCardAccountFrame(this).setVisible(true);
+        new CreditCardAccountFrame(this);
     }//GEN-LAST:event_btnCreditCardAccountActionPerformed
 
     private void btnSavingAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSavingAccountActionPerformed
@@ -457,25 +461,25 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
     }//GEN-LAST:event_btnLogoutActionPerformed
 
     private void btnViewTransactionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewTransactionsActionPerformed
-        jdViewTransaction.setVisible(true);
-        this.setEnabled(false);
-    }//GEN-LAST:event_btnViewTransactionsActionPerformed
-
-    private void btnViewTransactionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewTransactionActionPerformed
-        if (dtm.getRowCount() > 0) {
+       if (dtm.getRowCount() > 0) {
             /* clear the default table model */
             for (int i = dtm.getRowCount() - 1; i > -1; i--) {
                 dtm.removeRow(i);
             }
         }
 
-        String condition = " WHERE USER = '" + username + "'";
+        String condition = " WHERE username = '" + username + "'";
         String table = "S27624366.transaction_log";
         ArrayList<Object[]> rows = DBManager.check(table, condition);
         for(Object[] row: rows) {
              dtm.addRow(row);
-        }     
-    }//GEN-LAST:event_btnViewTransactionActionPerformed
+        }   
+        jdViewTransaction.setVisible(true);
+    }//GEN-LAST:event_btnViewTransactionsActionPerformed
+
+    private void btnViewTransactionBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewTransactionBackActionPerformed
+        jdViewTransaction.setVisible(false);
+    }//GEN-LAST:event_btnViewTransactionBackActionPerformed
 
     private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
         jdViewProfile.setVisible(false);
@@ -494,7 +498,7 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
     private final javax.swing.JButton btnSavingAccount = new javax.swing.JButton();
     private javax.swing.JButton btnTermDepositAccount;
     private final javax.swing.JButton btnViewProfile = new javax.swing.JButton();
-    private javax.swing.JButton btnViewTransaction;
+    private javax.swing.JButton btnViewTransactionBack;
     private final javax.swing.JButton btnViewTransactions = new javax.swing.JButton();
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -568,4 +572,14 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
     public void showUserFullname(String fullname) {
         labelUsername.setText(fullname);
     }
+    
+    
+    private void addTableModel(DefaultTableModel dcbm){
+        if (dcbm.getRowCount() > 0) {
+            /* clear the default table model */
+            for (int i = dcbm.getRowCount() - 1; i > -1; i--) {
+                dcbm.removeRow(i);
+            }
+        }
+    }        
 }

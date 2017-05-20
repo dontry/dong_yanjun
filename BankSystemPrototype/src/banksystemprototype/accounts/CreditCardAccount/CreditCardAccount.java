@@ -70,4 +70,7 @@ public class CreditCardAccount{
     public void setBalance(double balance) {
         mAccount.set("balance", balance).save();
     }
+    public void freezeAccount() {
+        mAccount.freezAccount();
+    }
 }

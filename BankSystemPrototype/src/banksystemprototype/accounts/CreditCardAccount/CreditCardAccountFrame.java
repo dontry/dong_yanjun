@@ -7,9 +7,12 @@ package banksystemprototype.accounts.CreditCardAccount;
 
 import banksystemprototype.TypeOfAccountAction;
 import banksystemprototype.TypeOfMessageDialog;
+import banksystemprototype.Utils.BspConstants;
 import banksystemprototype.accounts.CustomerHomeFrame;
 import banksystemprototype.accounts.Database.DBConnection;
 import java.sql.Connection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -29,7 +32,14 @@ public class CreditCardAccountFrame extends javax.swing.JFrame implements Credit
         initComponents();
         homeFrame = (CustomerHomeFrame) home;
         mActionListener = new CreditCardAccountController(this);
-        mActionListener.openAccount(homeFrame.getUsername());
+        try {
+            mActionListener.openAccount(homeFrame.getUsername());
+            this.setVisible(true);
+        } catch (Exception ex) {
+            showMessageDialog(BspConstants.ACCOUNT_NULL_MSG, TypeOfMessageDialog.PLAIN);
+            mActionListener.back();
+     
+        }
     }
 
     /**
@@ -51,7 +61,6 @@ public class CreditCardAccountFrame extends javax.swing.JFrame implements Credit
         jLabel10 = new javax.swing.JLabel();
         tfDepositAmount = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        dialogViewTransaction = new javax.swing.JDialog();
         jPanel1 = new javax.swing.JPanel();
         jLayeredPane1 = new javax.swing.JLayeredPane();
         jLabel3 = new javax.swing.JLabel();
@@ -64,8 +73,11 @@ public class CreditCardAccountFrame extends javax.swing.JFrame implements Credit
         labelDailyPaymentLimit = new javax.swing.JLabel();
         labelCreditLimit = new javax.swing.JLabel();
         btnBack = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
 
         dialogTransfer.setTitle("Withdraw");
+        dialogTransfer.setMinimumSize(new java.awt.Dimension(400, 183));
+        dialogTransfer.setSize(new java.awt.Dimension(400, 183));
         dialogTransfer.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentHidden(java.awt.event.ComponentEvent evt) {
                 dialogTransferComponentHidden(evt);
@@ -88,6 +100,11 @@ public class CreditCardAccountFrame extends javax.swing.JFrame implements Credit
         });
 
         btnTransferCancel.setText("Cancel");
+        btnTransferCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTransferCancelActionPerformed(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel6.setText("Transfer Money");
@@ -143,10 +160,11 @@ public class CreditCardAccountFrame extends javax.swing.JFrame implements Credit
                 .addGroup(dialogTransferLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTransferOK)
                     .addComponent(btnTransferCancel))
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         dialogWithdraw.setTitle("Transfer");
+        dialogWithdraw.setMinimumSize(new java.awt.Dimension(400, 151));
         dialogWithdraw.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentHidden(java.awt.event.ComponentEvent evt) {
                 dialogWithdrawComponentHidden(evt);
@@ -169,6 +187,11 @@ public class CreditCardAccountFrame extends javax.swing.JFrame implements Credit
         });
 
         btnWithdrawCancel.setText("Cancel");
+        btnWithdrawCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnWithdrawCancelActionPerformed(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel9.setText("Withdraw Money");
@@ -208,10 +231,11 @@ public class CreditCardAccountFrame extends javax.swing.JFrame implements Credit
                 .addGroup(dialogWithdrawLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnWithdrawOK)
                     .addComponent(btnWithdrawCancel))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         dialogDeposit.setTitle("Deposit");
+        dialogDeposit.setMinimumSize(new java.awt.Dimension(400, 151));
         dialogDeposit.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentHidden(java.awt.event.ComponentEvent evt) {
                 dialogDepositComponentHidden(evt);
@@ -234,6 +258,11 @@ public class CreditCardAccountFrame extends javax.swing.JFrame implements Credit
         });
 
         btnDepositCancel.setText("Cancel");
+        btnDepositCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDepositCancelActionPerformed(evt);
+            }
+        });
 
         jLabel11.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel11.setText("Deposit Money");
@@ -273,20 +302,7 @@ public class CreditCardAccountFrame extends javax.swing.JFrame implements Credit
                 .addGroup(dialogDepositLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDepositOK)
                     .addComponent(btnDepositCancel))
-                .addContainerGap(15, Short.MAX_VALUE))
-        );
-
-        dialogViewTransaction.setTitle("Transaction");
-
-        javax.swing.GroupLayout dialogViewTransactionLayout = new javax.swing.GroupLayout(dialogViewTransaction.getContentPane());
-        dialogViewTransaction.getContentPane().setLayout(dialogViewTransactionLayout);
-        dialogViewTransactionLayout.setHorizontalGroup(
-            dialogViewTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        dialogViewTransactionLayout.setVerticalGroup(
-            dialogViewTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -438,6 +454,9 @@ public class CreditCardAccountFrame extends javax.swing.JFrame implements Credit
             }
         });
 
+        jLabel13.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jLabel13.setText("Credit Card Account");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -448,23 +467,29 @@ public class CreditCardAccountFrame extends javax.swing.JFrame implements Credit
                         .addContainerGap()
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(46, 46, 46)
+                                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(btnBack))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(120, 120, 120)
+                                .addComponent(jLabel13)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnBack)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnBack)
-                .addGap(41, 41, 41)
+                .addGap(13, 13, 13)
+                .addComponent(jLabel13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLayeredPane1)
                     .addGroup(layout.createSequentialGroup()
@@ -524,8 +549,6 @@ public class CreditCardAccountFrame extends javax.swing.JFrame implements Credit
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
         mActionListener.back();
-        this.dispose();
-        homeFrame.setVisible(true);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnWithdrawOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnWithdrawOKActionPerformed
@@ -543,6 +566,21 @@ public class CreditCardAccountFrame extends javax.swing.JFrame implements Credit
         mActionListener.newAction(TypeOfAccountAction.DEPOSIT);
     }//GEN-LAST:event_btnDepositOKActionPerformed
 
+    private void btnTransferCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransferCancelActionPerformed
+        // TODO add your handling code here:
+        disposeActionDialog(TypeOfAccountAction.TRANSFER);
+    }//GEN-LAST:event_btnTransferCancelActionPerformed
+
+    private void btnWithdrawCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnWithdrawCancelActionPerformed
+        // TODO add your handling code here:
+        disposeActionDialog(TypeOfAccountAction.WITHDRAW);
+    }//GEN-LAST:event_btnWithdrawCancelActionPerformed
+
+    private void btnDepositCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDepositCancelActionPerformed
+        // TODO add your handling code here:
+        disposeActionDialog(TypeOfAccountAction.DEPOSIT);
+    }//GEN-LAST:event_btnDepositCancelActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
@@ -557,11 +595,11 @@ public class CreditCardAccountFrame extends javax.swing.JFrame implements Credit
     private final javax.swing.JButton btnWithdrawOK = new javax.swing.JButton();
     private final javax.swing.JDialog dialogDeposit = new javax.swing.JDialog();
     private final javax.swing.JDialog dialogTransfer = new javax.swing.JDialog();
-    private javax.swing.JDialog dialogViewTransaction;
     private final javax.swing.JDialog dialogWithdraw = new javax.swing.JDialog();
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -610,10 +648,11 @@ public class CreditCardAccountFrame extends javax.swing.JFrame implements Credit
 
     @Override
     public void disposeActionDialog(TypeOfAccountAction action) {
-  switch(action) {
+        switch(action) {
             case TRANSFER:
                 dialogTransfer.setVisible(false);
                 tfTransferAmount.setText("");
+                tfTransferAccount.setText("");
                 break;
             case WITHDRAW:
                 dialogWithdraw.setVisible(false);
@@ -660,5 +699,11 @@ public class CreditCardAccountFrame extends javax.swing.JFrame implements Credit
     @Override
     public void showLoanLimit(double limit) {
         labelCreditLimit.setText(String.valueOf(limit));
+    }
+
+    @Override
+    public void close() {
+       this.dispose();
+            homeFrame.setVisible(true);
     }
 }

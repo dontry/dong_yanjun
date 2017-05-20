@@ -16,7 +16,9 @@ public class PinFrame extends javax.swing.JFrame implements PinServiceApi {
     /**
      * Creates new form PinFrame
      */
+    private int chances = 3;
     private PinServiceApi.Listener mListener;
+    private boolean isVerified;
     public PinFrame(PinServiceApi.Listener listener) {
         initComponents();
         mListener= listener;
@@ -35,11 +37,13 @@ public class PinFrame extends javax.swing.JFrame implements PinServiceApi {
         btnOK = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         tfPin = new javax.swing.JPasswordField();
+        jLabel2 = new javax.swing.JLabel();
 
         jButton2.setText("jButton2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(getPreferredSize());
+        setMinimumSize(new java.awt.Dimension(351, 145));
+        setSize(new java.awt.Dimension(351, 145));
 
         btnOK.setText("OK");
         btnOK.addActionListener(new java.awt.event.ActionListener() {
@@ -64,33 +68,47 @@ public class PinFrame extends javax.swing.JFrame implements PinServiceApi {
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 51, 51));
+        jLabel2.setText(" ");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1)
-                    .addComponent(btnOK))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnCancel)
-                    .addComponent(tfPin, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addGap(65, 65, 65)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addComponent(btnOK)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(tfPin, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(33, 33, 33)
+                                .addComponent(btnCancel)))))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(23, Short.MAX_VALUE)
+                .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(tfPin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(tfPin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnOK)
                     .addComponent(btnCancel))
-                .addContainerGap())
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         pack();
@@ -102,11 +120,24 @@ public class PinFrame extends javax.swing.JFrame implements PinServiceApi {
         getPin(pin, new Callback() {
             @Override
             public void onload(Object pin) {
-                mListener.verifyPin(pin);
+                isVerified = mListener.verifyPin(pin);
             }
             
         });
-        this.dispose();
+        if(isVerified) {
+            this.dispose();
+            jLabel2.setText("");
+            chances = 3;
+        } else {
+            if(--chances <= 0) {
+                mListener.freezeAccount();
+                this.dispose();
+            };            
+            String msg = "Sorry, your PIN is ivalid.\n You have " + chances + " chance(s) left."; 
+            jLabel2.setText(msg);
+            tfPin.setText("");
+        }
+        
     }//GEN-LAST:event_btnOKActionPerformed
 
     private void tfPinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfPinActionPerformed
@@ -126,6 +157,7 @@ public class PinFrame extends javax.swing.JFrame implements PinServiceApi {
     private javax.swing.JButton btnOK;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPasswordField tfPin;
     // End of variables declaration//GEN-END:variables
 }

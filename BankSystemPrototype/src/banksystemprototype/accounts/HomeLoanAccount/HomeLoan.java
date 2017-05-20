@@ -1,35 +1,50 @@
 package banksystemprototype.accounts.HomeLoanAccount;
 
 import java.util.Date;
-
+import org.javalite.activejdbc.Model;
 /**
  * Created by caidong on 10/05/2017.
  */
-public class HomeLoan {
-    private long loanId;
-    private double principle;
-    private double remainingLoan;
-    private Date startingDate;
-    private int period;
-    private double interest;
-    private Date nextRepaymentDate;
-    private double repaymentAmount;
-
-    public HomeLoan(long loanId, double principle,  Date startingDate, double interest, int period, double repaymentAmount) {
-        this.loanId = loanId;
-        this.principle = principle;
-        this.remainingLoan = remainingLoan;
-        this.startingDate = startingDate;
-        this.period = period;
-        this.interest = interest;
-        this.repaymentAmount = repaymentAmount;
+public class HomeLoan extends Model{
+    public long getLoanId() {
+        return this.getLong("loan_id");
     }
-
-    public void deductRepayment(double amount) {
-        remainingLoan -= amount;
+    public long getAccountId() {
+        return this.getLong("account_id");
     }
-
-    public void stop() {
-        //TODO Stop the mortgage
+    public double getPrincipal() {
+        return this.getDouble("principal");
+    }
+    public double getInterest() {
+        return this.getDouble("interest");
+    }
+    public double getRemainLoan() {
+        return this.getDouble("remain_loan");
+    }
+    public double getRepaymentAmount() {
+        return this.getDouble("repayment_amount");
+    }
+    public int getPeriod() {
+        return this.getInteger("period");
+    }
+    public Date getStartDate() {
+        return this.getDate("start_date");
+    }
+    public Date getEndDate() {
+        return this.getDate("end_date");
+    }
+    public Date getRepayDate() {
+        return this.getDate("repay_date");
+    }
+    public Date getNextRepayDate() {
+        return this.getDate("next_repay_date");
+    }
+    public boolean getFinishStatus() {
+        String isFinished =  this.getString("finish_status");
+        return isFinished.equals("Y");
+    }
+    public boolean getFrozenStatus() {
+        String isFrozen = this.getString("frozen_status");
+        return isFrozen.equals("Y");
     }
 }

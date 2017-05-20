@@ -63,8 +63,8 @@ public class CreditCardAccountController implements CreditCardContract.UserActio
         double dailyPayment = mCreditCardAccount.getDailyPayment() + amount;
         if(balance < mLoanLimit) throw new BalanceLimitException(TypeOfLimit.LOAN);
         if(dailyPayment > mDailyLimit) throw new BalanceLimitException(TypeOfLimit.DAILY_PAYMENT);
-        if(amount <= 0) throw new BalanceLimitException(TypeOfLimit.BALANCE);
-        mCreditCardAccount.setBalance(balance);
+        if(amount <= 0) throw new BalanceLimitException(TypeOfLimit.AMOUNT);
+        if(amount > balance) throw new BalanceLimitException(TypeOfLimit.BALANCE);        mCreditCardAccount.setBalance(balance);
         mCreditCardAccount.setTodayPament(dailyPayment);
         
         view.refreshBalance(String.valueOf(mCreditCardAccount.getBalance()));
@@ -81,7 +81,8 @@ public class CreditCardAccountController implements CreditCardContract.UserActio
         double dailyPayment = mCreditCardAccount.getDailyPayment() + amount;
         if(balance < mLoanLimit) throw new BalanceLimitException(TypeOfLimit.LOAN);
         if(dailyPayment > mDailyLimit) throw new BalanceLimitException(TypeOfLimit.DAILY_PAYMENT);
-        if(amount <= 0) throw new BalanceLimitException(TypeOfLimit.BALANCE);        
+        if(amount <= 0) throw new BalanceLimitException(TypeOfLimit.AMOUNT);
+        if(amount > balance) throw new BalanceLimitException(TypeOfLimit.BALANCE);
         Account toAccount = Account.findFirst(" account_id = ?", toAccountId);
         double toAccountNewBalance = toAccount.getBalance() + amount;
         mCreditCardAccount.setBalance(balance);
@@ -94,19 +95,20 @@ public class CreditCardAccountController implements CreditCardContract.UserActio
     }
 
     @Override
-    public void openAccount(String username) {
+    public void openAccount(String username) throws Exception {
         Base.open(BspConstants.DB_DRIVER, BspConstants.DB_CONNECTION, BspConstants.DB_USER, BspConstants.DB_PASSWORD);
         mCreditCardAccount = new CreditCardAccount(username);
         mUsername = username;
         mLoanLimit = mCreditCardAccount.getLoanLimit();
         mDailyLimit = mCreditCardAccount.getDailyLimit();
-        
+       
         initialize();
     }
 
     @Override
     public void back() {
         closeAccount();
+        view.close();
     }
 
     @Override
@@ -118,14 +120,14 @@ public class CreditCardAccountController implements CreditCardContract.UserActio
             try {
                 proceedTransaction();
             } catch (BalanceLimitException ex) {
-                view.showMessageDialog("Sorry, the amount exceeds the limit.", TypeOfMessageDialog.WARNING);
+                view.showMessageDialog(ex.getMessage(), TypeOfMessageDialog.WARNING);
                 Logger.getLogger(SavingAccountController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NumberFormatException ex) {
+                view.showMessageDialog(ex.getMessage(), TypeOfMessageDialog.WARNING);
             }
-        } else {
-            view.showMessageDialog("Sorry, your PIN is incorrect.", TypeOfMessageDialog.WARNING);
-        }
+        } 
         return isVerified;
-        }
+    }
 
     @Override
     public void newAction(TypeOfAccountAction action) {
@@ -159,6 +161,13 @@ public class CreditCardAccountController implements CreditCardContract.UserActio
         view.refreshDailyPayment(mCreditCardAccount.getDailyPayment());
         view.showLoanLimit(mLoanLimit);
         view.showDailyPaymentLimit(mDailyLimit);
+    }
+
+    @Override
+    public void freezeAccount() {
+        mCreditCardAccount.freezeAccount();
+        view.showMessageDialog(BspConstants.ACCOUNT_LOCKED_MSG, TypeOfMessageDialog.WARNING);
+        back();
     }
 
 }

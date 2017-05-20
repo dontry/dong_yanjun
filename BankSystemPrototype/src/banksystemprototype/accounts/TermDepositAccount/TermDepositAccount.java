@@ -57,4 +57,7 @@ public class TermDepositAccount {
         }
         return map;
     }
+    public void freezeAccount() {
+        mAccount.freezAccount();
+    }
 }

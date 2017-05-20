@@ -30,8 +30,6 @@ public class CreditAccount extends Model{
         return this.getDate("current_date");
     }
     public void setTodayPayment(double amount) {
-        this.setDouble("today_payment", amount);
+        this.setDouble("daily_payment", amount);
     }
-    
-    
 }

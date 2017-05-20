@@ -57,5 +57,10 @@ public class HomeLoanAccountController implements HomeLoanAccountContract.UserAc
     public void newAction(TypeOfAccountAction action) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public void freezeAccount() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

@@ -26,13 +26,14 @@ public interface CreditCardContract {
         void showLoanLimit(double limit);
         void disposeActionDialog(TypeOfAccountAction action);
         void showMessageDialog(String msg, TypeOfMessageDialog type);
+        void close();
     }
     interface UserActionListener {
         double deposit() throws BalanceLimitException;
         double withdraw() throws BalanceLimitException;
         double transfer() throws BalanceLimitException;
         void initialize();
-        void openAccount(String username);
+        void openAccount(String username) throws Exception;
         void closeAccount();
         void back();
         void newAction(TypeOfAccountAction action);

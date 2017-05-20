@@ -5,10 +5,13 @@
  */
 package banksystemprototype.accounts.TermDepositAccount;
 
+import banksystemprototype.Exceptions.AccountException;
 import banksystemprototype.TypeOfAccountAction;
 import banksystemprototype.TypeOfMessageDialog;
+import banksystemprototype.Utils.BspConstants;
 import banksystemprototype.accounts.CustomerHomeFrame;
 import banksystemprototype.accounts.Database.DBConnection;
+import banksystemprototype.accounts.Database.DBManager;
 import static java.lang.System.in;
 import java.sql.Connection;
 import java.util.Calendar;
@@ -21,6 +24,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SpinnerListModel;
@@ -28,6 +32,7 @@ import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -42,13 +47,23 @@ public class TermDepositAccountFrame extends javax.swing.JFrame implements TermD
     private List<TermDeposit> mTempTerms;
     private final TermDepositAccountContract.UserActionListener mActionListener;
     private String[] mOptionValues;
+    
+    DefaultTableModel dtm = new DefaultTableModel(BspConstants.TERM_DEPOSIT_ATTR_NAME, 0);
+    
     public TermDepositAccountFrame(JFrame home) {
         initComponents();
         homeFrame = (CustomerHomeFrame) home;
         mActionListener = new TermDepositAccountController(this);
-        mActionListener.openAccount(homeFrame.getUsername());
-        dateChooserTermDeposit.setMinDate(Calendar.getInstance());
-        spTermPeriod.addChangeListener(spinnerTermPeriodListener);
+        try {
+            mActionListener.openAccount(homeFrame.getUsername());
+            dateChooserTermDeposit.setMinDate(Calendar.getInstance());
+            spTermPeriod.addChangeListener(spinnerTermPeriodListener);
+            this.setVisible(true);
+        } catch (Exception e) {
+            showMessageDialog(BspConstants.ACCOUNT_NULL_MSG, TypeOfMessageDialog.WARNING);
+            mActionListener.back();
+        }
+    
     }
 
     /**
@@ -79,13 +94,20 @@ public class TermDepositAccountFrame extends javax.swing.JFrame implements TermD
         spWithdrawTermDeposit = new javax.swing.JSpinner();
         tfWithdrawAmount = new javax.swing.JTextField();
         dialogViewTermDeposits = new javax.swing.JDialog();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        btnViewTermBack = new javax.swing.JButton();
+        dateChooserCombo1 = new datechooser.beans.DateChooserCombo();
         jPanel1 = new javax.swing.JPanel();
         btnViewTermDeposits = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         labelBalanceValue = new javax.swing.JLabel();
         btnBack = new javax.swing.JButton();
+        jLabel12 = new javax.swing.JLabel();
 
         dialogTransfer.setTitle("Withdraw");
+        dialogTransfer.setLocation(new java.awt.Point(528, 167));
+        dialogTransfer.setMinimumSize(new java.awt.Dimension(528, 167));
         dialogTransfer.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentHidden(java.awt.event.ComponentEvent evt) {
                 dialogTransferComponentHidden(evt);
@@ -142,13 +164,12 @@ public class TermDepositAccountFrame extends javax.swing.JFrame implements TermD
                             .addComponent(jLabel8)
                             .addComponent(jLabel2))
                         .addGap(18, 18, 18)
-                        .addGroup(dialogTransferLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(dialogTransferLayout.createSequentialGroup()
-                                .addComponent(tfTransferAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(spTransferTermDeposit, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(tfTransferToAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))))
+                        .addGroup(dialogTransferLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(tfTransferAmount)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tfTransferToAccount))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(spTransferTermDeposit, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(45, Short.MAX_VALUE))
         );
         dialogTransferLayout.setVerticalGroup(
@@ -173,7 +194,7 @@ public class TermDepositAccountFrame extends javax.swing.JFrame implements TermD
         );
 
         dialogCreateTermDeposit.setTitle("Create Term Deposit");
-        dialogCreateTermDeposit.setMinimumSize(new java.awt.Dimension(300, 470));
+        dialogCreateTermDeposit.setMinimumSize(new java.awt.Dimension(393, 278));
         dialogCreateTermDeposit.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentHidden(java.awt.event.ComponentEvent evt) {
                 dialogCreateTermDepositComponentHidden(evt);
@@ -242,7 +263,7 @@ public class TermDepositAccountFrame extends javax.swing.JFrame implements TermD
                         .addComponent(btnCreateTermDepositOK)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnCreateTermDepositCancel)))
-                .addContainerGap(122, Short.MAX_VALUE))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
         dialogCreateTermDepositLayout.setVerticalGroup(
             dialogCreateTermDepositLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -273,7 +294,7 @@ public class TermDepositAccountFrame extends javax.swing.JFrame implements TermD
         );
 
         dialogWithdraw.setTitle("Transfer");
-        dialogWithdraw.setMinimumSize(getPreferredSize());
+        dialogWithdraw.setMinimumSize(new java.awt.Dimension(453, 151));
         dialogWithdraw.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentHidden(java.awt.event.ComponentEvent evt) {
                 dialogWithdrawComponentHidden(evt);
@@ -349,16 +370,40 @@ public class TermDepositAccountFrame extends javax.swing.JFrame implements TermD
         );
 
         dialogViewTermDeposits.setTitle("Term Deposits");
+        dialogViewTermDeposits.setMinimumSize(new java.awt.Dimension(650, 334));
+
+        jTable1.setModel(dtm);
+        jScrollPane1.setViewportView(jTable1);
+
+        btnViewTermBack.setText("Back");
+        btnViewTermBack.setToolTipText("");
+        btnViewTermBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewTermBackActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout dialogViewTermDepositsLayout = new javax.swing.GroupLayout(dialogViewTermDeposits.getContentPane());
         dialogViewTermDeposits.getContentPane().setLayout(dialogViewTermDepositsLayout);
         dialogViewTermDepositsLayout.setHorizontalGroup(
             dialogViewTermDepositsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(dialogViewTermDepositsLayout.createSequentialGroup()
+                .addContainerGap(32, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28))
+            .addGroup(dialogViewTermDepositsLayout.createSequentialGroup()
+                .addGap(281, 281, 281)
+                .addComponent(btnViewTermBack)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         dialogViewTermDepositsLayout.setVerticalGroup(
             dialogViewTermDepositsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(dialogViewTermDepositsLayout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnViewTermBack)
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -424,7 +469,7 @@ public class TermDepositAccountFrame extends javax.swing.JFrame implements TermD
         jLabel1.setText("Balance:");
 
         labelBalanceValue.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        labelBalanceValue.setText("number");
+        labelBalanceValue.setText("0.00");
 
         btnBack.setText("Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
@@ -433,38 +478,44 @@ public class TermDepositAccountFrame extends javax.swing.JFrame implements TermD
             }
         });
 
+        jLabel12.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jLabel12.setText("Term Deposit Account");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(102, 102, 102)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(labelBalanceValue, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(btnBack)))
+                        .addComponent(btnBack)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelBalanceValue, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(92, 92, 92)
+                .addComponent(jLabel12)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(13, 13, 13)
                 .addComponent(btnBack)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addComponent(jLabel12)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(labelBalanceValue))
-                .addGap(102, 102, 102)
+                .addGap(49, 49, 49)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -513,8 +564,6 @@ public class TermDepositAccountFrame extends javax.swing.JFrame implements TermD
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
         mActionListener.back();
-        this.dispose();
-        homeFrame.setVisible(true);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnTransferOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransferOKActionPerformed
@@ -539,6 +588,19 @@ public class TermDepositAccountFrame extends javax.swing.JFrame implements TermD
 
     private void btnViewTermDepositsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewTermDepositsActionPerformed
         // TODO add your handling code here:
+        addTableModel(dtm);
+        if (dtm.getRowCount() > 0) {
+            /* clear the default table model */
+            for (int i = dtm.getRowCount() - 1; i > -1; i--) {
+                dtm.removeRow(i);
+            }
+        }
+        String condition = " where account_id = " + mActionListener.getAccountId();
+        String table = "S27624366.TERM_DEPOSITS";
+        ArrayList<Object[]> rows = DBManager.check(table, condition);
+        for(Object[] row: rows) {
+             dtm.addRow(row);
+        }     
         dialogViewTermDeposits.setVisible(true);
     }//GEN-LAST:event_btnViewTermDepositsActionPerformed
 
@@ -560,6 +622,11 @@ public class TermDepositAccountFrame extends javax.swing.JFrame implements TermD
         // TODO add your handling code here:
     }//GEN-LAST:event_tfWithdrawAmountActionPerformed
 
+    private void btnViewTermBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewTermBackActionPerformed
+        // TODO add your handling code here:
+        dialogViewTermDeposits.setVisible(false);
+    }//GEN-LAST:event_btnViewTermBackActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
     private final javax.swing.JButton btnCreateTermDeposit = new javax.swing.JButton();
@@ -568,10 +635,12 @@ public class TermDepositAccountFrame extends javax.swing.JFrame implements TermD
     private final javax.swing.JButton btnTransfer = new javax.swing.JButton();
     private final javax.swing.JButton btnTransferCancel = new javax.swing.JButton();
     private final javax.swing.JButton btnTransferOK = new javax.swing.JButton();
+    private javax.swing.JButton btnViewTermBack;
     private javax.swing.JButton btnViewTermDeposits;
     private final javax.swing.JButton btnWithdraw = new javax.swing.JButton();
     private final javax.swing.JButton btnWithdrawCancel = new javax.swing.JButton();
     private final javax.swing.JButton btnWithdrawOK = new javax.swing.JButton();
+    private datechooser.beans.DateChooserCombo dateChooserCombo1;
     private datechooser.beans.DateChooserCombo dateChooserTermDeposit;
     private final javax.swing.JDialog dialogCreateTermDeposit = new javax.swing.JDialog();
     private final javax.swing.JDialog dialogTransfer = new javax.swing.JDialog();
@@ -580,6 +649,7 @@ public class TermDepositAccountFrame extends javax.swing.JFrame implements TermD
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -589,6 +659,8 @@ public class TermDepositAccountFrame extends javax.swing.JFrame implements TermD
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JLabel labelBalanceValue;
     private javax.swing.JLabel labelInterestRate;
     private javax.swing.JSpinner spTermPeriod;
@@ -786,5 +858,20 @@ public class TermDepositAccountFrame extends javax.swing.JFrame implements TermD
     @Override
     public void refreshBalance(String balance) {
         labelBalanceValue.setText(balance);
+    }
+    
+    private void addTableModel(DefaultTableModel dcbm){
+        if (dcbm.getRowCount() > 0) {
+            /* clear the default table model */
+            for (int i = dcbm.getRowCount() - 1; i > -1; i--) {
+                dcbm.removeRow(i);
+            }
+        }
+    }
+
+    @Override
+    public void close() {
+            this.dispose();
+            homeFrame.setVisible(true);   
     }
 }

@@ -1,0 +1,301 @@
+@startuml
+abstract class banksystemprototype.users.User
+annotation java.lang.Override
+annotation java.lang.SuppressWarnings
+class banksystemprototype.BankSystemPrototype
+class banksystemprototype.Exceptions.BalanceLimitException
+class banksystemprototype.HomeLoanApplication
+class banksystemprototype.Utils.BspConstants
+class banksystemprototype.Utils.DataConverter
+class banksystemprototype.Utils.Validator
+class banksystemprototype.accounts.Account
+class banksystemprototype.accounts.AdminHomeFrame
+class banksystemprototype.accounts.CreditCardAccount.CreditCardAccount
+class banksystemprototype.accounts.CreditCardAccount.CreditCardAccountController
+class banksystemprototype.accounts.CreditCardAccount.CreditCardAccountFrame
+class banksystemprototype.accounts.CustomerAccountController
+class banksystemprototype.accounts.CustomerHomeFrame
+class banksystemprototype.accounts.Database.DBConnection
+class banksystemprototype.accounts.Database.DBManager
+class banksystemprototype.accounts.HomeLoanAccount.HomeLoan
+class banksystemprototype.accounts.HomeLoanAccount.HomeLoanAccount
+class banksystemprototype.accounts.HomeLoanAccount.HomeLoanAccountController
+class banksystemprototype.accounts.HomeLoanAccount.HomeLoanAccountFrame
+class banksystemprototype.accounts.SavingAccount.SavingAccount
+class banksystemprototype.accounts.SavingAccount.SavingAccountController
+class banksystemprototype.accounts.SavingAccount.SavingAccountFrame
+class banksystemprototype.accounts.TermDepositAccount.TermDeposit
+class banksystemprototype.accounts.TermDepositAccount.TermDepositAccount
+class banksystemprototype.accounts.TermDepositAccount.TermDepositAccountController
+class banksystemprototype.accounts.TermDepositAccount.TermDepositAccountFrame
+class banksystemprototype.accounts.Transaction.Transaction
+class banksystemprototype.accounts.Transaction.TransactionLog
+class banksystemprototype.users.Administator
+class banksystemprototype.users.Customer
+class banksystemprototype.users.LoginFrame
+class banksystemprototype.users.UserController
+class banksystemprototype.widgets.PinFrame
+class java.lang.Exception
+class java.math.BigDecimal
+class java.sql.Connection
+class java.sql.DriverManager
+class java.sql.ResultSet
+class java.sql.ResultSetMetaData
+class java.sql.SQLException
+class java.sql.Statement
+class java.text.SimpleDateFormat
+class java.util.ArrayList
+class java.util.Arrays
+class java.util.Calendar
+class java.util.Date
+class java.util.GregorianCalendar
+class java.util.HashMap
+class java.util.List
+class java.util.Map
+class java.util.logging.Level
+class java.util.logging.Logger
+class javafx.scene.input.KeyCode
+class javax.swing.DefaultComboBoxModel
+class javax.swing.JFrame
+class javax.swing.JOptionPane
+class javax.swing.table.DefaultTableModel
+class oracle.jdbc.OracleDriver
+enum banksystemprototype.TypeOfAccountAction
+enum banksystemprototype.TypeOfHomeLoan
+enum banksystemprototype.TypeOfMessageDialog
+enum banksystemprototype.accounts.TermDepositAccount.TypeOfTermDeposit
+enum banksystemprototype.accounts.Transaction.TypeOfTransaction
+enum banksystemprototype.accounts.TypeOfAccount
+enum banksystemprototype.users.TypeOfId
+enum banksystemprototype.users.TypeOfUser
+interface AccountContract.CustomerActionListener
+interface AccountContract.View
+interface CreditCardContract.UserActionListener
+interface CreditCardContract.View
+interface HomeLoanAccountContract.UserActionListener
+interface HomeLoanAccountContract.View
+interface PinServiceApi.Listener
+interface SavingAccountContract.UserActionListener
+interface SavingAccountContract.View
+interface TermDepositAccountContract.UserActionListener
+interface TermDepositAccountContract.View
+interface UserContract.UserActionListener
+interface UserContract.View
+interface banksystemprototype.accounts.AccountContract
+interface banksystemprototype.accounts.CreditCardAccount.CreditCardContract
+interface banksystemprototype.accounts.HomeLoanAccount.HomeLoanAccountContract
+interface banksystemprototype.accounts.SavingAccount.SavingAccountContract
+interface banksystemprototype.accounts.TermDepositAccount.TermDepositAccountContract
+interface banksystemprototype.users.UserContract
+interface banksystemprototype.widgets.PinServiceApi
+banksystemprototype.Exceptions.BalanceLimitException --|> java.lang.Exception
+banksystemprototype.HomeLoanApplication ..> java.util.Date
+banksystemprototype.Utils.DataConverter ..> java.text.SimpleDateFormat
+banksystemprototype.Utils.DataConverter ..> java.util.Calendar
+banksystemprototype.Utils.DataConverter ..> java.util.Date
+banksystemprototype.Utils.DataConverter ..> java.util.GregorianCalendar
+banksystemprototype.Utils.DataConverter ..> java.util.HashMap
+banksystemprototype.Utils.Validator ..> banksystemprototype.users.Customer
+banksystemprototype.accounts.Account ..> java.math.BigDecimal
+banksystemprototype.accounts.Account ..> java.util.HashMap
+banksystemprototype.accounts.AdminHomeFrame ..> java.lang.SuppressWarnings
+banksystemprototype.accounts.AdminHomeFrame ..> banksystemprototype.users.LoginFrame
+banksystemprototype.accounts.AdminHomeFrame ..> java.util.ArrayList
+banksystemprototype.accounts.AdminHomeFrame ..> java.util.logging.Level
+banksystemprototype.accounts.AdminHomeFrame ..> java.util.logging.Logger
+banksystemprototype.accounts.AdminHomeFrame ..> javax.swing.DefaultComboBoxModel
+banksystemprototype.accounts.AdminHomeFrame --|> javax.swing.JFrame
+banksystemprototype.accounts.AdminHomeFrame ..> javax.swing.table.DefaultTableModel
+banksystemprototype.accounts.CreditCardAccount.CreditCardAccount --|> banksystemprototype.accounts.Account
+banksystemprototype.accounts.CreditCardAccount.CreditCardAccount ..> banksystemprototype.accounts.TypeOfAccount
+banksystemprototype.accounts.CreditCardAccount.CreditCardAccountController ..> java.lang.Override
+banksystemprototype.accounts.CreditCardAccount.CreditCardAccountController ..> banksystemprototype.Exceptions.BalanceLimitException
+banksystemprototype.accounts.CreditCardAccount.CreditCardAccountController ..> banksystemprototype.accounts.Database.DBConnection
+banksystemprototype.accounts.CreditCardAccount.CreditCardAccountController ..> banksystemprototype.accounts.Transaction.Transaction
+banksystemprototype.accounts.CreditCardAccount.CreditCardAccountController ..> banksystemprototype.widgets.PinFrame
+banksystemprototype.accounts.CreditCardAccount.CreditCardAccountController ..> java.util.Date
+banksystemprototype.accounts.CreditCardAccount.CreditCardAccountController ..> java.util.List
+banksystemprototype.accounts.CreditCardAccount.CreditCardAccountController ..> java.util.logging.Level
+banksystemprototype.accounts.CreditCardAccount.CreditCardAccountController ..> java.util.logging.Logger
+banksystemprototype.accounts.CreditCardAccount.CreditCardAccountController ..> banksystemprototype.TypeOfAccountAction
+banksystemprototype.accounts.CreditCardAccount.CreditCardAccountController --|> CreditCardContract.UserActionListener
+banksystemprototype.accounts.CreditCardAccount.CreditCardAccountController --|> PinServiceApi.Listener
+banksystemprototype.accounts.CreditCardAccount.CreditCardAccountController ..> banksystemprototype.widgets.PinServiceApi
+banksystemprototype.accounts.CreditCardAccount.CreditCardAccountFrame ..> java.lang.Override
+banksystemprototype.accounts.CreditCardAccount.CreditCardAccountFrame ..> java.lang.SuppressWarnings
+banksystemprototype.accounts.CreditCardAccount.CreditCardAccountFrame ..> banksystemprototype.accounts.CustomerHomeFrame
+banksystemprototype.accounts.CreditCardAccount.CreditCardAccountFrame ..> banksystemprototype.accounts.Database.DBConnection
+banksystemprototype.accounts.CreditCardAccount.CreditCardAccountFrame ..> java.sql.Connection
+banksystemprototype.accounts.CreditCardAccount.CreditCardAccountFrame --|> javax.swing.JFrame
+banksystemprototype.accounts.CreditCardAccount.CreditCardAccountFrame ..> banksystemprototype.TypeOfAccountAction
+banksystemprototype.accounts.CreditCardAccount.CreditCardAccountFrame --|> CreditCardContract.View
+banksystemprototype.accounts.CustomerAccountController ..> java.lang.Override
+banksystemprototype.accounts.CustomerAccountController ..> banksystemprototype.accounts.CreditCardAccount.CreditCardAccount
+banksystemprototype.accounts.CustomerAccountController ..> banksystemprototype.accounts.HomeLoanAccount.HomeLoanAccount
+banksystemprototype.accounts.CustomerAccountController ..> banksystemprototype.accounts.SavingAccount.SavingAccount
+banksystemprototype.accounts.CustomerAccountController ..> banksystemprototype.accounts.TermDepositAccount.TermDepositAccount
+banksystemprototype.accounts.CustomerAccountController ..> banksystemprototype.users.Customer
+banksystemprototype.accounts.CustomerAccountController --|> AccountContract.CustomerActionListener
+banksystemprototype.accounts.CustomerHomeFrame ..> java.lang.Override
+banksystemprototype.accounts.CustomerHomeFrame ..> java.lang.SuppressWarnings
+banksystemprototype.accounts.CustomerHomeFrame ..> banksystemprototype.accounts.CreditCardAccount.CreditCardAccountFrame
+banksystemprototype.accounts.CustomerHomeFrame ..> banksystemprototype.accounts.HomeLoanAccount.HomeLoanAccountFrame
+banksystemprototype.accounts.CustomerHomeFrame ..> banksystemprototype.accounts.SavingAccount.SavingAccountFrame
+banksystemprototype.accounts.CustomerHomeFrame ..> banksystemprototype.accounts.TermDepositAccount.TermDepositAccountFrame
+banksystemprototype.accounts.CustomerHomeFrame ..> banksystemprototype.users.Customer
+banksystemprototype.accounts.CustomerHomeFrame ..> banksystemprototype.users.LoginFrame
+banksystemprototype.accounts.CustomerHomeFrame ..> java.util.ArrayList
+banksystemprototype.accounts.CustomerHomeFrame ..> java.util.logging.Level
+banksystemprototype.accounts.CustomerHomeFrame --|> javax.swing.JFrame
+banksystemprototype.accounts.CustomerHomeFrame ..> javax.swing.table.DefaultTableModel
+banksystemprototype.accounts.CustomerHomeFrame --|> AccountContract.View
+banksystemprototype.accounts.Database.DBConnection ..> java.sql.Connection
+banksystemprototype.accounts.Database.DBConnection ..> java.sql.DriverManager
+banksystemprototype.accounts.Database.DBConnection ..> java.sql.SQLException
+banksystemprototype.accounts.Database.DBConnection ..> java.util.logging.Level
+banksystemprototype.accounts.Database.DBConnection ..> java.util.logging.Logger
+banksystemprototype.accounts.Database.DBConnection ..> oracle.jdbc.OracleDriver
+banksystemprototype.accounts.Database.DBManager ..> java.sql.Connection
+banksystemprototype.accounts.Database.DBManager ..> java.sql.ResultSet
+banksystemprototype.accounts.Database.DBManager ..> java.sql.ResultSetMetaData
+banksystemprototype.accounts.Database.DBManager ..> java.sql.SQLException
+banksystemprototype.accounts.Database.DBManager ..> java.sql.Statement
+banksystemprototype.accounts.Database.DBManager ..> java.util.ArrayList
+banksystemprototype.accounts.Database.DBManager ..> java.util.HashMap
+banksystemprototype.accounts.Database.DBManager ..> java.util.Map
+banksystemprototype.accounts.Database.DBManager ..> java.util.logging.Level
+banksystemprototype.accounts.Database.DBManager ..> java.util.logging.Logger
+banksystemprototype.accounts.Database.DBManager ..> javafx.scene.input.KeyCode
+banksystemprototype.accounts.HomeLoanAccount.HomeLoan ..> java.util.Date
+banksystemprototype.accounts.HomeLoanAccount.HomeLoanAccount --|> banksystemprototype.accounts.Account
+banksystemprototype.accounts.HomeLoanAccount.HomeLoanAccount ..> java.util.Date
+banksystemprototype.accounts.HomeLoanAccount.HomeLoanAccount ..> java.util.HashMap
+banksystemprototype.accounts.HomeLoanAccount.HomeLoanAccount ..> banksystemprototype.accounts.TypeOfAccount
+banksystemprototype.accounts.HomeLoanAccount.HomeLoanAccountController ..> java.lang.Override
+banksystemprototype.accounts.HomeLoanAccount.HomeLoanAccountController ..> banksystemprototype.accounts.Database.DBConnection
+banksystemprototype.accounts.HomeLoanAccount.HomeLoanAccountController ..> banksystemprototype.TypeOfAccountAction
+banksystemprototype.accounts.HomeLoanAccount.HomeLoanAccountController --|> HomeLoanAccountContract.UserActionListener
+banksystemprototype.accounts.HomeLoanAccount.HomeLoanAccountController --|> PinServiceApi.Listener
+banksystemprototype.accounts.HomeLoanAccount.HomeLoanAccountController ..> banksystemprototype.widgets.PinServiceApi
+banksystemprototype.accounts.HomeLoanAccount.HomeLoanAccountFrame ..> java.lang.Override
+banksystemprototype.accounts.HomeLoanAccount.HomeLoanAccountFrame ..> java.lang.SuppressWarnings
+banksystemprototype.accounts.HomeLoanAccount.HomeLoanAccountFrame ..> banksystemprototype.accounts.CustomerHomeFrame
+banksystemprototype.accounts.HomeLoanAccount.HomeLoanAccountFrame ..> banksystemprototype.accounts.Database.DBConnection
+banksystemprototype.accounts.HomeLoanAccount.HomeLoanAccountFrame ..> java.sql.Connection
+banksystemprototype.accounts.HomeLoanAccount.HomeLoanAccountFrame --|> javax.swing.JFrame
+banksystemprototype.accounts.HomeLoanAccount.HomeLoanAccountFrame ..> banksystemprototype.TypeOfAccountAction
+banksystemprototype.accounts.HomeLoanAccount.HomeLoanAccountFrame --|> HomeLoanAccountContract.View
+banksystemprototype.accounts.SavingAccount.SavingAccount --|> banksystemprototype.accounts.Account
+banksystemprototype.accounts.SavingAccount.SavingAccount ..> banksystemprototype.accounts.TypeOfAccount
+banksystemprototype.accounts.SavingAccount.SavingAccountController ..> java.lang.Override
+banksystemprototype.accounts.SavingAccount.SavingAccountController ..> banksystemprototype.Exceptions.BalanceLimitException
+banksystemprototype.accounts.SavingAccount.SavingAccountController ..> banksystemprototype.Utils.BspConstants
+banksystemprototype.accounts.SavingAccount.SavingAccountController ..> banksystemprototype.Utils.DataConverter
+banksystemprototype.accounts.SavingAccount.SavingAccountController ..> banksystemprototype.accounts.Account
+banksystemprototype.accounts.SavingAccount.SavingAccountController ..> banksystemprototype.accounts.Database.DBConnection
+banksystemprototype.accounts.SavingAccount.SavingAccountController ..> banksystemprototype.accounts.Database.DBManager
+banksystemprototype.accounts.SavingAccount.SavingAccountController ..> banksystemprototype.accounts.Transaction.Transaction
+banksystemprototype.accounts.SavingAccount.SavingAccountController ..> banksystemprototype.widgets.PinFrame
+banksystemprototype.accounts.SavingAccount.SavingAccountController ..> java.util.ArrayList
+banksystemprototype.accounts.SavingAccount.SavingAccountController ..> java.util.Date
+banksystemprototype.accounts.SavingAccount.SavingAccountController ..> java.util.HashMap
+banksystemprototype.accounts.SavingAccount.SavingAccountController ..> java.util.List
+banksystemprototype.accounts.SavingAccount.SavingAccountController ..> java.util.logging.Level
+banksystemprototype.accounts.SavingAccount.SavingAccountController ..> java.util.logging.Logger
+banksystemprototype.accounts.SavingAccount.SavingAccountController ..> banksystemprototype.TypeOfAccountAction
+banksystemprototype.accounts.SavingAccount.SavingAccountController ..> banksystemprototype.TypeOfMessageDialog
+banksystemprototype.accounts.SavingAccount.SavingAccountController --|> PinServiceApi.Listener
+banksystemprototype.accounts.SavingAccount.SavingAccountController --|> SavingAccountContract.UserActionListener
+banksystemprototype.accounts.SavingAccount.SavingAccountController ..> banksystemprototype.widgets.PinServiceApi
+banksystemprototype.accounts.SavingAccount.SavingAccountFrame ..> java.lang.Override
+banksystemprototype.accounts.SavingAccount.SavingAccountFrame ..> java.lang.SuppressWarnings
+banksystemprototype.accounts.SavingAccount.SavingAccountFrame ..> banksystemprototype.accounts.CustomerHomeFrame
+banksystemprototype.accounts.SavingAccount.SavingAccountFrame ..> banksystemprototype.accounts.Database.DBConnection
+banksystemprototype.accounts.SavingAccount.SavingAccountFrame ..> banksystemprototype.users.LoginFrame
+banksystemprototype.accounts.SavingAccount.SavingAccountFrame ..> java.sql.Connection
+banksystemprototype.accounts.SavingAccount.SavingAccountFrame ..> java.sql.SQLException
+banksystemprototype.accounts.SavingAccount.SavingAccountFrame ..> java.util.logging.Level
+banksystemprototype.accounts.SavingAccount.SavingAccountFrame ..> java.util.logging.Logger
+banksystemprototype.accounts.SavingAccount.SavingAccountFrame --|> javax.swing.JFrame
+banksystemprototype.accounts.SavingAccount.SavingAccountFrame ..> javax.swing.JOptionPane
+banksystemprototype.accounts.SavingAccount.SavingAccountFrame ..> banksystemprototype.TypeOfAccountAction
+banksystemprototype.accounts.SavingAccount.SavingAccountFrame ..> banksystemprototype.TypeOfMessageDialog
+banksystemprototype.accounts.SavingAccount.SavingAccountFrame --|> SavingAccountContract.View
+banksystemprototype.accounts.TermDepositAccount.TermDeposit ..> banksystemprototype.Utils.DataConverter
+banksystemprototype.accounts.TermDepositAccount.TermDeposit ..> java.util.Calendar
+banksystemprototype.accounts.TermDepositAccount.TermDeposit ..> java.util.Date
+banksystemprototype.accounts.TermDepositAccount.TermDeposit ..> java.util.GregorianCalendar
+banksystemprototype.accounts.TermDepositAccount.TermDepositAccount --|> banksystemprototype.accounts.Account
+banksystemprototype.accounts.TermDepositAccount.TermDepositAccount ..> java.util.HashMap
+banksystemprototype.accounts.TermDepositAccount.TermDepositAccount ..> banksystemprototype.accounts.TypeOfAccount
+banksystemprototype.accounts.TermDepositAccount.TermDepositAccountController ..> java.lang.Override
+banksystemprototype.accounts.TermDepositAccount.TermDepositAccountController ..> banksystemprototype.Exceptions.BalanceLimitException
+banksystemprototype.accounts.TermDepositAccount.TermDepositAccountController ..> banksystemprototype.accounts.Database.DBConnection
+banksystemprototype.accounts.TermDepositAccount.TermDepositAccountController ..> banksystemprototype.accounts.SavingAccount.SavingAccountController
+banksystemprototype.accounts.TermDepositAccount.TermDepositAccountController ..> banksystemprototype.accounts.Transaction.Transaction
+banksystemprototype.accounts.TermDepositAccount.TermDepositAccountController ..> banksystemprototype.widgets.PinFrame
+banksystemprototype.accounts.TermDepositAccount.TermDepositAccountController ..> java.util.Date
+banksystemprototype.accounts.TermDepositAccount.TermDepositAccountController ..> java.util.List
+banksystemprototype.accounts.TermDepositAccount.TermDepositAccountController ..> java.util.logging.Level
+banksystemprototype.accounts.TermDepositAccount.TermDepositAccountController ..> java.util.logging.Logger
+banksystemprototype.accounts.TermDepositAccount.TermDepositAccountController ..> banksystemprototype.TypeOfAccountAction
+banksystemprototype.accounts.TermDepositAccount.TermDepositAccountController --|> PinServiceApi.Listener
+banksystemprototype.accounts.TermDepositAccount.TermDepositAccountController --|> TermDepositAccountContract.UserActionListener
+banksystemprototype.accounts.TermDepositAccount.TermDepositAccountController ..> banksystemprototype.widgets.PinServiceApi
+banksystemprototype.accounts.TermDepositAccount.TermDepositAccountFrame ..> java.lang.Override
+banksystemprototype.accounts.TermDepositAccount.TermDepositAccountFrame ..> java.lang.SuppressWarnings
+banksystemprototype.accounts.TermDepositAccount.TermDepositAccountFrame ..> banksystemprototype.accounts.CustomerHomeFrame
+banksystemprototype.accounts.TermDepositAccount.TermDepositAccountFrame ..> banksystemprototype.accounts.Database.DBConnection
+banksystemprototype.accounts.TermDepositAccount.TermDepositAccountFrame ..> java.sql.Connection
+banksystemprototype.accounts.TermDepositAccount.TermDepositAccountFrame ..> java.util.Date
+banksystemprototype.accounts.TermDepositAccount.TermDepositAccountFrame --|> javax.swing.JFrame
+banksystemprototype.accounts.TermDepositAccount.TermDepositAccountFrame ..> banksystemprototype.TypeOfAccountAction
+banksystemprototype.accounts.TermDepositAccount.TermDepositAccountFrame --|> TermDepositAccountContract.View
+banksystemprototype.accounts.Transaction.Transaction ..> banksystemprototype.Utils.DataConverter
+banksystemprototype.accounts.Transaction.Transaction ..> java.util.Date
+banksystemprototype.accounts.Transaction.TransactionLog ..> java.util.ArrayList
+banksystemprototype.accounts.Transaction.TransactionLog ..> java.util.Date
+banksystemprototype.users.Administator --|> banksystemprototype.users.User
+banksystemprototype.users.Customer --|> banksystemprototype.users.User
+banksystemprototype.users.LoginFrame ..> java.lang.Override
+banksystemprototype.users.LoginFrame ..> java.lang.SuppressWarnings
+banksystemprototype.users.LoginFrame ..> banksystemprototype.Utils.DataConverter
+banksystemprototype.users.LoginFrame ..> banksystemprototype.accounts.AdminHomeFrame
+banksystemprototype.users.LoginFrame ..> banksystemprototype.accounts.CustomerHomeFrame
+banksystemprototype.users.LoginFrame ..> banksystemprototype.accounts.Database.DBConnection
+banksystemprototype.users.LoginFrame ..> java.util.Arrays
+banksystemprototype.users.LoginFrame --|> javax.swing.JFrame
+banksystemprototype.users.LoginFrame --|> UserContract.View
+banksystemprototype.users.UserController ..> java.lang.Override
+banksystemprototype.users.UserController ..> banksystemprototype.accounts.Database.DBConnection
+banksystemprototype.users.UserController ..> banksystemprototype.accounts.Database.DBManager
+banksystemprototype.users.UserController ..> java.sql.Connection
+banksystemprototype.users.UserController ..> java.util.List
+banksystemprototype.users.UserController --|> UserContract.UserActionListener
+banksystemprototype.widgets.PinFrame ..> java.lang.Override
+banksystemprototype.widgets.PinFrame ..> java.lang.SuppressWarnings
+banksystemprototype.widgets.PinFrame ..> banksystemprototype.Utils.DataConverter
+banksystemprototype.widgets.PinFrame --|> javax.swing.JFrame
+banksystemprototype.widgets.PinFrame --|> banksystemprototype.widgets.PinServiceApi
+banksystemprototype.accounts.AccountContract ..> banksystemprototype.HomeLoanApplication
+banksystemprototype.accounts.AccountContract ..> banksystemprototype.accounts.CreditCardAccount.CreditCardAccount
+banksystemprototype.accounts.AccountContract ..> banksystemprototype.accounts.HomeLoanAccount.HomeLoanAccount
+banksystemprototype.accounts.AccountContract ..> banksystemprototype.accounts.SavingAccount.SavingAccount
+banksystemprototype.accounts.AccountContract ..> banksystemprototype.accounts.TermDepositAccount.TermDepositAccount
+banksystemprototype.accounts.AccountContract ..> banksystemprototype.users.Customer
+banksystemprototype.accounts.CreditCardAccount.CreditCardContract ..> banksystemprototype.Exceptions.BalanceLimitException
+banksystemprototype.accounts.CreditCardAccount.CreditCardContract ..> banksystemprototype.accounts.Transaction.Transaction
+banksystemprototype.accounts.CreditCardAccount.CreditCardContract ..> java.util.Date
+banksystemprototype.accounts.CreditCardAccount.CreditCardContract ..> java.util.List
+banksystemprototype.accounts.CreditCardAccount.CreditCardContract ..> banksystemprototype.TypeOfAccountAction
+banksystemprototype.accounts.HomeLoanAccount.HomeLoanAccountContract ..> banksystemprototype.TypeOfAccountAction
+banksystemprototype.accounts.SavingAccount.SavingAccountContract ..> banksystemprototype.accounts.Transaction.Transaction
+banksystemprototype.accounts.SavingAccount.SavingAccountContract ..> java.util.Date
+banksystemprototype.accounts.SavingAccount.SavingAccountContract ..> java.util.List
+banksystemprototype.accounts.SavingAccount.SavingAccountContract ..> banksystemprototype.TypeOfAccountAction
+banksystemprototype.accounts.SavingAccount.SavingAccountContract ..> banksystemprototype.TypeOfMessageDialog
+banksystemprototype.accounts.TermDepositAccount.TermDepositAccountContract ..> banksystemprototype.accounts.Transaction.Transaction
+banksystemprototype.accounts.TermDepositAccount.TermDepositAccountContract ..> java.util.Date
+banksystemprototype.accounts.TermDepositAccount.TermDepositAccountContract ..> java.util.List
+banksystemprototype.accounts.TermDepositAccount.TermDepositAccountContract ..> banksystemprototype.TypeOfAccountAction
+@enduml

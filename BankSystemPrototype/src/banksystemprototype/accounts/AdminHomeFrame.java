@@ -20,7 +20,6 @@ import javax.swing.JFrame;
  * @author yanjunwu
  */
 public class AdminHomeFrame extends javax.swing.JFrame {
-
     Connection conn = null;
     Statement stmt = null;
     ResultSetMetaData mdata;
@@ -42,7 +41,6 @@ public class AdminHomeFrame extends javax.swing.JFrame {
         labelUsername.setText(username);
     }
     
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -985,7 +983,7 @@ btnViewCreditAccount.addActionListener(new java.awt.event.ActionListener() {
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
         try 
         {
-            String sql = "Insert into S27624366.Customer (username, password, fname, lname, email, address, phone, id_type, ID_no, pin) values (?,?,?,?,?,?,?,?,?,?)";
+            String sql = "Insert into S27624366.Customers (username, password, fname, lname, email, address, phone, id_type, ID_no, pin) values (?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setString(1, tfCreateUsername.getText());
             pst.setString(2, pfCreatePassword.getPassword().toString());
@@ -1012,7 +1010,7 @@ btnViewCreditAccount.addActionListener(new java.awt.event.ActionListener() {
     private void btnViewAllAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewAllAccountActionPerformed
         addTableModel(dtm);
         String condition = "";
-        String table = "S27624366.Account";
+        String table = "S27624366.Accounts";
         ArrayList<Object[]> rows = DBManager.check(table, condition);
         for(Object[] row: rows) {
              dtm.addRow(row);
@@ -1026,7 +1024,7 @@ btnViewCreditAccount.addActionListener(new java.awt.event.ActionListener() {
     private void btnSubmitPinResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitPinResetActionPerformed
         try 
         {
-            String sql = "update S27624366.Customer set PIN = ? where username = ?";
+            String sql = "update S27624366.Customers set PIN = ? where username = ?";
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setString(1, pfResetPin.getPassword().toString());
             pst.setString(2, tfInputUsername.getText());
@@ -1050,7 +1048,7 @@ btnViewCreditAccount.addActionListener(new java.awt.event.ActionListener() {
     private void btnViewHomeLoanApplicationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewHomeLoanApplicationActionPerformed
         addTableModel(dtmHomeLoan);
         String condition = "";
-        String table = "S27624366.home_loan";
+        String table = "S27624366.home_loans";
         ArrayList<Object[]> rows = DBManager.check(table, condition);
         for(Object[] row: rows) {
              dtmHomeLoan.addRow(row);
@@ -1113,7 +1111,7 @@ btnViewCreditAccount.addActionListener(new java.awt.event.ActionListener() {
     private void btnSearchAccountByCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchAccountByCustomerActionPerformed
         addTableModel(dtm);
         String condition = " where username = '" + tfSearchUsername.getText() + "'";
-        String table = "S27624366.Account";
+        String table = "S27624366.Accounts";
         ArrayList<Object[]> rows = DBManager.check(table, condition);
         for(Object[] row: rows) {
              dtm.addRow(row);
@@ -1129,11 +1127,16 @@ btnViewCreditAccount.addActionListener(new java.awt.event.ActionListener() {
         jdCreateAccount.setVisible(true);
         this.setEnabled(false);
     }//GEN-LAST:event_btnCreateAccountActionPerformed
-
+        
     private void btnSubmitCreateAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitCreateAccountActionPerformed
         try 
         {
-            String sql = "Insert into S27624366.Account (account_id, username, account_type, lock_status, balance) values (accountid_seq.nextval,?,?,'N',0)";
+            stmt = conn.createStatement();
+            /* insert a student record using the values from JTextField txtID and txtName */
+            String checksql = "select account_type from S27624366.Account where username ='" + tfUsername.getText() + "'";
+            stmt.executeUpdate(checksql);
+            
+            String sql = "Insert into S27624366.Accounts (account_id, username, account_type, lockstatus, balance) values (accountid_seq.nextval,?,?,'N',0)";
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setString(1, tfUsername.getText());
             String account_type = cbAccountType.getSelectedItem().toString();
@@ -1160,7 +1163,7 @@ btnViewCreditAccount.addActionListener(new java.awt.event.ActionListener() {
     private void btnSubmitUnlockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitUnlockActionPerformed
         try 
         {
-            String sql = "update S27624366.Account set lock_status = 'N' where account_id = ?";
+            String sql = "update S27624366.Accounts set lockstatus = 'N' where account_id = ?";
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setString(1, tfAccountID.getText());
             pst.executeUpdate();
@@ -1185,7 +1188,7 @@ btnViewCreditAccount.addActionListener(new java.awt.event.ActionListener() {
     private void btnViewCreditAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewCreditAccountActionPerformed
         addTableModel(CreditTableModel);
         String condition = " where account_id = " + tfCreditAccountID.getText();
-        String table = "S27624366.Credit_Account";
+        String table = "S27624366.Credit_Accounts";
         ArrayList<Object[]> rows = DBManager.check(table, condition);
         for(Object[] row: rows) {
              CreditTableModel.addRow(row);
@@ -1200,7 +1203,7 @@ btnViewCreditAccount.addActionListener(new java.awt.event.ActionListener() {
     private void btnSubmitCreditLimitChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitCreditLimitChangeActionPerformed
           try 
         {
-            String sql = "update S27624366.credit_account set " + cbCreditLimitType.getSelectedItem().toString() + " = ? where account_id = ?";
+            String sql = "update S27624366.credit_accounts set " + cbCreditLimitType.getSelectedItem().toString() + " = ? where account_id = ?";
             PreparedStatement pst = conn.prepareStatement(sql);
             Long creditLimit = Long.parseLong(tfCreditLimit.getText());
             pst.setLong(1, creditLimit);
@@ -1274,7 +1277,7 @@ btnViewCreditAccount.addActionListener(new java.awt.event.ActionListener() {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AdminHomeFrame(new LoginFrame(), "123").setVisible(true);
+                new AdminHomeFrame(new LoginFrame(), "newAdmin").setVisible(true);
             }
         });
     }

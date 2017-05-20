@@ -1,6 +1,6 @@
 package banksystemprototype.accounts.HomeLoanAccount;
 
-import banksystemprototype.accounts.Account;
+import banksystemprototype.accounts._Account;
 import banksystemprototype.accounts.TypeOfAccount;
 import java.util.Date;
 import java.util.HashMap;
@@ -8,7 +8,7 @@ import java.util.HashMap;
 /**
  * Created by caidong on 8/05/2017.
  */
-public class HomeLoanAccount extends Account {
+public class HomeLoanAccount extends _Account {
     HashMap<Long, HomeLoan> loans;
 
     public HomeLoanAccount(long accountId, String username, TypeOfAccount typeOfAccount, boolean locked, double balance) {

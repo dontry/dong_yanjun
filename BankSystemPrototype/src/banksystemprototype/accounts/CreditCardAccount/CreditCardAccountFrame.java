@@ -6,10 +6,12 @@
 package banksystemprototype.accounts.CreditCardAccount;
 
 import banksystemprototype.TypeOfAccountAction;
+import banksystemprototype.TypeOfMessageDialog;
 import banksystemprototype.accounts.CustomerHomeFrame;
 import banksystemprototype.accounts.Database.DBConnection;
 import java.sql.Connection;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,13 +24,12 @@ public class CreditCardAccountFrame extends javax.swing.JFrame implements Credit
      */
     private final CustomerHomeFrame homeFrame;
     private final CreditCardContract.UserActionListener mActionListener;
-    private Connection conn;
     
     public CreditCardAccountFrame(JFrame home) {
         initComponents();
         homeFrame = (CustomerHomeFrame) home;
         mActionListener = new CreditCardAccountController(this);
-        conn = DBConnection.getConnection();
+        mActionListener.openAccount(homeFrame.getUsername());
     }
 
     /**
@@ -56,10 +57,12 @@ public class CreditCardAccountFrame extends javax.swing.JFrame implements Credit
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
         jLayeredPane2 = new javax.swing.JLayeredPane();
-        labelBalanceValue = new javax.swing.JLabel();
-        labelBalanceValue1 = new javax.swing.JLabel();
-        labelBalanceValue2 = new javax.swing.JLabel();
+        labelBalance = new javax.swing.JLabel();
+        labelDailyPayment = new javax.swing.JLabel();
+        labelDailyPaymentLimit = new javax.swing.JLabel();
+        labelCreditLimit = new javax.swing.JLabel();
         btnBack = new javax.swing.JButton();
 
         dialogTransfer.setTitle("Withdraw");
@@ -336,17 +339,24 @@ public class CreditCardAccountFrame extends javax.swing.JFrame implements Credit
         );
 
         jLabel3.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 102, 51));
         jLabel3.setText("Credit Limit:");
 
         jLabel4.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel4.setText("Balance:");
 
         jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jLabel2.setText("Daily Withdraw Limit:");
+        jLabel2.setForeground(new java.awt.Color(255, 102, 51));
+        jLabel2.setText("Daily Payment Limit:");
+
+        jLabel12.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jLabel12.setText("Daily Payment:");
+        jLabel12.setToolTipText("");
 
         jLayeredPane1.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(jLabel12, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
         jLayeredPane1.setLayout(jLayeredPane1Layout);
@@ -357,7 +367,8 @@ public class CreditCardAccountFrame extends javax.swing.JFrame implements Credit
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
         jLayeredPane1Layout.setVerticalGroup(
@@ -365,25 +376,33 @@ public class CreditCardAccountFrame extends javax.swing.JFrame implements Credit
             .addGroup(jLayeredPane1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel12)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addGap(41, 41, 41))
         );
 
-        labelBalanceValue.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        labelBalanceValue.setText("amount");
+        labelBalance.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        labelBalance.setText("0.00");
 
-        labelBalanceValue1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        labelBalanceValue1.setText("amount");
+        labelDailyPayment.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        labelDailyPayment.setText("0.00");
 
-        labelBalanceValue2.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        labelBalanceValue2.setText("amount");
+        labelDailyPaymentLimit.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        labelDailyPaymentLimit.setForeground(new java.awt.Color(255, 102, 51));
+        labelDailyPaymentLimit.setText("0.00");
 
-        jLayeredPane2.setLayer(labelBalanceValue, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane2.setLayer(labelBalanceValue1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane2.setLayer(labelBalanceValue2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        labelCreditLimit.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        labelCreditLimit.setForeground(new java.awt.Color(255, 102, 51));
+        labelCreditLimit.setText("0.00");
+
+        jLayeredPane2.setLayer(labelBalance, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(labelDailyPayment, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(labelDailyPaymentLimit, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(labelCreditLimit, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane2Layout = new javax.swing.GroupLayout(jLayeredPane2);
         jLayeredPane2.setLayout(jLayeredPane2Layout);
@@ -392,21 +411,24 @@ public class CreditCardAccountFrame extends javax.swing.JFrame implements Credit
             .addGroup(jLayeredPane2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelBalanceValue, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelBalanceValue1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelBalanceValue2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(labelBalance, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelDailyPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelDailyPaymentLimit, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelCreditLimit, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         jLayeredPane2Layout.setVerticalGroup(
             jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(labelBalanceValue)
+                .addComponent(labelBalance)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelBalanceValue1)
+                .addComponent(labelDailyPayment)
+                .addGap(18, 18, 18)
+                .addComponent(labelDailyPaymentLimit)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelBalanceValue2)
-                .addContainerGap())
+                .addComponent(labelCreditLimit)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         btnBack.setText("Back");
@@ -539,6 +561,7 @@ public class CreditCardAccountFrame extends javax.swing.JFrame implements Credit
     private final javax.swing.JDialog dialogWithdraw = new javax.swing.JDialog();
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -550,9 +573,10 @@ public class CreditCardAccountFrame extends javax.swing.JFrame implements Credit
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JLayeredPane jLayeredPane2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel labelBalanceValue;
-    private javax.swing.JLabel labelBalanceValue1;
-    private javax.swing.JLabel labelBalanceValue2;
+    private javax.swing.JLabel labelBalance;
+    private javax.swing.JLabel labelCreditLimit;
+    private javax.swing.JLabel labelDailyPayment;
+    private javax.swing.JLabel labelDailyPaymentLimit;
     private javax.swing.JTextField tfDepositAmount;
     private final javax.swing.JTextField tfTransferAccount = new javax.swing.JTextField();
     private javax.swing.JTextField tfTransferAmount;
@@ -561,76 +585,80 @@ public class CreditCardAccountFrame extends javax.swing.JFrame implements Credit
 
     @Override
     public void refreshBalance(String amount) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        labelBalance.setText(amount);
     }
 
     @Override
     public double getTransferAmount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return Double.parseDouble(tfTransferAmount.getText());
     }
 
     @Override
     public double getWithdrawAmount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return Double.parseDouble(tfWithdrawAmount.getText());
     }
 
     @Override
     public double getDepositAmount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return Double.parseDouble(tfDepositAmount.getText());
     }
 
     @Override
     public long getTransferId() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return Long.parseLong(tfTransferAccount.getText());
     }
 
     @Override
     public void disposeActionDialog(TypeOfAccountAction action) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  switch(action) {
+            case TRANSFER:
+                dialogTransfer.setVisible(false);
+                tfTransferAmount.setText("");
+                break;
+            case WITHDRAW:
+                dialogWithdraw.setVisible(false);
+                tfWithdrawAmount.setText("");
+                break;
+            case DEPOSIT:
+                dialogDeposit.setVisible(false);
+                tfDepositAmount.setText("");
+                break;
+            default:
+                break;
+        }    
     }
 
-//    @Override
-//    public void refreshBalance(String amount) {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//    }
-//
-//    @Override
-//    public double getTransferAmount() {
-//        return Double.parseDouble(tfTransferAmount.getText());
-//    }
-//
-//    @Override
-//    public double getWithdrawAmount() {
-//        return Double.parseDouble(tfWithdrawAmount.getText());
-//    }
-//
-//    @Override
-//    public double getDepositAmount() {
-//        return Double.parseDouble(tfDepositAmount.getText());
-//    }
-//
-//    @Override
-//    public long getTransferId() {
-//        return Long.parseLong(tfTransferAccount.getText());
-//    }
-//
-//    @Override
-//    public void disposeActionDialog(TypeOfAccountAction action) {
-//        switch(action) {
-//            case TRANSFER:
-//                dialogTransfer.setVisible(false);
-//                tfTransferAmount.setText("");
-//                break;
-//            case WITHDRAW:
-//                dialogWithdraw.setVisible(false);
-//                tfWithdrawAmount.setText("");
-//                break;
-//            case DEPOSIT:
-//                dialogDeposit.setVisible(false);
-//                tfDepositAmount.setText("");
-//                break;
-//            default:
-//                break;
-//        }
-//    }
+    @Override
+    public void showMessageDialog(String msg, TypeOfMessageDialog type) {
+ switch(type) {
+            case WARNING: 
+                JOptionPane.showMessageDialog(this, msg, type.toString(), JOptionPane.WARNING_MESSAGE);
+                break;
+            case PLAIN:
+                JOptionPane.showMessageDialog(this, msg, type.toString(), JOptionPane.PLAIN_MESSAGE);
+                break;
+            case ERROR:
+                JOptionPane.showMessageDialog(this, msg, type.toString(), JOptionPane.ERROR_MESSAGE);
+        }    
+    }
+
+    @Override
+    public void refreshBalance(double balance) {
+        labelBalance.setText(String.valueOf(balance));
+    }
+
+    @Override
+    public void refreshDailyPayment(double payment) {
+        labelDailyPayment.setText(String.valueOf(payment));
+    }
+
+    @Override
+    public void showDailyPaymentLimit(double limit) {
+        labelDailyPaymentLimit.setText(String.valueOf(limit));
+    }
+
+    @Override
+    public void showLoanLimit(double limit) {
+        labelCreditLimit.setText(String.valueOf(limit));
+    }
 }

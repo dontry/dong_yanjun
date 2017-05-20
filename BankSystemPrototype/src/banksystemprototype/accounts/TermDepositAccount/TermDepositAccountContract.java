@@ -2,9 +2,11 @@ package banksystemprototype.accounts.TermDepositAccount;
 
 
 import banksystemprototype.TypeOfAccountAction;
+import banksystemprototype.TypeOfMessageDialog;
 import banksystemprototype.accounts.Transaction.Transaction;
 import java.util.Date;
 import java.util.List;
+import java.util.HashMap;
 
 /**
  * Created by caidong on 10/05/2017.
@@ -20,18 +22,17 @@ public interface TermDepositAccountContract {
         long getTransferTermDepositId();
         long getWithdrawTermDepositId();
         void disposeActionDialog(TypeOfAccountAction action);
+        void showMessageDialog(String msg, TypeOfMessageDialog type);
+        void refreshBalance(String balance);
+        void showTermDeposit(HashMap<Long, TermDeposit> terms, TypeOfAccountAction action);
     }
     interface UserActionListener {
-        double withdraw();
+        void withdraw();
         void createTermDeposit();
         double transfer();
-        void viewAllTermDeposits();
-        TermDeposit checkTermDeposit(long termId);
-        List<TermDeposit> getAllTermDeposit();
-        List<Transaction> checkTransactions(Date startingDate,  Date endingDate);
-        void openAccount( long accountId);
-        void showAccount();
-        void saveAccount();
+        void showTermDeposits(TypeOfAccountAction action);
+        void openAccount(String username);
+        void closeAccount();
         void back();
         void newAction(TypeOfAccountAction action);
     }

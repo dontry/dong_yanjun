@@ -3,6 +3,7 @@ package banksystemprototype.accounts.CreditCardAccount;
 
 import banksystemprototype.Exceptions.BalanceLimitException;
 import banksystemprototype.TypeOfAccountAction;
+import banksystemprototype.TypeOfMessageDialog;
 import banksystemprototype.accounts.Transaction.Transaction;
 
 
@@ -19,15 +20,20 @@ public interface CreditCardContract {
         double getWithdrawAmount();
         double getDepositAmount();
         long getTransferId();
+        void refreshBalance(double balance);
+        void refreshDailyPayment(double payment);
+        void showDailyPaymentLimit(double limit);
+        void showLoanLimit(double limit);
         void disposeActionDialog(TypeOfAccountAction action);
+        void showMessageDialog(String msg, TypeOfMessageDialog type);
     }
     interface UserActionListener {
-        void deposit();
+        double deposit() throws BalanceLimitException;
         double withdraw() throws BalanceLimitException;
-        void transfer() throws BalanceLimitException;
-        void openAccount( long accountId);
-        void showAccount();
-        void saveAccount();
+        double transfer() throws BalanceLimitException;
+        void initialize();
+        void openAccount(String username);
+        void closeAccount();
         void back();
         void newAction(TypeOfAccountAction action);
     }

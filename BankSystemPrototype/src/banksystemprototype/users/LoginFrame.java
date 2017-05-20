@@ -5,11 +5,13 @@
  */
 package banksystemprototype.users;
 
+import banksystemprototype.TypeOfMessageDialog;
 import banksystemprototype.Utils.DataConverter;
 import banksystemprototype.accounts.CustomerHomeFrame;
 import banksystemprototype.accounts.AdminHomeFrame;
 import banksystemprototype.accounts.Database.DBConnection;
 import java.util.Arrays;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -87,7 +89,8 @@ public class LoginFrame extends javax.swing.JFrame implements UserContract.View{
 
         jLabel1.setText("User name:");
 
-        tfUsername.setText("natalie");
+        tfUsername.setText("zimo");
+        tfUsername.setToolTipText("");
         tfUsername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfUsernameActionPerformed(evt);
@@ -107,9 +110,14 @@ public class LoginFrame extends javax.swing.JFrame implements UserContract.View{
 
         jLabel4.setText("User type:");
 
-        tfPwd.setText("123456");
+        tfPwd.setText("software1");
+        tfPwd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfPwdActionPerformed(evt);
+            }
+        });
 
-        spUserType.setModel(new javax.swing.SpinnerListModel(new String[] {"CUSTOMER", "ADMINISTRATOR"}));
+        spUserType.setModel(new javax.swing.SpinnerListModel(new String[] {"CUSTOMER", "ADMIN"}));
 
         javax.swing.GroupLayout tv_title_usernameLayout = new javax.swing.GroupLayout(tv_title_username);
         tv_title_username.setLayout(tv_title_usernameLayout);
@@ -197,6 +205,10 @@ public class LoginFrame extends javax.swing.JFrame implements UserContract.View{
         dialogNotVerified.setVisible(false);
     }//GEN-LAST:event_btnOKActionPerformed
 
+    private void tfPwdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfPwdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfPwdActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -262,5 +274,20 @@ public class LoginFrame extends javax.swing.JFrame implements UserContract.View{
                 break;
         }
         this.setVisible(false);
+    }
+
+    @Override
+    public void showMessageDialog(String msg, TypeOfMessageDialog type) {
+            switch(type) {
+            case WARNING: 
+                JOptionPane.showMessageDialog(this, msg, type.toString(), JOptionPane.WARNING_MESSAGE);
+                break;
+            case PLAIN:
+                JOptionPane.showMessageDialog(this, msg, type.toString(), JOptionPane.PLAIN_MESSAGE);
+                break;
+            case ERROR:
+                JOptionPane.showMessageDialog(this, msg, type.toString(), JOptionPane.ERROR_MESSAGE);
+
+        }
     }
 }

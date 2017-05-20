@@ -89,7 +89,7 @@ public class LoginFrame extends javax.swing.JFrame implements UserContract.View{
 
         jLabel1.setText("User name:");
 
-        tfUsername.setText("zimo");
+        tfUsername.setText("amy123");
         tfUsername.setToolTipText("");
         tfUsername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -110,7 +110,7 @@ public class LoginFrame extends javax.swing.JFrame implements UserContract.View{
 
         jLabel4.setText("User type:");
 
-        tfPwd.setText("software1");
+        tfPwd.setText("aa111");
         tfPwd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfPwdActionPerformed(evt);

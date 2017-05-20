@@ -669,7 +669,7 @@ public class CreditCardAccountFrame extends javax.swing.JFrame implements Credit
 
     @Override
     public void showMessageDialog(String msg, TypeOfMessageDialog type) {
- switch(type) {
+        switch(type) {
             case WARNING: 
                 JOptionPane.showMessageDialog(this, msg, type.toString(), JOptionPane.WARNING_MESSAGE);
                 break;

@@ -8,16 +8,10 @@ import banksystemprototype.TypeOfAccountAction;
  */
 public interface HomeLoanAccountContract {
     interface View {
-        double getTransferAmount();
-        double getDepositAmount();
+        void displayHomeLoan(Loan homeLoan);
     }
     interface UserActionListener {
-        void depositMoney( double amount);
-        void repayMoney( double amount);
-        void openAccount( long accountId);
-        void showAccount();
-        void saveAccount();
+        void openAccount(String username) throws Exception;
         void back();
-        void newAction(TypeOfAccountAction action);
     }
 }

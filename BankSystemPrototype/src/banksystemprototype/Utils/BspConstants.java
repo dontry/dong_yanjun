@@ -10,7 +10,7 @@ package banksystemprototype.Utils;
  * @author caidong
  */
 public class BspConstants {
-    public static final String DATABASE_NAME = "S7624366.";
+    public static final String DATABASE_NAME = "S7624366";
     public static final String[] ACCOUNT_ATTR_NAME = {"account_id", "username", "account_type", "lock_status",
     "balance"};
     public static final String[] CUSTOMER_ATTR_NAME = {"username", "password", "fname", "lname", "email", "address", 

@@ -5,11 +5,11 @@
  */
 package banksystemprototype.accounts.HomeLoanAccount;
 
-import banksystemprototype.TypeOfAccountAction;
+import banksystemprototype.TypeOfMessageDialog;
+import banksystemprototype.Utils.BspConstants;
 import banksystemprototype.accounts.CustomerHomeFrame;
-import banksystemprototype.accounts.Database.DBConnection;
-import java.sql.Connection;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -26,6 +26,12 @@ public class HomeLoanAccountFrame extends javax.swing.JFrame implements HomeLoan
         initComponents();
         homeFrame = (CustomerHomeFrame) home;
         mActionListener = new HomeLoanAccountController(this);
+        try {
+            mActionListener.openAccount(homeFrame.getUsername());
+        } catch (Exception ex) {
+            showMessageDialog(BspConstants.ACCOUNT_NULL_MSG, TypeOfMessageDialog.WARNING);
+            close();
+        }
     }
 
     /**
@@ -37,74 +43,47 @@ public class HomeLoanAccountFrame extends javax.swing.JFrame implements HomeLoan
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        labelBalanceValue = new javax.swing.JLabel();
+        labelRepayment = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        labelBalanceValue1 = new javax.swing.JLabel();
+        labelPrincipal = new javax.swing.JLabel();
         btnBack = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        labelRemainLoan = new javax.swing.JLabel();
+        labelInterest = new javax.swing.JLabel();
+        labelInterestRate = new javax.swing.JLabel();
+        labelMonthlyRepayment = new javax.swing.JLabel();
+        labelPeriod = new javax.swing.JLabel();
+        labelStartDate = new javax.swing.JLabel();
+        labelEndDate = new javax.swing.JLabel();
+        labelRepayDate = new javax.swing.JLabel();
+        labelNextRepayDate = new javax.swing.JLabel();
+        labelFrozenStatus = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        btnWithdraw.setText("Withdraw");
-        btnWithdraw.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnWithdrawActionPerformed(evt);
-            }
-        });
-
-        btnDeposit.setText("Deposit");
-        btnDeposit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDepositActionPerformed(evt);
-            }
-        });
-
-        btnTransfer.setText("Transfer");
-        btnTransfer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTransferActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnWithdraw, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnDeposit, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnTransfer, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnWithdraw, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDeposit, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnTransfer, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 24, Short.MAX_VALUE))
-        );
-
-        jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
         jLabel1.setText("Principle:");
 
-        labelBalanceValue.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        labelBalanceValue.setText("0.00");
+        labelRepayment.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        labelRepayment.setText("0.00");
 
-        jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
         jLabel2.setText("Repayment:");
 
-        labelBalanceValue1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        labelBalanceValue1.setText("0.00");
+        labelPrincipal.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        labelPrincipal.setText("0.00");
 
         btnBack.setText("Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
@@ -116,98 +95,241 @@ public class HomeLoanAccountFrame extends javax.swing.JFrame implements HomeLoan
         jLabel12.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel12.setText("Home Loan Account");
 
+        jLabel3.setText("Remain Loan:");
+
+        jLabel4.setText("Interest:");
+
+        jLabel5.setText("Monthly repayment:");
+
+        jLabel6.setText("Interest rate:");
+
+        jLabel7.setText("Period:");
+
+        jLabel8.setText("Start date:");
+
+        jLabel9.setText("End date:");
+
+        jLabel10.setText("Last Repay date:");
+
+        jLabel11.setText("Next repay date:");
+
+        jLabel13.setText("Frozen status:");
+
+        labelRemainLoan.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        labelRemainLoan.setText("0.00");
+
+        labelInterest.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        labelInterest.setText("0.00");
+
+        labelInterestRate.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        labelInterestRate.setText("0.00");
+
+        labelMonthlyRepayment.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        labelMonthlyRepayment.setText("0.00");
+
+        labelPeriod.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        labelPeriod.setText("0");
+
+        labelStartDate.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        labelStartDate.setText("1900-01-01");
+        labelStartDate.setToolTipText("");
+
+        labelEndDate.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        labelEndDate.setText("2999-01-01");
+        labelEndDate.setToolTipText("");
+
+        labelRepayDate.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        labelRepayDate.setText("2999-01-01");
+        labelRepayDate.setToolTipText("");
+
+        labelNextRepayDate.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        labelNextRepayDate.setText("2999-01-01");
+        labelNextRepayDate.setToolTipText("");
+
+        labelFrozenStatus.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+        labelFrozenStatus.setText("false");
+        labelFrozenStatus.setToolTipText("");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnBack)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addGap(192, 192, 192)
+                .addComponent(btnBack)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(23, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel12)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addComponent(labelInterestRate, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelRepayment, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(labelInterest, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(labelRemainLoan, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(labelMonthlyRepayment, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelBalanceValue, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(labelBalanceValue1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(95, 95, 95))
+                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelRepayDate, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelNextRepayDate, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelFrozenStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(labelPeriod, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jLabel12))
+                .addGap(19, 19, 19))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnBack)
-                .addGap(11, 11, 11)
+                .addContainerGap(31, Short.MAX_VALUE)
                 .addComponent(jLabel12)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(labelBalanceValue1))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(labelPrincipal))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(labelRepayment)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(labelStartDate))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9)
+                            .addComponent(labelEndDate))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(labelBalanceValue))
-                .addGap(36, 36, 36)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3)
+                        .addComponent(labelRemainLoan))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel7)
+                        .addComponent(labelPeriod)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(labelInterest))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(labelMonthlyRepayment))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(labelInterestRate)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel10)
+                            .addComponent(labelRepayDate))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel11)
+                            .addComponent(labelNextRepayDate))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel13)
+                            .addComponent(labelFrozenStatus))))
+                .addGap(29, 29, 29)
+                .addComponent(btnBack)
+                .addGap(14, 14, 14))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnDepositActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDepositActionPerformed
-        // TODO add your handling code here:
-        mActionListener.newAction(TypeOfAccountAction.DEPOSIT);
-    }//GEN-LAST:event_btnDepositActionPerformed
-
-    private void btnWithdrawActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnWithdrawActionPerformed
-        // TODO add your handling code here:
-        mActionListener.newAction(TypeOfAccountAction.WITHDRAW);
-    }//GEN-LAST:event_btnWithdrawActionPerformed
-
-    private void btnTransferActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransferActionPerformed
-        // TODO add your handling code here:
-        mActionListener.newAction(TypeOfAccountAction.TRANSFER);
-    }//GEN-LAST:event_btnTransferActionPerformed
-
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-        mActionListener.back();
-        this.dispose();
-        homeFrame.setVisible(true);
+        close();
     }//GEN-LAST:event_btnBackActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
-    private final javax.swing.JButton btnDeposit = new javax.swing.JButton();
-    private final javax.swing.JButton btnTransfer = new javax.swing.JButton();
-    private final javax.swing.JButton btnWithdraw = new javax.swing.JButton();
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel labelBalanceValue;
-    private javax.swing.JLabel labelBalanceValue1;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel labelEndDate;
+    private javax.swing.JLabel labelFrozenStatus;
+    private javax.swing.JLabel labelInterest;
+    private javax.swing.JLabel labelInterestRate;
+    private javax.swing.JLabel labelMonthlyRepayment;
+    private javax.swing.JLabel labelNextRepayDate;
+    private javax.swing.JLabel labelPeriod;
+    private javax.swing.JLabel labelPrincipal;
+    private javax.swing.JLabel labelRemainLoan;
+    private javax.swing.JLabel labelRepayDate;
+    private javax.swing.JLabel labelRepayment;
+    private javax.swing.JLabel labelStartDate;
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public double getTransferAmount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void displayHomeLoan(Loan homeLoan) {
+        labelPrincipal.setText(String.valueOf(homeLoan.getPrincipal()));
+        labelRemainLoan.setText(String.valueOf(homeLoan.getRemainLoan()));
+        labelInterest.setText(String.valueOf(homeLoan.getInterest()));
+        labelInterestRate.setText(String.valueOf(homeLoan.getInterestRate()));
+        labelRepayment.setText(String.valueOf(homeLoan.getRepaymentAmount()));
+        labelMonthlyRepayment.setText(String.valueOf(homeLoan.getRepaymentAmount()));
+        labelStartDate.setText(homeLoan.getStartDateString());
+        labelEndDate.setText(homeLoan.getEndDateString());
+        labelRepayDate.setText(homeLoan.getRepayDateString());
+        labelNextRepayDate.setText(homeLoan.getNextRepayDateString());
+        labelFrozenStatus.setText(String.valueOf(homeLoan.getFrozenStatus()));
+        labelPeriod.setText(String.valueOf(homeLoan.getPeriod()));                
     }
-
-    @Override
-    public double getDepositAmount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
+    public final void showMessageDialog(String msg, TypeOfMessageDialog type) {
+        switch (type) {
+            case WARNING:
+                JOptionPane.showMessageDialog(this, msg, type.toString(), JOptionPane.WARNING_MESSAGE);
+                break;
+            case PLAIN:
+                JOptionPane.showMessageDialog(this, msg, type.toString(), JOptionPane.PLAIN_MESSAGE);
+                break;
+            case ERROR:
+                JOptionPane.showMessageDialog(this, msg, type.toString(), JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private void close() {
+        mActionListener.back();
+        this.dispose();
+        homeFrame.setVisible(false);
     }
 }

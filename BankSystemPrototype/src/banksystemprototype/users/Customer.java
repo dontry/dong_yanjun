@@ -10,35 +10,48 @@ package banksystemprototype.users;
  * @author caidong
  */
 import org.javalite.activejdbc.Model;
+import org.javalite.activejdbc.annotations.IdName;
+
+@IdName("account_id")
 public class Customer extends Model {
-    String getUsername() {
+    public String getUsername() {
         return this.getString("username");
     }
-    String getPassword() {
+    public String getPassword() {
         return this.getString("password");
     }
-    String getFirstName() {
+    public String getFirstName() {
         return this.getString("fname");
     }
-    String getLastName() {
+    public String getLastName() {
         return this.getString("lname");
     }
-    String getEmail() {
+    public String getEmail() {
         return this.getString("email");
     }
-    String getAddress() {
+    public String getAddress() {
         return this.getString("address");
     }
-    long getPhone() {
+    public long getPhone() {
         return this.getLong("phone");
     }
-    String getIdType() {
-        return this.getString("id_type");
+    public TypeOfId getIdType() {
+        String type = this.getString("id_type");
+        switch(type) {
+            case "Passport":
+                return TypeOfId.PASSPORT;
+            case "Driver License":
+                return TypeOfId.DRIVER_LICENSE;
+            case "ID card":
+                return TypeOfId.ID_CARD;
+            default:
+                return TypeOfId.CITIZENSHIP_CERTIFICATE;      
+        }
     }
-    String getIdNubmer() {
+    public String getIdNubmer() {
         return this.getString("id_no");
     }
-    String getPin() {
+    public String getPin() {
         return this.getString("pin");
     }
 }

@@ -20,4 +20,9 @@ public class BspConstants {
     public static final String[] TERM_DEPOSIT_ATTR_NAME = {"td_purchase_id", "account_id", "td_type", "start_date", "end_date",
     "end_date", "interest_rate", "amount", "finish_status"};
     public static long MILLISECOND_PER_DAY = 60 * 60 * 24 * 1000;
+    public static long MILLISECOND_PER_MONTH = MILLISECOND_PER_DAY * 30;
+    public static final String DB_DRIVER = "oracle.jdbc.driver.OracleDriver";
+    public static final String DB_CONNECTION =  "jdbc:oracle:thin:@hippo.its.monash.edu.au:1521:FIT5148a";
+    public static final String DB_USER = "S27624366";
+    public static final String DB_PASSWORD = "student";
 }

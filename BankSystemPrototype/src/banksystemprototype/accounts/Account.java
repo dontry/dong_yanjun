@@ -10,6 +10,10 @@ package banksystemprototype.accounts;
  * @author caidong
  */
 import org.javalite.activejdbc.Model;
+import org.javalite.activejdbc.annotations.*;
+
+
+@IdName("account_id")
 public class Account extends Model{
     public long getAccountId() {
         return  this.getLong("account_id");
@@ -26,14 +30,14 @@ public class Account extends Model{
     
     public boolean getLockStatus() {
         String status = this.getString("lockstatus");
-        if(status.equals("N")) {
-            return false;
-        } else {
-            return true;
-        }
+        return status.equals("Y");
     }
     
     public double getBalance() {
         return this.getDouble("balance");
+    }
+    
+    public void setBalance(double balance) {
+        this.set("balance", balance).save();
     }
 }

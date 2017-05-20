@@ -1,14 +1,18 @@
 package banksystemprototype.accounts.SavingAccount;
 
 import banksystemprototype.Exceptions.BalanceLimitException;
+import banksystemprototype.Exceptions.TypeOfLimit;
 import banksystemprototype.TypeOfAccountAction;
 import banksystemprototype.TypeOfMessageDialog;
 import banksystemprototype.Utils.BspConstants;
 import banksystemprototype.Utils.DataConverter;
+import banksystemprototype.accounts.Account;
 import banksystemprototype.accounts._Account;
 import banksystemprototype.accounts.Database.DBConnection;
 import banksystemprototype.accounts.Database.DBManager;
 import banksystemprototype.accounts.Transaction.Transaction;
+import banksystemprototype.accounts.TypeOfAccount;
+import banksystemprototype.users.Customer;
 import banksystemprototype.widgets.PinFrame;
 import banksystemprototype.widgets.PinServiceApi;
 import java.util.ArrayList;
@@ -17,12 +21,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.javalite.activejdbc.Base;
 
 /**
  * Created by caidong on 10/05/2017.
  */
 public class SavingAccountController implements SavingAccountContract.UserActionListener, PinServiceApi.Listener {
-    private _Account mSavingAccount;
+    private Account mSavingAccount;
     private SavingAccountContract.View view;
     private TypeOfAccountAction mAccountAction;
     private String ACCOUNT_TABLE_NAME =  "S27624366.ACCOUNT";
@@ -38,13 +43,10 @@ public class SavingAccountController implements SavingAccountContract.UserAction
         double amount = view.getDepositAmount();
         double balance = mSavingAccount.getBalance();
         balance += amount;
-        if(amount < 0) throw new BalanceLimitException();
+        if(amount < 0) throw new BalanceLimitException(TypeOfLimit.BALANCE);
         mSavingAccount.setBalance(balance);
-        HashMap<String, Object> attributes = new HashMap<>();
-        attributes.put("balance", balance);
-        String condition = " WHERE account_id = " + mSavingAccount.getmAccountId();
-        DBManager.update(ACCOUNT_TABLE_NAME, attributes, condition);
-        view.refreshBalance(String.valueOf(balance));
+        
+        view.refreshBalance(String.valueOf(mSavingAccount.getBalance()));
         return balance;
     }
 
@@ -53,50 +55,45 @@ public class SavingAccountController implements SavingAccountContract.UserAction
         double amount = view.getWithdrawAmount();
         double balance = mSavingAccount.getBalance();
         balance -= amount;
-        if(balance - amount < 0 || amount < 0) throw new BalanceLimitException();
+        if(balance < 0 || amount < 0) throw new BalanceLimitException(TypeOfLimit.BALANCE);
         mSavingAccount.setBalance(balance);
-        HashMap<String, Object> attributes = new HashMap<>();
-        attributes.put("balance", balance);
-        String condition = " WHERE account_id = " + mSavingAccount.getmAccountId();
-        DBManager.update(ACCOUNT_TABLE_NAME, attributes, condition);
-        view.refreshBalance(String.valueOf(balance));
+
+        view.refreshBalance(String.valueOf(mSavingAccount.getBalance()));
         return balance;
     }
 
     @Override
     public double transfer() throws BalanceLimitException {
         double amount = view.getTransferAmount();
-        long toAccountId = view.getTransferAccountId();
+        Long toAccountId = view.getTransferAccountId();
         double balance = mSavingAccount.getBalance();
         balance -= amount;
-        if(balance - amount < 0 || amount < 0) throw new BalanceLimitException();
+        if(balance < 0 || amount < 0) throw new BalanceLimitException(TypeOfLimit.BALANCE);
+        
+        Account toAccount = Account.findFirst(" account_id = ?", toAccountId);
+        double toAccountNewBalance = toAccount.getBalance() + amount;
         mSavingAccount.setBalance(balance);
-        view.refreshBalance(String.valueOf(balance));
+        toAccount.setBalance(toAccountNewBalance);
+        
+        view.refreshBalance(String.valueOf(mSavingAccount.getBalance()));
         return balance;
     }
 
 
     @Override
     public void openAccount(String username) {
-        String condition = " WHERE username = '" + username + "'";
+        Base.open(BspConstants.DB_DRIVER, BspConstants.DB_CONNECTION, BspConstants.DB_USER, BspConstants.DB_PASSWORD);
+        mSavingAccount = Account.findFirst(" username = ? AND account_type = 'SAVING' AND lockstatus = 'N' ", username);
         mUsername = username;
-        Object[] objs = DBManager.check(ACCOUNT_TABLE_NAME, condition).get(0);
-        HashMap<String, Object> map = DataConverter.objectArrayToHashMap(BspConstants.ACCOUNT_ATTR_NAME, objs);
-        mSavingAccount = _Account.convertToAccount(map);
         view.refreshBalance(String.valueOf(mSavingAccount.getBalance()));
     }
 
-    @Override
-    public void showAccount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
    
     @Override
     public boolean verifyPin(Object pin) {
         //verifyPin
-        String condition = " WHERE username = '" + mUsername + "' AND pin = " + pin ;
-        ArrayList<Object[]> objs = DBManager.check(CUSTOMER_TABLE_NAME, condition);;
-        boolean isVerified = objs.size() == 1;
+        Customer customer = Customer.findFirst(" username = ? AND pin = ? ", mUsername, pin);
+        boolean isVerified = customer != null;
         if(isVerified) {
             try {
                 proceedTransaction();
@@ -112,7 +109,7 @@ public class SavingAccountController implements SavingAccountContract.UserAction
 
     @Override
     public void back() {
-        DBConnection.closeConnection();
+        closeAccount();
     }
 
     @Override
@@ -121,7 +118,7 @@ public class SavingAccountController implements SavingAccountContract.UserAction
         new PinFrame(this).setVisible(true);
     }
     
-      private void proceedTransaction() throws BalanceLimitException {
+    private void proceedTransaction() throws BalanceLimitException {
         switch(mAccountAction) {
             case DEPOSIT:
                 deposit();
@@ -134,6 +131,11 @@ public class SavingAccountController implements SavingAccountContract.UserAction
                 break;
         }
         view.disposeActionDialog(mAccountAction);
+    }
+
+    @Override
+    public void closeAccount() {
+        Base.close();
     }
 
 }

@@ -162,7 +162,8 @@
         </Component>
         <Component class="javax.swing.JTextField" name="tfUsername">
           <Properties>
-            <Property name="text" type="java.lang.String" value="amy123"/>
+            <Property name="text" type="java.lang.String" value="zimo"/>
+            <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfUsernameActionPerformed"/>
@@ -193,7 +194,7 @@
         </Component>
         <Component class="javax.swing.JPasswordField" name="tfPwd">
           <Properties>
-            <Property name="text" type="java.lang.String" value="11111111"/>
+            <Property name="text" type="java.lang.String" value="software1"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfPwdActionPerformed"/>
@@ -204,7 +205,7 @@
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel type="list">
                 <ListItem value="CUSTOMER"/>
-                <ListItem value="ADMINISTRATOR"/>
+                <ListItem value="ADMIN"/>
               </SpinnerModel>
             </Property>
           </Properties>

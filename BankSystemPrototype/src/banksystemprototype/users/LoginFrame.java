@@ -89,7 +89,8 @@ public class LoginFrame extends javax.swing.JFrame implements UserContract.View{
 
         jLabel1.setText("User name:");
 
-        tfUsername.setText("amy123");
+        tfUsername.setText("zimo");
+        tfUsername.setToolTipText("");
         tfUsername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfUsernameActionPerformed(evt);
@@ -109,14 +110,14 @@ public class LoginFrame extends javax.swing.JFrame implements UserContract.View{
 
         jLabel4.setText("User type:");
 
-        tfPwd.setText("11111111");
+        tfPwd.setText("software1");
         tfPwd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfPwdActionPerformed(evt);
             }
         });
 
-        spUserType.setModel(new javax.swing.SpinnerListModel(new String[] {"CUSTOMER", "ADMINISTRATOR"}));
+        spUserType.setModel(new javax.swing.SpinnerListModel(new String[] {"CUSTOMER", "ADMIN"}));
 
         javax.swing.GroupLayout tv_title_usernameLayout = new javax.swing.GroupLayout(tv_title_username);
         tv_title_username.setLayout(tv_title_usernameLayout);

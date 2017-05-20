@@ -2,56 +2,38 @@ package banksystemprototype.accounts;
 
 
 
-import banksystemprototype.accounts.CreditCardAccount.CreditCardAccount;
-import banksystemprototype.accounts.HomeLoanAccount.HomeLoanAccount;
-import banksystemprototype.accounts.SavingAccount.SavingAccount;
-import banksystemprototype.accounts.TermDepositAccount.TermDepositAccount;
-import banksystemprototype.users._Customer;
-
+import banksystemprototype.Utils.BspConstants;
+import banksystemprototype.users.Customer;
+import org.javalite.activejdbc.Base;
 /**
  * Created by caidong on 9/05/2017.
  */
 public class CustomerAccountController implements AccountContract.CustomerActionListener{
 
-    private final AccountContract.View mHomeView;
+    private final AccountContract.View view;
+    private Customer mCustomer;
 
     public CustomerAccountController(AccountContract.View mHomeView) {
-        this.mHomeView = mHomeView;
-    }
-
-
-    @Override
-    public void viewCustomerProfile( _Customer customer) {
-        mHomeView.showCustomerProfile(customer);
+        this.view = mHomeView;
     }
 
     @Override
-    public _Account selectAccount(String username, TypeOfAccount typeOfAccount) {
-        return null;
+    public void initialize(String username) {
+        Base.open(BspConstants.DB_DRIVER, BspConstants.DB_CONNECTION, BspConstants.DB_USER, BspConstants.DB_PASSWORD);
+        mCustomer = Customer.findFirst(" username = ? ",  username);
+        String fullname = mCustomer.getFirstName() + " " + mCustomer.getLastName();
+        view.showUserFullname(fullname);
+        Base.close();
     }
-
+    
     @Override
-    public void openSavingAccount( SavingAccount account) {
-        mHomeView.showSavingAccount(account.getmAccountId());
-    }
-
-    @Override
-    public void openTermDepositAccount( TermDepositAccount account) {
-        mHomeView.showTermDepositAccount(account.getmAccountId());
-    }
-
-    @Override
-    public void openCreditCardAccount( CreditCardAccount account) {
-        mHomeView.showSavingAccount(account.getmAccountId());
-    }
-
-    @Override
-    public void openHomeLoanAccount(HomeLoanAccount account) {
-        mHomeView.showHomeLoanAccount(account.getmAccountId());
+    public void viewCustomerProfile() {
+        view.showCustomerProfile(mCustomer);
     }
 
     @Override
     public void logout() {
-        mHomeView.showLogout();
+        view.showLogout();
     }
+
 }

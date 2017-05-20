@@ -25,7 +25,7 @@ public interface SavingAccountContract {
         double withdraw() throws Exception;
         double transfer() throws Exception;
         void openAccount(String username);
-        void showAccount();
+        void closeAccount();
         void back();
         void newAction(TypeOfAccountAction action);
     }

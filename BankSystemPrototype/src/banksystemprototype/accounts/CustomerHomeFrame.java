@@ -10,12 +10,14 @@ import banksystemprototype.accounts.CreditCardAccount.CreditCardAccountFrame;
 import banksystemprototype.accounts.Database.*;
 import banksystemprototype.accounts.SavingAccount.SavingAccountFrame;
 import banksystemprototype.accounts.TermDepositAccount.TermDepositAccountFrame;
+import banksystemprototype.users.Customer;
 import banksystemprototype.users._Customer;
 import banksystemprototype.users.LoginFrame;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -30,15 +32,15 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
     DefaultTableModel dtm = new DefaultTableModel(new String[]{
     "Transaction No", "Username", "Date", "Current Balance", "Amount", "Account ID","Account Type"}, 0);
     private LoginFrame loginFrame;
-    private Connection conn;
     private String username;
+    private CustomerAccountController mActionListener;
             
     public CustomerHomeFrame(JFrame login, String username) {
         initComponents();
         loginFrame = (LoginFrame) login;
-        conn = DBConnection.getConnection();
+        mActionListener = new CustomerAccountController(this);
+        mActionListener.initialize(username);
         this.username = username;
-        labelUsername.setText(username);
     }
 
     /**
@@ -58,6 +60,29 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
         jScrollPane1 = new javax.swing.JScrollPane();
         tblTransaction = new javax.swing.JTable();
         btnViewTransaction = new javax.swing.JButton();
+        jdViewProfile = new javax.swing.JDialog();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        tfCreateUsername = new javax.swing.JTextField();
+        tfCreateFname = new javax.swing.JTextField();
+        tfCreateLname = new javax.swing.JTextField();
+        tfCreateEmail = new javax.swing.JTextField();
+        tfCreateAddress = new javax.swing.JTextField();
+        tfCreatePhone = new javax.swing.JTextField();
+        tfCreateIDNo = new javax.swing.JTextField();
+        btnOK = new javax.swing.JButton();
+        pfCreatePassword = new javax.swing.JPasswordField();
+        pfCreatePin = new javax.swing.JPasswordField();
+        tfCreateIdType = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         btnTermDepositAccount = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
@@ -100,6 +125,158 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
                 .addGap(38, 38, 38)
                 .addComponent(btnViewTransaction)
                 .addContainerGap(43, Short.MAX_VALUE))
+        );
+
+        jdViewProfile.setMinimumSize(new java.awt.Dimension(466, 550));
+
+        jLabel15.setText("last name");
+
+        jLabel10.setText("ID type");
+
+        jLabel4.setText("email");
+
+        jLabel5.setText("phone number");
+
+        jLabel11.setText("ID Number");
+
+        jLabel12.setText("first name");
+
+        jLabel8.setText("Username");
+
+        jLabel9.setText("Password");
+
+        jLabel6.setText("address");
+
+        jLabel7.setText("PIN");
+
+        tfCreateUsername.setEnabled(false);
+
+        tfCreateFname.setEnabled(false);
+
+        tfCreateLname.setEnabled(false);
+
+        tfCreateEmail.setEnabled(false);
+
+        tfCreateAddress.setEnabled(false);
+
+        tfCreatePhone.setEnabled(false);
+
+        tfCreateIDNo.setEnabled(false);
+
+        btnOK.setText("OK");
+        btnOK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOKActionPerformed(evt);
+            }
+        });
+
+        pfCreatePassword.setEnabled(false);
+        pfCreatePassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pfCreatePasswordActionPerformed(evt);
+            }
+        });
+
+        pfCreatePin.setEnabled(false);
+
+        jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jLabel2.setText("View Profile");
+
+        javax.swing.GroupLayout jdViewProfileLayout = new javax.swing.GroupLayout(jdViewProfile.getContentPane());
+        jdViewProfile.getContentPane().setLayout(jdViewProfileLayout);
+        jdViewProfileLayout.setHorizontalGroup(
+            jdViewProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jdViewProfileLayout.createSequentialGroup()
+                .addGroup(jdViewProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jdViewProfileLayout.createSequentialGroup()
+                        .addGap(52, 52, 52)
+                        .addGroup(jdViewProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jdViewProfileLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel12))
+                            .addGroup(jdViewProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel5)
+                                .addGroup(jdViewProfileLayout.createSequentialGroup()
+                                    .addGroup(jdViewProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel15)
+                                        .addComponent(jLabel11)
+                                        .addComponent(jLabel6)
+                                        .addComponent(jLabel4)
+                                        .addComponent(jLabel7)
+                                        .addComponent(jLabel10)
+                                        .addComponent(jLabel9))
+                                    .addGap(12, 12, 12))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jdViewProfileLayout.createSequentialGroup()
+                                    .addGap(20, 20, 20)
+                                    .addComponent(jLabel8))))
+                        .addGap(7, 7, 7)
+                        .addGroup(jdViewProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tfCreateIdType, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnOK)
+                            .addGroup(jdViewProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(tfCreateUsername)
+                                .addComponent(tfCreateFname)
+                                .addComponent(tfCreateLname)
+                                .addComponent(tfCreateEmail)
+                                .addComponent(tfCreateAddress)
+                                .addComponent(tfCreatePhone)
+                                .addComponent(tfCreateIDNo)
+                                .addComponent(pfCreatePassword)
+                                .addComponent(pfCreatePin, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jdViewProfileLayout.createSequentialGroup()
+                        .addGap(125, 125, 125)
+                        .addComponent(jLabel2)))
+                .addContainerGap(106, Short.MAX_VALUE))
+        );
+        jdViewProfileLayout.setVerticalGroup(
+            jdViewProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jdViewProfileLayout.createSequentialGroup()
+                .addContainerGap(19, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addGroup(jdViewProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfCreateUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jdViewProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(pfCreatePassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jdViewProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfCreateFname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jdViewProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jdViewProfileLayout.createSequentialGroup()
+                        .addComponent(tfCreateLname, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jdViewProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(tfCreateEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jdViewProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(tfCreateAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jdViewProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(tfCreatePhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel15))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jdViewProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel10)
+                    .addComponent(tfCreateIdType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(13, 13, 13)
+                .addGroup(jdViewProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel11)
+                    .addComponent(tfCreateIDNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jdViewProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(pfCreatePin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(btnOK)
+                .addGap(40, 40, 40))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -269,6 +446,7 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
 
     private void btnViewProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewProfileActionPerformed
         // TODO add your handling code here:
+        mActionListener.viewCustomerProfile();
     }//GEN-LAST:event_btnViewProfileActionPerformed
 
     
@@ -299,17 +477,37 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
         }     
     }//GEN-LAST:event_btnViewTransactionActionPerformed
 
+    private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
+        jdViewProfile.setVisible(false);
+    }//GEN-LAST:event_btnOKActionPerformed
+
+    private void pfCreatePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pfCreatePasswordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pfCreatePasswordActionPerformed
+
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private final javax.swing.JButton btnCreditCardAccount = new javax.swing.JButton();
     private final javax.swing.JButton btnHomeLoanAccount = new javax.swing.JButton();
     private javax.swing.JButton btnLogout;
+    private javax.swing.JButton btnOK;
     private final javax.swing.JButton btnSavingAccount = new javax.swing.JButton();
     private javax.swing.JButton btnTermDepositAccount;
     private final javax.swing.JButton btnViewProfile = new javax.swing.JButton();
     private javax.swing.JButton btnViewTransaction;
     private final javax.swing.JButton btnViewTransactions = new javax.swing.JButton();
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuItem jMenuItem1;
@@ -317,36 +515,23 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JDialog jdViewProfile;
     private javax.swing.JDialog jdViewTransaction;
     private javax.swing.JLabel labelUsername;
+    private javax.swing.JPasswordField pfCreatePassword;
+    private javax.swing.JPasswordField pfCreatePin;
     private javax.swing.JTable tblTransaction;
+    private javax.swing.JTextField tfCreateAddress;
+    private javax.swing.JTextField tfCreateEmail;
+    private javax.swing.JTextField tfCreateFname;
+    private javax.swing.JTextField tfCreateIDNo;
+    private javax.swing.JTextField tfCreateIdType;
+    private javax.swing.JTextField tfCreateLname;
+    private javax.swing.JTextField tfCreatePhone;
+    private javax.swing.JTextField tfCreateUsername;
     // End of variables declaration//GEN-END:variables
     
-    
-
-    @Override
-    public void showSavingAccount(long accountId) {
-    }
-
-    @Override
-    public void showTermDepositAccount(long accountId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void showCreditCardAccount(long accountId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void showHomeLoanAccount(long accountId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void showCustomerProfile(_Customer profile) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+   
 
     @Override
     public void showLogout() {
@@ -364,5 +549,23 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
      
     public String getUsername(){
         return username;
+    }
+
+    @Override
+    public void showCustomerProfile(Customer profile) {
+        tfCreateAddress.setText(profile.getAddress());
+        tfCreateEmail.setText(profile.getEmail());
+        tfCreateFname.setText(profile.getFirstName());
+        tfCreateIDNo.setText(profile.getIdNubmer());
+        tfCreateLname.setText(profile.getLastName());
+        tfCreatePhone.setText(String.valueOf(profile.getPhone()));
+        tfCreateIdType.setText(profile.getIdType().toString());
+        tfCreateUsername.setText(profile.getUsername());
+        jdViewProfile.setVisible(true);
+    }
+
+    @Override
+    public void showUserFullname(String fullname) {
+        labelUsername.setText(fullname);
     }
 }

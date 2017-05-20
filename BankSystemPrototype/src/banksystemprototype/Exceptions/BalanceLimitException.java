@@ -10,12 +10,12 @@ package banksystemprototype.Exceptions;
  * @author caidong
  */
 public class BalanceLimitException extends Exception {
-    private final String MSG = "The amount exceeds the balance Limit";
-    public BalanceLimitException() {
-        
+    private String type;
+    public BalanceLimitException(TypeOfLimit limit) {
+        type = limit.toString();
     }
     
     public String getMessage() {
-        return MSG;
+        return "The amount exceeds the " + type + " Limit";
     }
 }

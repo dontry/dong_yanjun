@@ -3,10 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package banksystemprototype.users;
+package banksystemprototype.Exceptions;
+
 /**
  *
  * @author caidong
  */
-import org.javalite.activejdbc.Model;
-import org.javalite.activejdbc.Base;
+public enum TypeOfLimit {
+    BALANCE, LOAN, DAILY_PAYMENT
+}

@@ -538,7 +538,7 @@ public class SavingAccountFrame extends javax.swing.JFrame implements SavingAcco
 
     @Override
     public long getTransferAccountId() {
-        return Long.parseLong(tfTransferAmount.getText());
+        return Long.parseLong(tfTransferToAccount.getText());
     }
 
     @Override

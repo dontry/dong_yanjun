@@ -9,6 +9,7 @@ import banksystemprototype.Exceptions.BalanceLimitException;
 import banksystemprototype.TypeOfAccountAction;
 import banksystemprototype.Utils.BspConstants;
 import banksystemprototype.Utils.DataConverter;
+import banksystemprototype.accounts.Account;
 import banksystemprototype.accounts._Account;
 import banksystemprototype.accounts.Database.DBConnection;
 import banksystemprototype.accounts.Database.DBManager;
@@ -22,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.javalite.activejdbc.Base;
 
 /**
  *
@@ -30,108 +32,79 @@ import java.util.logging.Logger;
 public class TermDepositAccountController implements TermDepositAccountContract.UserActionListener, PinServiceApi.Listener {
     private TypeOfAccountAction mAccountAction;
     private TermDepositAccountContract.View view;
-    private List<TermDeposit> mTermDepositList;
-    private TermDeposit mTermDeposit;
-    private static final String TERM_DEPOSIT_TABLE_NAME = "S27624366.TERM_DEPOSIT";
-    private String ACCOUNT_TABLE_NAME =  "S27624366.ACCOUNT";
-    private _Account mTermDepositAccount;
-    private String mUsername;
+    private HashMap<Long, TermDeposit> mTermDeposits;
+   
+    private TermDepositAccount mTermDepositAccount;
     
     public TermDepositAccountController(TermDepositAccountContract.View v) {
         view = v;
     }
     
     @Override
-    public double withdraw() {
-        double amount = view.getWithdrawAmount();
-        //update Table;
-        deleteTermDeposit(mTermDeposit.getmTermId());
+    public void withdraw() {
+        long termId = view.getWithdrawTermDepositId();
         
-        return amount;
+        //finish term;
+        TermDeposit term = mTermDeposits.get(termId);
+        term.finishTerm();
+        refreshTermDeposits();
+        view.refreshBalance(String.valueOf(mTermDepositAccount.getBalance() - term.getBaseDeposit()));
     }
 
     @Override
     public void createTermDeposit() { 
-        String[] attributes = {};
-        String termDepositId = "td_purchase_id_seq.nextVal";
-        String accountId = "17";
-        int month = view.getTypeOfTermDeposit().month();
-        String period = String.valueOf(month);
+        long accountId = mTermDepositAccount.getAccountId();
+        int type = view.getTypeOfTermDeposit().month();
         Date startingDate = view.getTermDepositStartingDate();
-        String amount = String.valueOf(view.getCreateDepositAmount());
-        Date endingDate = new Date(startingDate.getTime() + month * 30 * BspConstants.MILLISECOND_PER_DAY); 
-    }
-
-   
-    private void deleteTermDeposit(long termDepositId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        double amount = view.getCreateDepositAmount();
+        Date endingDate = new Date(startingDate.getTime() + type * BspConstants.MILLISECOND_PER_MONTH); 
+        TermDeposit term = new TermDeposit()
+                .set("account_id", accountId)
+                .set("td_type",type)
+                .set("interest_rate",TermDeposit.convertInterestRate(type))
+                .setDate("start_date",startingDate)
+                .setDate("end_date",endingDate)
+                .set("amount",amount)
+                .set("finish_status","N");
+        term.saveIt();
+        
+        refreshTermDeposits();
+        view.refreshBalance(String.valueOf(mTermDepositAccount.getBalance() + term.getBaseDeposit()));
     }
 
     @Override
     public double transfer() {
-        double amount = view.getTransferAmount();
+        long termId = view.getTransferTermDepositId();
         long toAccountId = view.getTransferAccountId();
-        //update table
-        deleteTermDeposit(mTermDeposit.getmTermId());
         
+        TermDeposit term = mTermDeposits.get(termId);
+        double amount = term.getTotalAccrueAmount(new Date());
+        Account account  = Account.findById(toAccountId);
+        
+        term.finishTerm();
+         
+        account.setBalance(account.getBalance() + amount);
+        view.refreshBalance(String.valueOf(mTermDepositAccount.getBalance() - term.getBaseDeposit()));
+        refreshTermDeposits();
         return amount;
     }
     
     @Override
-    public void viewAllTermDeposits() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public TermDeposit checkTermDeposit(long termId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        
-    }
-
-    @Override
-    public List<TermDeposit> getAllTermDeposit() {
-        ArrayList<TermDeposit> terms = new ArrayList<>();
-        String condition1 = " WHERE accountId = " + String.valueOf(mTermDepositAccount.getmAccountId());
-        List<Object[]> objList = DBManager.check(TERM_DEPOSIT_TABLE_NAME, condition1);
-        for(Object[] o: objList) {
-            HashMap<String, Object> map = DataConverter.objectArrayToHashMap(BspConstants.ACCOUNT_ATTR_NAME, o);
-            TermDeposit term = TermDeposit.convertToTermDeposit(map);
-            terms.add(term);
-        }
-        return terms;
-    }
-
-    @Override
-    public List<Transaction> checkTransactions(Date startingDate, Date endingDate) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void showTermDeposits(TypeOfAccountAction action) {
+        view.showTermDeposit(mTermDeposits, action);
     }
 
     @Override
     public void openAccount(String username) {
-        String condition = " WHERE username = '" + username + "'";
-        mUsername = username;
-        Object[] obj = DBManager.check(ACCOUNT_TABLE_NAME, condition).get(0);
-        HashMap<String, Object> map = DataConverter.objectArrayToHashMap(BspConstants.ACCOUNT_ATTR_NAME, obj);
-        mTermDepositAccount = _Account.convertToAccount(map);
-        mTermDepositList  = getAllTermDeposit();
-        view.showTermDeposit(mTermDepositList);
-       
-        view.refreshBalance(String.valueOf(mTermDepositAccount.getBalance()));    
-    }
-
-    @Override
-    public void showAccount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void saveAccount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Base.open(BspConstants.DB_DRIVER, BspConstants.DB_CONNECTION, BspConstants.DB_USER, BspConstants.DB_PASSWORD);
+        mTermDepositAccount = new TermDepositAccount(username);
+        mTermDeposits = mTermDepositAccount.getTermDeposits();
+        view.refreshBalance(String.valueOf(mTermDepositAccount.getBalance()));       
     }
 
     @Override
     public void back() {
-        DBConnection.closeConnection();
+        closeAccount();
     }
 
     @Override
@@ -165,7 +138,14 @@ public class TermDepositAccountController implements TermDepositAccountContract.
         }
         view.disposeActionDialog(mAccountAction);
     }
+    
+    private void refreshTermDeposits() {
+        mTermDeposits = mTermDepositAccount.getTermDeposits();
+    }
 
-
+    @Override
+    public void closeAccount() {
+        Base.close();
+    }
  }
     

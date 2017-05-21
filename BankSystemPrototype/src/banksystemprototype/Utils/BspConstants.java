@@ -29,4 +29,5 @@ public class BspConstants {
     public static final String DB_PASSWORD = "student";
     public static final String ACCOUNT_LOCKED_MSG = "Sorry your account is locked.\n Please call Admin for help.";
     public static final String ACCOUNT_NULL_MSG = "Sorry, your account doesn't exist or locked.";
+    public static final double TERM_DEPOSIT_THRESHOLD = 1000;
 }

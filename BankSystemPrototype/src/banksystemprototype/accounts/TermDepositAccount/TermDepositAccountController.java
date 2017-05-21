@@ -6,11 +6,11 @@
 package banksystemprototype.accounts.TermDepositAccount;
 
 import banksystemprototype.Exceptions.BalanceLimitException;
+import banksystemprototype.Exceptions.TypeOfLimit;
 import banksystemprototype.TypeOfAccountAction;
 import banksystemprototype.TypeOfMessageDialog;
 import banksystemprototype.Utils.BspConstants;
 import banksystemprototype.accounts.Account;
-import banksystemprototype.accounts.SavingAccount.SavingAccountController;
 import banksystemprototype.users.Customer;
 import banksystemprototype.widgets.PinFrame;
 import banksystemprototype.widgets.PinServiceApi;
@@ -31,7 +31,7 @@ public class TermDepositAccountController implements TermDepositAccountContract.
     private HashMap<Long, TermDeposit> mTermDeposits;
     private String mUsername;
     private TermDepositAccount mTermDepositAccount;
-    
+    private double mTotalBalance = 0;
     public TermDepositAccountController(TermDepositAccountContract.View v) {
         view = v;
     }
@@ -44,28 +44,44 @@ public class TermDepositAccountController implements TermDepositAccountContract.
         TermDeposit term = mTermDeposits.get(termId);
         term.finishTerm();
         refreshTermDeposits();
-        view.refreshBalance(String.valueOf(mTermDepositAccount.getBalance() - term.getBaseDeposit()));
+        String balanceString = new DecimalFormat("#0.00").format(mTotalBalance - term.getTotalAccrueAmount(new Date()));
+        view.refreshBalance(balanceString);
     }
 
     @Override
-    public void createTermDeposit() { 
+    public void createTermDeposit() throws Exception{ 
         long accountId = mTermDepositAccount.getAccountId();
         int type = view.getTypeOfTermDeposit().month();
         Date startingDate = view.getTermDepositStartingDate();
         double amount = view.getCreateDepositAmount();
         Date endingDate = new Date(startingDate.getTime() + type * BspConstants.MILLISECOND_PER_MONTH); 
-        TermDeposit term = new TermDeposit()
-                .set("account_id", accountId)
-                .set("td_type",type)
-                .set("interest_rate",TermDeposit.convertInterestRate(type))
-                .setDate("start_date",startingDate)
-                .setDate("end_date",endingDate)
-                .set("amount",amount)
-                .set("finish_status","N");
-        term.saveIt();
-        
-        refreshTermDeposits();
-        view.refreshBalance(String.valueOf(mTermDepositAccount.getBalance() + term.getBaseDeposit()));
+        Account savingAccount = Account.findFirst(" username = ? AND account_type = 'SAVING' AND lockstatus = 'N' ", mUsername);
+        try {
+            if(savingAccount.getBalance() < BspConstants.TERM_DEPOSIT_THRESHOLD ) {
+                view.showMessageDialog("Sorry, your saving account balance is less than " + BspConstants.TERM_DEPOSIT_THRESHOLD 
+                        + ".\n You are not able to create a term deposit. ", TypeOfMessageDialog.WARNING);
+            } else if(savingAccount.getBalance() <= amount ) {
+                throw new BalanceLimitException(TypeOfLimit.BALANCE);
+            } else {
+                TermDeposit term = new TermDeposit()
+                    .set("account_id", accountId)
+                    .set("td_type",type)
+                    .set("interest_rate",TermDeposit.convertInterestRate(type))
+                    .setDate("start_date",startingDate)
+                    .setDate("end_date",endingDate)
+                    .set("amount",amount)
+                    .set("finish_status","N");
+                term.saveIt();
+
+                refreshTermDeposits();
+                savingAccount.setBalance(savingAccount.getBalance() - amount);
+               String balanceString = new DecimalFormat("#0.00").format(mTotalBalance + term.getBaseDeposit());
+                view.refreshBalance(balanceString);
+            }
+        } catch(Exception ex) {
+            view.showMessageDialog(ex.getMessage(), TypeOfMessageDialog.ERROR);
+        }
+      
     }
 
     @Override
@@ -80,8 +96,8 @@ public class TermDepositAccountController implements TermDepositAccountContract.
         term.finishTerm();
          
         account.setBalance(account.getBalance() + amount);
-        view.refreshBalance(String.valueOf(mTermDepositAccount.getBalance() - term.getBaseDeposit()));
-        refreshTermDeposits();
+        String balanceString = new DecimalFormat("#0.00").format(mTotalBalance - term.getTotalAccrueAmount(new Date()));
+        view.refreshBalance(balanceString);
         return amount;
     }
     
@@ -96,12 +112,12 @@ public class TermDepositAccountController implements TermDepositAccountContract.
         mTermDepositAccount = new TermDepositAccount(username);
         mUsername = username;
         mTermDeposits = mTermDepositAccount.getTermDeposits();
-        double totalBalance = 0;
-        totalBalance = mTermDeposits.entrySet().stream().map((entry) -> {
+        
+        mTotalBalance = mTermDeposits.entrySet().stream().map((entry) -> {
             Long key = entry.getKey();
             return entry;
-        }).map((entry) -> entry.getValue()).map((value) -> value.getTotalAccrueAmount(new Date())).reduce(totalBalance, (accumulator, _item) -> accumulator + _item);
-        String balanceString = new DecimalFormat("#0.00").format(totalBalance);
+        }).map((entry) -> entry.getValue()).map((value) -> value.getTotalAccrueAmount(new Date())).reduce(mTotalBalance, (accumulator, _item) -> accumulator + _item);
+        String balanceString = new DecimalFormat("#0.00").format(mTotalBalance);
         view.refreshBalance(String.valueOf(balanceString));        
     }
 
@@ -137,16 +153,22 @@ public class TermDepositAccountController implements TermDepositAccountContract.
     }
     
     private void proceedTransaction() throws BalanceLimitException {
-        switch(mAccountAction) {
-            case CREATE_DEPOSIT:
-                createTermDeposit();
-                break;
-            case TRANSFER:
-                transfer();
-                break;
-            case WITHDRAW:
-                withdraw();              
-                break;
+        try {        
+            switch(mAccountAction) {
+                case CREATE_DEPOSIT:
+                    createTermDeposit();
+                    break;
+                case TRANSFER:
+                    transfer();
+                    break;
+                case WITHDRAW:
+                    withdraw();              
+                    break;
+            }      
+        } catch(BalanceLimitException ex) {
+            view.showMessageDialog(ex.getMessage(), TypeOfMessageDialog.WARNING);
+        } catch (Exception ex) {
+            view.showMessageDialog("Sorry, illegal input is entered.", TypeOfMessageDialog.WARNING);
         }
         view.disposeActionDialog(mAccountAction);
     }

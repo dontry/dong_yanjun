@@ -40,4 +40,8 @@ public class Account extends Model{
     public void setBalance(double balance) {
         this.set("balance", balance).save();
     }
+    
+    public void freezAccount() {
+        this.set("lockstatus","Y").saveIt();
+    }
 }

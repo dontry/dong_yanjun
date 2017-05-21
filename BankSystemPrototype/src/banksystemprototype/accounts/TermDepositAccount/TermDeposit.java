@@ -1,13 +1,7 @@
 package banksystemprototype.accounts.TermDepositAccount;
 
 import banksystemprototype.Utils.BspConstants;
-import banksystemprototype.Utils.DataConverter;
-import banksystemprototype.users.Admin;
-import banksystemprototype.users.HomeLoan;
-import java.math.BigDecimal;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.IdName;

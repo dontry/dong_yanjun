@@ -19,12 +19,13 @@ public interface SavingAccountContract {
         void disposeActionDialog(TypeOfAccountAction action);
         String getUsername();
         void showMessageDialog(String msg, TypeOfMessageDialog type);
+        void close();
     }
     interface UserActionListener {
         double deposit() throws Exception;
         double withdraw() throws Exception;
         double transfer() throws Exception;
-        void openAccount(String username);
+        void openAccount(String username) throws Exception;
         void closeAccount();
         void back();
         void newAction(TypeOfAccountAction action);

@@ -2,7 +2,6 @@ package banksystemprototype.accounts;
 
 import banksystemprototype.HomeLoanApplication;
 import banksystemprototype.accounts.CreditCardAccount.CreditCardAccount;
-import banksystemprototype.accounts.HomeLoanAccount.HomeLoanAccount;
 import banksystemprototype.accounts.SavingAccount.SavingAccount;
 import banksystemprototype.accounts.TermDepositAccount.TermDepositAccount;
 import banksystemprototype.users.Customer;

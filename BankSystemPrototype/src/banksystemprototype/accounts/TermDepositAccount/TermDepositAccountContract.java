@@ -25,13 +25,16 @@ public interface TermDepositAccountContract {
         void showMessageDialog(String msg, TypeOfMessageDialog type);
         void refreshBalance(String balance);
         void showTermDeposit(HashMap<Long, TermDeposit> terms, TypeOfAccountAction action);
+        void close();
     }
     interface UserActionListener {
         void withdraw();
         void createTermDeposit();
         double transfer();
         void showTermDeposits(TypeOfAccountAction action);
-        void openAccount(String username);
+//        List<Object[]> getTermDeposits();
+        long getAccountId();
+        void openAccount(String username) throws Exception;
         void closeAccount();
         void back();
         void newAction(TypeOfAccountAction action);

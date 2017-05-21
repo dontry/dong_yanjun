@@ -7,6 +7,7 @@ package banksystemprototype.accounts.TermDepositAccount;
 
 import banksystemprototype.Exceptions.BalanceLimitException;
 import banksystemprototype.TypeOfAccountAction;
+import banksystemprototype.TypeOfMessageDialog;
 import banksystemprototype.Utils.BspConstants;
 import banksystemprototype.Utils.DataConverter;
 import banksystemprototype.accounts.Account;
@@ -95,16 +96,17 @@ public class TermDepositAccountController implements TermDepositAccountContract.
     }
 
     @Override
-    public void openAccount(String username) {
+    public void openAccount(String username) throws Exception{
         Base.open(BspConstants.DB_DRIVER, BspConstants.DB_CONNECTION, BspConstants.DB_USER, BspConstants.DB_PASSWORD);
         mTermDepositAccount = new TermDepositAccount(username);
         mTermDeposits = mTermDepositAccount.getTermDeposits();
-        view.refreshBalance(String.valueOf(mTermDepositAccount.getBalance()));       
+        view.refreshBalance(String.valueOf(mTermDepositAccount.getBalance()));        
     }
 
     @Override
     public void back() {
         closeAccount();
+        view.close();
     }
 
     @Override
@@ -146,6 +148,18 @@ public class TermDepositAccountController implements TermDepositAccountContract.
     @Override
     public void closeAccount() {
         Base.close();
+    }
+
+    @Override
+    public long getAccountId() {
+        return  mTermDepositAccount.getAccountId();
+    }
+
+    @Override
+    public void freezeAccount() {
+        mTermDepositAccount.freezeAccount();
+        view.showMessageDialog(BspConstants.ACCOUNT_LOCKED_MSG, TypeOfMessageDialog.WARNING);
+        back();
     }
  }
     

@@ -943,7 +943,7 @@ btnViewCreditAccount.addActionListener(new java.awt.event.ActionListener() {
     pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void addTableModel(DefaultTableModel dcbm){
+    private void addTableModel(DefaultTableModel dcbm){
         if (dcbm.getRowCount() > 0) {
             /* clear the default table model */
             for (int i = dcbm.getRowCount() - 1; i > -1; i--) {

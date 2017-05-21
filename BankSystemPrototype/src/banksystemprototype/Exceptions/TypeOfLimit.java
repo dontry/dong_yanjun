@@ -10,5 +10,5 @@ package banksystemprototype.Exceptions;
  * @author caidong
  */
 public enum TypeOfLimit {
-    BALANCE, LOAN, DAILY_PAYMENT
+    BALANCE, LOAN, DAILY_PAYMENT, AMOUNT
 }

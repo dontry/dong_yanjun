@@ -15,5 +15,6 @@ public interface PinServiceApi {
     }
      interface Listener<T> {
          public boolean verifyPin(T pin);
+         public void freezeAccount();
      }
 }

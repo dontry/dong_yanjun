@@ -1,5 +1,6 @@
 package banksystemprototype.accounts.SavingAccount;
 
+import banksystemprototype.Exceptions.AccountException;
 import banksystemprototype.Exceptions.BalanceLimitException;
 import banksystemprototype.Exceptions.TypeOfLimit;
 import banksystemprototype.TypeOfAccountAction;
@@ -28,10 +29,8 @@ import org.javalite.activejdbc.Base;
  */
 public class SavingAccountController implements SavingAccountContract.UserActionListener, PinServiceApi.Listener {
     private Account mSavingAccount;
-    private SavingAccountContract.View view;
+    private final SavingAccountContract.View view;
     private TypeOfAccountAction mAccountAction;
-    private String ACCOUNT_TABLE_NAME =  "S27624366.ACCOUNT";
-    private String CUSTOMER_TABLE_NAME = "S27624366.CUSTOMER";
     private String mUsername;
     
     public SavingAccountController(SavingAccountContract.View v) {
@@ -54,8 +53,10 @@ public class SavingAccountController implements SavingAccountContract.UserAction
     public double withdraw() throws BalanceLimitException {
         double amount = view.getWithdrawAmount();
         double balance = mSavingAccount.getBalance();
+        
+        if(balance < amount) throw new BalanceLimitException(TypeOfLimit.BALANCE);
+        if(amount < 0)throw new BalanceLimitException(TypeOfLimit.AMOUNT);
         balance -= amount;
-        if(balance < 0 || amount < 0) throw new BalanceLimitException(TypeOfLimit.BALANCE);
         mSavingAccount.setBalance(balance);
 
         view.refreshBalance(String.valueOf(mSavingAccount.getBalance()));
@@ -67,9 +68,10 @@ public class SavingAccountController implements SavingAccountContract.UserAction
         double amount = view.getTransferAmount();
         Long toAccountId = view.getTransferAccountId();
         double balance = mSavingAccount.getBalance();
-        balance -= amount;
-        if(balance < 0 || amount < 0) throw new BalanceLimitException(TypeOfLimit.BALANCE);
         
+        if(balance < amount) throw new BalanceLimitException(TypeOfLimit.BALANCE);
+        if(amount < 0)throw new BalanceLimitException(TypeOfLimit.AMOUNT);
+        balance -= amount;
         Account toAccount = Account.findFirst(" account_id = ?", toAccountId);
         double toAccountNewBalance = toAccount.getBalance() + amount;
         mSavingAccount.setBalance(balance);
@@ -81,7 +83,7 @@ public class SavingAccountController implements SavingAccountContract.UserAction
 
 
     @Override
-    public void openAccount(String username) {
+    public void openAccount(String username) throws Exception{
         Base.open(BspConstants.DB_DRIVER, BspConstants.DB_CONNECTION, BspConstants.DB_USER, BspConstants.DB_PASSWORD);
         mSavingAccount = Account.findFirst(" username = ? AND account_type = 'SAVING' AND lockstatus = 'N' ", username);
         mUsername = username;
@@ -98,11 +100,11 @@ public class SavingAccountController implements SavingAccountContract.UserAction
             try {
                 proceedTransaction();
             } catch (BalanceLimitException ex) {
-                view.showMessageDialog("Sorry, the amount exceeds the limit.", TypeOfMessageDialog.WARNING);
+                view.showMessageDialog(ex.getMessage(), TypeOfMessageDialog.WARNING);
                 Logger.getLogger(SavingAccountController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NumberFormatException ex) {
+                view.showMessageDialog(ex.getMessage(), TypeOfMessageDialog.WARNING);
             }
-        } else {
-            view.showMessageDialog("Sorry, your PIN is incorrect.", TypeOfMessageDialog.WARNING);
         }
         return isVerified;
     }
@@ -110,6 +112,7 @@ public class SavingAccountController implements SavingAccountContract.UserAction
     @Override
     public void back() {
         closeAccount();
+        view.close();
     }
 
     @Override
@@ -136,6 +139,13 @@ public class SavingAccountController implements SavingAccountContract.UserAction
     @Override
     public void closeAccount() {
         Base.close();
+    }
+
+    @Override
+    public void freezeAccount() {
+        mSavingAccount.freezAccount();
+        view.showMessageDialog(BspConstants.ACCOUNT_LOCKED_MSG, TypeOfMessageDialog.WARNING);
+        back();
     }
 
 }

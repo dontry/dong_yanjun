@@ -6,56 +6,32 @@
 package banksystemprototype.accounts.HomeLoanAccount;
 
 import banksystemprototype.TypeOfAccountAction;
-import banksystemprototype.accounts.Database.DBConnection;
-import banksystemprototype.widgets.PinServiceApi;
+import banksystemprototype.Utils.BspConstants;
+import banksystemprototype.accounts.Account;
+import org.javalite.activejdbc.Base;
 
 /**
  *
  * @author caidong
  */
-public class HomeLoanAccountController implements HomeLoanAccountContract.UserActionListener, PinServiceApi.Listener {
+public class HomeLoanAccountController implements HomeLoanAccountContract.UserActionListener {
     private HomeLoanAccountContract.View view;
+    private Account mHomeLoanAccount;
     public HomeLoanAccountController(HomeLoanAccountContract.View v) {
      view = v;   
     }
-    @Override
-    public void depositMoney(double amount) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+ 
 
     @Override
-    public void repayMoney(double amount) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void openAccount(long accountId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void showAccount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void saveAccount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void openAccount(String username) throws Exception{
+        Base.open(BspConstants.DB_DRIVER, BspConstants.DB_CONNECTION, BspConstants.DB_USER, BspConstants.DB_PASSWORD);
+        mHomeLoanAccount = Account.findFirst(" username = ? AND account_type = 'LOAN' AND lockstatus = 'N' ", username);
+        Loan homeLoan = Loan.findFirst(" account_id = ? ", mHomeLoanAccount.getAccountId());
+        view.displayHomeLoan(homeLoan);
     }
 
     @Override
     public void back() {
-        DBConnection.closeConnection();
+        Base.close();
     }
-
-    @Override
-    public boolean verifyPin(Object pin) {
-        return false;
-    }
-
-    @Override
-    public void newAction(TypeOfAccountAction action) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
 }

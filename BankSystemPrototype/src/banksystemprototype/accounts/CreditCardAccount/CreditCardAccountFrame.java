@@ -9,10 +9,6 @@ import banksystemprototype.TypeOfAccountAction;
 import banksystemprototype.TypeOfMessageDialog;
 import banksystemprototype.Utils.BspConstants;
 import banksystemprototype.accounts.CustomerHomeFrame;
-import banksystemprototype.accounts.Database.DBConnection;
-import java.sql.Connection;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 

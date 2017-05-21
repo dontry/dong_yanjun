@@ -97,6 +97,7 @@ public class LoginFrame extends javax.swing.JFrame implements UserContract.View{
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel2.setText("Bank System Prototype");
 
         jLabel3.setText("Password:");
@@ -123,6 +124,10 @@ public class LoginFrame extends javax.swing.JFrame implements UserContract.View{
         tv_title_username.setLayout(tv_title_usernameLayout);
         tv_title_usernameLayout.setHorizontalGroup(
             tv_title_usernameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tv_title_usernameLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(36, 36, 36))
             .addGroup(tv_title_usernameLayout.createSequentialGroup()
                 .addGroup(tv_title_usernameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(tv_title_usernameLayout.createSequentialGroup()
@@ -138,19 +143,16 @@ public class LoginFrame extends javax.swing.JFrame implements UserContract.View{
                                 .addComponent(tfPwd, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(tfUsername, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE))))
                     .addGroup(tv_title_usernameLayout.createSequentialGroup()
-                        .addGap(103, 103, 103)
-                        .addComponent(btnLogin))
-                    .addGroup(tv_title_usernameLayout.createSequentialGroup()
-                        .addGap(68, 68, 68)
-                        .addComponent(jLabel2)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(94, 94, 94)
+                        .addComponent(btnLogin)))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         tv_title_usernameLayout.setVerticalGroup(
             tv_title_usernameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tv_title_usernameLayout.createSequentialGroup()
-                .addGap(37, 37, 37)
+                .addGap(25, 25, 25)
                 .addComponent(jLabel2)
-                .addGap(18, 18, 18)
+                .addGap(30, 30, 30)
                 .addGroup(tv_title_usernameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(tfUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -172,16 +174,16 @@ public class LoginFrame extends javax.swing.JFrame implements UserContract.View{
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(39, 39, 39)
+                .addGap(45, 45, 45)
                 .addComponent(tv_title_username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(52, 52, 52)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(46, Short.MAX_VALUE)
                 .addComponent(tv_title_username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addGap(45, 45, 45))
         );
 
         pack();

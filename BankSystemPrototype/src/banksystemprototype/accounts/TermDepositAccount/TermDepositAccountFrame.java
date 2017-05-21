@@ -5,15 +5,11 @@
  */
 package banksystemprototype.accounts.TermDepositAccount;
 
-import banksystemprototype.Exceptions.AccountException;
 import banksystemprototype.TypeOfAccountAction;
 import banksystemprototype.TypeOfMessageDialog;
 import banksystemprototype.Utils.BspConstants;
 import banksystemprototype.accounts.CustomerHomeFrame;
-import banksystemprototype.accounts.Database.DBConnection;
 import banksystemprototype.accounts.Database.DBManager;
-import static java.lang.System.in;
-import java.sql.Connection;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -24,12 +20,10 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SpinnerListModel;
 import javax.swing.SpinnerModel;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;

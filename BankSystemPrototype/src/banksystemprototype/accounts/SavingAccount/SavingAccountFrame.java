@@ -10,12 +10,7 @@ import banksystemprototype.TypeOfMessageDialog;
 import banksystemprototype.Utils.BspConstants;
 import banksystemprototype.accounts.CustomerHomeFrame;
 import banksystemprototype.accounts.Database.DBConnection;
-import banksystemprototype.users.LoginFrame;
 import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**

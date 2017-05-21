@@ -7,10 +7,6 @@ package banksystemprototype.users;
 
 import banksystemprototype.TypeOfMessageDialog;
 import banksystemprototype.Utils.BspConstants;
-import banksystemprototype.accounts.Database.DBConnection;
-import banksystemprototype.accounts.Database.DBManager;
-import java.sql.Connection;
-import java.util.List;
 import org.javalite.activejdbc.Base;
 
 /**
@@ -37,18 +33,23 @@ public class UserController implements UserContract.UserActionListener {
     }
     
     private boolean verifyUser(String username, String password, String userType) {
-       Base.open(BspConstants.DB_DRIVER, BspConstants.DB_CONNECTION, BspConstants.DB_USER, BspConstants.DB_PASSWORD);
-       boolean isVerified = false;
-      switch(userType) {
-          case CUSTOMER:
-               isVerified = Customer.findFirst(" username = ? AND password = ? ",  username, password) != null;
-               break;
-          case ADMIN:
-                isVerified = Admin.findFirst(" username = ? AND password = ?", username, password) != null;
-                break;
-          default:
-      }
-        Base.close();
-        return isVerified;
+        try {
+                Base.open(BspConstants.DB_DRIVER, BspConstants.DB_CONNECTION, BspConstants.DB_USER, BspConstants.DB_PASSWORD);
+                boolean isVerified = false;
+                switch(userType) {
+                case CUSTOMER:
+                    isVerified = Customer.findFirst(" username = ? AND password = ? ",  username, password) != null;
+                    break;
+                case ADMIN:
+                     isVerified = Admin.findFirst(" username = ? AND password = ?", username, password) != null;
+                     break;
+                default:
+            }
+            Base.close();
+            return isVerified;
+        } catch (Exception ex) {
+            view.showMessageDialog(ex.getMessage(), TypeOfMessageDialog.ERROR);
+            return false;
+        }      
     } 
 }

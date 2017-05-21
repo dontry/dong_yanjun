@@ -1,11 +1,7 @@
 package banksystemprototype.accounts;
 
 import banksystemprototype.HomeLoanApplication;
-import banksystemprototype.accounts.CreditCardAccount.CreditCardAccount;
-import banksystemprototype.accounts.SavingAccount.SavingAccount;
-import banksystemprototype.accounts.TermDepositAccount.TermDepositAccount;
 import banksystemprototype.users.Customer;
-import banksystemprototype.users._Customer;
 
 
 /**
@@ -32,8 +28,6 @@ public interface AccountContract {
     }
 
     public interface  AdministratorListener {
-        _Customer getCustomer(String username);
-        _Account selectAccount(long accountId);
         void deleteAccount(long accountId);
         void unlockAccount(long accountId);
         void createLoan(HomeLoanApplication application);

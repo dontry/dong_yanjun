@@ -11,13 +11,9 @@ import banksystemprototype.accounts.Database.*;
 import banksystemprototype.accounts.SavingAccount.SavingAccountFrame;
 import banksystemprototype.accounts.TermDepositAccount.TermDepositAccountFrame;
 import banksystemprototype.users.Customer;
-import banksystemprototype.users._Customer;
 import banksystemprototype.users.LoginFrame;
-import java.sql.*;
 import java.util.ArrayList;
-import java.util.logging.Level;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -468,7 +464,7 @@ public class CustomerHomeFrame extends javax.swing.JFrame implements AccountCont
             }
         }
 
-        String condition = " WHERE username = '" + username + "'";
+        String condition = " WHERE username = '" + username + "' order by transaction_id asc";
         String table = "S27624366.transaction_log";
         ArrayList<Object[]> rows = DBManager.check(table, condition);
         for(Object[] row: rows) {

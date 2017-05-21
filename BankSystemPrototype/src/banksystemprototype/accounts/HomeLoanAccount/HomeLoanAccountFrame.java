@@ -330,6 +330,6 @@ public class HomeLoanAccountFrame extends javax.swing.JFrame implements HomeLoan
     private void close() {
         mActionListener.back();
         this.dispose();
-        homeFrame.setVisible(false);
+        homeFrame.setVisible(true);
     }
 }

@@ -3,12 +3,9 @@ package banksystemprototype.accounts.TermDepositAccount;
 
 
 import banksystemprototype.accounts.Account;
-import banksystemprototype.accounts.CreditCardAccount.CreditAccount;
-import banksystemprototype.accounts._Account;
 import banksystemprototype.accounts.TypeOfAccount;
 import java.util.HashMap;
 import java.util.Iterator;
-import org.javalite.activejdbc.LazyList;
 import java.util.List;
 
 /**

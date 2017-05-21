@@ -43,6 +43,7 @@ public class TermDepositAccountController implements TermDepositAccountContract.
         //finish term;
         TermDeposit term = mTermDeposits.get(termId);
         term.finishTerm();
+        
         refreshTermDeposits();
         String balanceString = new DecimalFormat("#0.00").format(mTotalBalance - term.getTotalAccrueAmount(new Date()));
         view.refreshBalance(balanceString);

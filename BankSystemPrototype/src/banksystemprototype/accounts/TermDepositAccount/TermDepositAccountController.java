@@ -9,19 +9,14 @@ import banksystemprototype.Exceptions.BalanceLimitException;
 import banksystemprototype.TypeOfAccountAction;
 import banksystemprototype.TypeOfMessageDialog;
 import banksystemprototype.Utils.BspConstants;
-import banksystemprototype.Utils.DataConverter;
 import banksystemprototype.accounts.Account;
-import banksystemprototype.accounts._Account;
-import banksystemprototype.accounts.Database.DBConnection;
-import banksystemprototype.accounts.Database.DBManager;
 import banksystemprototype.accounts.SavingAccount.SavingAccountController;
-import banksystemprototype.accounts.Transaction.Transaction;
+import banksystemprototype.users.Customer;
 import banksystemprototype.widgets.PinFrame;
 import banksystemprototype.widgets.PinServiceApi;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
+import java.text.DecimalFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.javalite.activejdbc.Base;
@@ -34,7 +29,7 @@ public class TermDepositAccountController implements TermDepositAccountContract.
     private TypeOfAccountAction mAccountAction;
     private TermDepositAccountContract.View view;
     private HashMap<Long, TermDeposit> mTermDeposits;
-   
+    private String mUsername;
     private TermDepositAccount mTermDepositAccount;
     
     public TermDepositAccountController(TermDepositAccountContract.View v) {
@@ -99,8 +94,15 @@ public class TermDepositAccountController implements TermDepositAccountContract.
     public void openAccount(String username) throws Exception{
         Base.open(BspConstants.DB_DRIVER, BspConstants.DB_CONNECTION, BspConstants.DB_USER, BspConstants.DB_PASSWORD);
         mTermDepositAccount = new TermDepositAccount(username);
+        mUsername = username;
         mTermDeposits = mTermDepositAccount.getTermDeposits();
-        view.refreshBalance(String.valueOf(mTermDepositAccount.getBalance()));        
+        double totalBalance = 0;
+        totalBalance = mTermDeposits.entrySet().stream().map((entry) -> {
+            Long key = entry.getKey();
+            return entry;
+        }).map((entry) -> entry.getValue()).map((value) -> value.getTotalAccrueAmount(new Date())).reduce(totalBalance, (accumulator, _item) -> accumulator + _item);
+        String balanceString = new DecimalFormat("#0.00").format(totalBalance);
+        view.refreshBalance(String.valueOf(balanceString));        
     }
 
     @Override
@@ -112,9 +114,17 @@ public class TermDepositAccountController implements TermDepositAccountContract.
     @Override
     public boolean verifyPin(Object pin) {
         //verifyPin
-        boolean isVerified = true;
+        Customer customer = Customer.findFirst(" username = ? AND pin = ? ", mUsername, pin);
+        boolean isVerified = customer != null;
         if(isVerified){
-            proceedTransaction();
+            try {
+                proceedTransaction();
+            } catch (BalanceLimitException ex) {
+                view.showMessageDialog(ex.getMessage(), TypeOfMessageDialog.WARNING);
+                Logger.getLogger(TermDepositAccountController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NumberFormatException ex) {
+                view.showMessageDialog(ex.getMessage(), TypeOfMessageDialog.WARNING);
+            }
         }
         return isVerified;
     }
@@ -126,7 +136,7 @@ public class TermDepositAccountController implements TermDepositAccountContract.
         new PinFrame(this).setVisible(true);    
     }
     
-    private void proceedTransaction() {
+    private void proceedTransaction() throws BalanceLimitException {
         switch(mAccountAction) {
             case CREATE_DEPOSIT:
                 createTermDeposit();

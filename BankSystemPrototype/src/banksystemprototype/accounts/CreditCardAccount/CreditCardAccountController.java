@@ -11,14 +11,10 @@ import banksystemprototype.TypeOfAccountAction;
 import banksystemprototype.TypeOfMessageDialog;
 import banksystemprototype.Utils.BspConstants;
 import banksystemprototype.accounts.Account;
-import banksystemprototype.accounts.Database.DBConnection;
 import banksystemprototype.accounts.SavingAccount.SavingAccountController;
-import banksystemprototype.accounts.Transaction.Transaction;
 import banksystemprototype.users.Customer;
 import banksystemprototype.widgets.PinFrame;
 import banksystemprototype.widgets.PinServiceApi;
-import java.util.Date;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.javalite.activejdbc.Base;
@@ -121,7 +117,7 @@ public class CreditCardAccountController implements CreditCardContract.UserActio
                 proceedTransaction();
             } catch (BalanceLimitException ex) {
                 view.showMessageDialog(ex.getMessage(), TypeOfMessageDialog.WARNING);
-                Logger.getLogger(SavingAccountController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CreditCardAccountController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (NumberFormatException ex) {
                 view.showMessageDialog(ex.getMessage(), TypeOfMessageDialog.WARNING);
             }

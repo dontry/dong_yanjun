@@ -409,7 +409,7 @@ public class SavingAccountFrame extends javax.swing.JFrame implements SavingAcco
                 .addGap(5, 5, 5)
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(labelBalanceValue))
                 .addGap(32, 32, 32)

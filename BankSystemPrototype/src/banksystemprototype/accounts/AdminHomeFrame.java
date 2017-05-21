@@ -13,7 +13,10 @@ import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 import banksystemprototype.users.LoginFrame;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import javax.swing.JFrame;
+import java.util.Date;  
 
 /**
  *
@@ -27,7 +30,7 @@ public class AdminHomeFrame extends javax.swing.JFrame {
     "Account_id", "username", "account type", "lock_status", "balance"}, 0);
     DefaultComboBoxModel dcm = new DefaultComboBoxModel(); 
     DefaultTableModel dtmHomeLoan = new DefaultTableModel(new String[]{
-    "loan_id", "Account_id", "Principal", "Interest", "Remain Loan", "$Repayment","interest_rate","period","start_date","end_date","repayment_date","next_repayment_date","finish_status"}, 0);
+    "loan_id", "Account_id", "Principal", "Interest", "Remain Loan", "$Repayment","interest_rate","period","start_date","end_date","repayment_date","next_repayment_date","finish_status","frozen status"}, 0);
     DefaultTableModel CreditTableModel = new DefaultTableModel(new String[]{
     "Account_id", "daily_payment_limit", "loan_limit"}, 0);
     private LoginFrame loginFrame;
@@ -101,20 +104,16 @@ public class AdminHomeFrame extends javax.swing.JFrame {
         btnBackHomepage = new javax.swing.JButton();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
-        jLabel23 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
-        jLabel26 = new javax.swing.JLabel();
-        tfHomeLoanUsername = new javax.swing.JTextField();
+        tfHomeLoanAccountID = new javax.swing.JTextField();
         tfPrincipal = new javax.swing.JTextField();
-        tfMonthlyRepayment = new javax.swing.JTextField();
-        tfInterestRate = new javax.swing.JTextField();
         tfPeriod = new javax.swing.JTextField();
         tfStartDate = new javax.swing.JTextField();
         tfEndDate = new javax.swing.JTextField();
-        tfRepaymentDate = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
         jdCreateAccount = new javax.swing.JDialog();
         jLabel16 = new javax.swing.JLabel();
         tfUsername = new javax.swing.JTextField();
@@ -307,6 +306,8 @@ public class AdminHomeFrame extends javax.swing.JFrame {
                 .addGap(40, 40, 40))
         );
 
+        jdAdminAccountManage.setMinimumSize(new java.awt.Dimension(466, 322));
+
         btnViewAllAccount.setText("View All Customer Accounts");
         btnViewAllAccount.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -365,11 +366,11 @@ public class AdminHomeFrame extends javax.swing.JFrame {
                         .addGroup(jdAdminAccountManageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnViewAllAccount)
                             .addComponent(btnCreateAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
-                        .addGroup(jdAdminAccountManageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(btnUnlockAccount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnModifyCreditLimit, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
-                            .addComponent(btnBack, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(76, 76, 76)
+                        .addGroup(jdAdminAccountManageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnModifyCreditLimit, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnUnlockAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jdAdminAccountManageLayout.createSequentialGroup()
                         .addComponent(jLabel14)
@@ -377,7 +378,7 @@ public class AdminHomeFrame extends javax.swing.JFrame {
                         .addComponent(tfSearchUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(39, 39, 39)
                         .addComponent(btnSearchAccountByCustomer)))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
         jdAdminAccountManageLayout.setVerticalGroup(
             jdAdminAccountManageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -497,13 +498,9 @@ public class AdminHomeFrame extends javax.swing.JFrame {
         }
     });
 
-    jLabel19.setText("Username");
+    jLabel19.setText("AccountID");
 
     jLabel20.setText("Principal");
-
-    jLabel22.setText("Monthly Repayment ");
-
-    jLabel23.setText("Interest rate");
 
     jLabel21.setText("Period");
 
@@ -511,9 +508,12 @@ public class AdminHomeFrame extends javax.swing.JFrame {
 
     jLabel25.setText("End date");
 
-    jLabel26.setText("Monthly Repay date");
-
-    tfHomeLoanUsername.setText(" ");
+    tfHomeLoanAccountID.setText(" ");
+    tfHomeLoanAccountID.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            tfHomeLoanAccountIDActionPerformed(evt);
+        }
+    });
 
     tfPrincipal.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -527,97 +527,109 @@ public class AdminHomeFrame extends javax.swing.JFrame {
         }
     });
 
+    jLabel2.setText("(month)");
+
+    jLabel22.setText("(dd/mm/yyyy)");
+
     javax.swing.GroupLayout jdHomeLoanLayout = new javax.swing.GroupLayout(jdHomeLoan.getContentPane());
     jdHomeLoan.getContentPane().setLayout(jdHomeLoanLayout);
     jdHomeLoanLayout.setHorizontalGroup(
         jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(jdHomeLoanLayout.createSequentialGroup()
-            .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jdHomeLoanLayout.createSequentialGroup()
-                    .addGap(21, 21, 21)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 701, Short.MAX_VALUE))
-                .addGroup(jdHomeLoanLayout.createSequentialGroup()
-                    .addGap(237, 237, 237)
-                    .addComponent(btnViewHomeLoanApplication)))
+            .addGap(46, 46, 46)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 695, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(20, 20, 20)
             .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jdHomeLoanLayout.createSequentialGroup()
-                    .addGap(21, 21, 21)
-                    .addComponent(btnBackHomepage)
-                    .addGap(25, 25, 25))
+                    .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel24, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jdHomeLoanLayout.createSequentialGroup()
+                            .addGap(6, 6, 6)
+                            .addComponent(jLabel25)))
+                    .addGap(36, 36, 36)
+                    .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(tfStartDate)
+                        .addComponent(tfEndDate)))
                 .addGroup(jdHomeLoanLayout.createSequentialGroup()
                     .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel21)
                         .addGroup(jdHomeLoanLayout.createSequentialGroup()
-                            .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel20)
+                            .addGap(6, 6, 6)
+                            .addComponent(jLabel2)))
+                    .addGap(49, 49, 49)
+                    .addComponent(tfPeriod))
+                .addGroup(jdHomeLoanLayout.createSequentialGroup()
+                    .addGap(12, 12, 12)
+                    .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jdHomeLoanLayout.createSequentialGroup()
+                            .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel19)
-                                .addComponent(jLabel23)
-                                .addComponent(jLabel22)
-                                .addComponent(jLabel21)
-                                .addComponent(jLabel24)
-                                .addComponent(jLabel25)
-                                .addComponent(jLabel26))
+                                .addComponent(jLabel20))
                             .addGap(18, 18, 18)
-                            .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(tfHomeLoanUsername)
+                            .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(tfPrincipal)
-                                .addComponent(tfMonthlyRepayment)
-                                .addComponent(tfInterestRate)
-                                .addComponent(tfPeriod)
-                                .addComponent(tfStartDate)
-                                .addComponent(tfEndDate)
-                                .addComponent(tfRepaymentDate, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(jdHomeLoanLayout.createSequentialGroup()
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(btnCreateHomeLoan, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGap(18, 18, 18))))
+                                .addComponent(tfHomeLoanAccountID, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jdHomeLoanLayout.createSequentialGroup()
+                            .addComponent(btnCreateHomeLoan, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(0, 0, Short.MAX_VALUE)))))
+            .addGap(18, 18, 18))
+        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jdHomeLoanLayout.createSequentialGroup()
+            .addGap(240, 240, 240)
+            .addComponent(btnViewHomeLoanApplication)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnBackHomepage)
+            .addGap(32, 32, 32))
+        .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jdHomeLoanLayout.createSequentialGroup()
+                .addContainerGap(783, Short.MAX_VALUE)
+                .addComponent(jLabel22)
+                .addGap(181, 181, 181)))
     );
     jdHomeLoanLayout.setVerticalGroup(
         jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jdHomeLoanLayout.createSequentialGroup()
-            .addGap(22, 22, 22)
-            .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jdHomeLoanLayout.createSequentialGroup()
+                    .addGap(34, 34, 34)
                     .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel19)
-                        .addComponent(tfHomeLoanUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(tfHomeLoanAccountID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(18, 18, 18)
                     .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel20)
                         .addComponent(tfPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(18, 18, 18)
                     .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel22)
-                        .addComponent(tfMonthlyRepayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel23)
-                        .addComponent(tfInterestRate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(18, 18, 18)
-                    .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel21)
                         .addComponent(tfPeriod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jLabel2)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel24)
-                        .addComponent(tfStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(18, 18, 18)
+                        .addComponent(tfStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGap(28, 28, 28)
                     .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel25)
                         .addComponent(tfEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(18, 18, 18)
-                    .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel26)
-                        .addComponent(tfRepaymentDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(18, 18, 18)
-                    .addComponent(btnCreateHomeLoan)
-                    .addGap(14, 14, 14))
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(27, 27, 27)
+                    .addComponent(btnCreateHomeLoan))
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jdHomeLoanLayout.createSequentialGroup()
+                    .addGap(22, 22, 22)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)))
             .addGap(18, 18, 18)
             .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(btnBackHomepage)
-                .addComponent(btnViewHomeLoanApplication))
-            .addContainerGap(26, Short.MAX_VALUE))
+                .addComponent(btnViewHomeLoanApplication)
+                .addComponent(btnBackHomepage))
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addGroup(jdHomeLoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jdHomeLoanLayout.createSequentialGroup()
+                .addContainerGap(208, Short.MAX_VALUE)
+                .addComponent(jLabel22)
+                .addGap(205, 205, 205)))
     );
+
+    jdCreateAccount.setMinimumSize(new java.awt.Dimension(466, 322));
 
     jLabel16.setText("Username:");
 
@@ -675,7 +687,7 @@ public class AdminHomeFrame extends javax.swing.JFrame {
             .addContainerGap(42, Short.MAX_VALUE))
     );
 
-    jdUnlockAccount.setMinimumSize(getPreferredSize());
+    jdUnlockAccount.setMinimumSize(new java.awt.Dimension(466, 322));
 
     btnSubmitUnlock.setText("Unlock");
     btnSubmitUnlock.addActionListener(new java.awt.event.ActionListener() {
@@ -1048,7 +1060,7 @@ btnViewCreditAccount.addActionListener(new java.awt.event.ActionListener() {
     private void btnViewHomeLoanApplicationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewHomeLoanApplicationActionPerformed
         addTableModel(dtmHomeLoan);
         String condition = "";
-        String table = "S27624366.home_loans";
+        String table = "S27624366.loans";
         ArrayList<Object[]> rows = DBManager.check(table, condition);
         for(Object[] row: rows) {
              dtmHomeLoan.addRow(row);
@@ -1056,41 +1068,36 @@ btnViewCreditAccount.addActionListener(new java.awt.event.ActionListener() {
     }//GEN-LAST:event_btnViewHomeLoanApplicationActionPerformed
 
     private void btnCreateHomeLoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateHomeLoanActionPerformed
-//        try 
-//        {
-//            stmt = conn.createStatement();
-//            String getAccountID = "select account_id from account where username = " + tfHomeLoanUsername.getText() + " And account_type ='LOAN'";
-//            ResultSet rset = stmt.executeQuery(getAccountID);
-//            mdata = rset.getMetaData();
-//            String sql = "Insert into S27624366.Home_Loan (loanid_seq.nextval, Account_id,principal, interest, remain_loan, repayment_amount, interest_rate, period, start_date, end_date, repay_date, next_repay_date, finish_status) values (loanid_seq.nextval,?,?,0,?,?,?,?,?,?,?,null,'N')";
-//            PreparedStatement pst = conn.prepareStatement(sql);
-//            pst.setString(1, mdata.toString());
-//            Long principal = Long.parseLong(tfPrincipal.getText());
-//            pst.setLong(2, principal);
-//            pst.setLong(3, principal);
-//            Long repayment = Long.parseLong(tfMonthlyRepayment.getText());
-//            pst.setLong(4, repayment);
-//            Long interestRate = Long.parseLong(tfInterestRate.getText());
-//            pst.setLong(5, interestRate);
-//            Long period = Long.parseLong(tfPeriod.getText());
-//            pst.setLong(6, period);
-//            pst.setDate(7,java.sql.Date.valueOf(tfStartDate.getText());
-//            pst.setDate(7, Date(tfStartDate.getTime());
-//            pst.setDate(8, java.sql.Date.valueOf("tfEndDate.getText()"));
-//            Long phone = Long.parseLong(tfCreatePhone.getText());
-//            pst.setLong(7, phone);
-//            String id_type;
-//            id_type = cbCreateIDType.getSelectedItem().toString();
-//            pst.setString(8, id_type);
-//            pst.setString(9, tfCreateIDNo.getText());
-//            pst.setString(10,pfCreatePin.getPassword().toString());  
-//            pst.executeUpdate();
-//            jOptionPane1.showMessageDialog(null,"Home Loan has been created!");
-//        }
-//        catch(SQLException ex)
-//        {
-//            jOptionPane1.showMessageDialog(null,ex);
-//        }
+       try 
+        {
+            //Date date = new Date(0);
+            String sql = "Insert into S27624366.Loans (loan_id, Account_id, principal, interest, remain_loan, repayment_amount, interest_rate, period, start_date, end_date, repay_date, next_repay_date, finish_status,frozen_status) values (loanid_seq.nextval,?,?,0,?,?,0.05,?,?,?,to_date('01','dd'),to_date('01','dd'),'N','N')";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            String accID = tfHomeLoanAccountID.getText(); 
+            pst.setString(1, accID);
+            Long principal = Long.parseLong(tfPrincipal.getText());
+            pst.setLong(2, principal);
+            pst.setLong(3, principal);
+            double a = Math.pow(1.05,12);
+            Double repayment = principal * (a * 0.05) / (a-1);
+            pst.setDouble(4,repayment);
+            Long period = Long.parseLong(tfPeriod.getText());
+            pst.setLong(5, period);
+            String aar = tfStartDate.getText();
+            Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(aar);
+            pst.setDate(6, new java.sql.Date(date1.getTime()));
+            String aar1 = tfEndDate.getText();
+            Date date2 = new SimpleDateFormat("dd/MM/yyyy").parse(aar1);
+            pst.setDate(7, new java.sql.Date(date2.getTime()));
+            pst.executeUpdate();
+            jOptionPane1.showMessageDialog(null,"Home Loan has been created!");
+        }
+        catch(SQLException ex)
+        {
+            jOptionPane1.showMessageDialog(null,ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(AdminHomeFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnCreateHomeLoanActionPerformed
 
     private void btnBackHomepageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackHomepageActionPerformed
@@ -1244,6 +1251,10 @@ btnViewCreditAccount.addActionListener(new java.awt.event.ActionListener() {
         // TODO add your handling code here:
     }//GEN-LAST:event_tfStartDateActionPerformed
 
+    private void tfHomeLoanAccountIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfHomeLoanAccountIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfHomeLoanAccountIDActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1323,13 +1334,12 @@ btnViewCreditAccount.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1370,13 +1380,10 @@ btnViewCreditAccount.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JTextField tfCreditAccountID;
     private javax.swing.JTextField tfCreditLimit;
     private javax.swing.JTextField tfEndDate;
-    private javax.swing.JTextField tfHomeLoanUsername;
+    private javax.swing.JTextField tfHomeLoanAccountID;
     private javax.swing.JTextField tfInputUsername;
-    private javax.swing.JTextField tfInterestRate;
-    private javax.swing.JTextField tfMonthlyRepayment;
     private javax.swing.JTextField tfPeriod;
     private javax.swing.JTextField tfPrincipal;
-    private javax.swing.JTextField tfRepaymentDate;
     private javax.swing.JTextField tfSearchUsername;
     private javax.swing.JTextField tfStartDate;
     private javax.swing.JTextField tfUsername;
